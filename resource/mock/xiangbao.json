@@ -1,46 +1,115 @@
 [
   {
-    "id": "oed6fd0393b6297e1",
-    "title": "青米插线板（三孔位）",
-    "describe": "",
-    "url": "https://static.home.mi.com/app/shop/img?id=shop_954d8bee31cf91966c14d93734e9ad28.jpeg&t=webp",
-    "link": "/activity?cid=oed6fd0393b6297e1",
-    "ratednum": 1000,
-    "soldnum": 640,
-    "price": 28,
-    "oprice": 35
+    "gid" : "100411",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_b5400104b86406fa241a0d81ad8894d6.jpeg&w=1080&h=501&t=webp",
+    "link":"/detail?gid=100411"
   },
   {
-    "id": "oed6fd0393b6297e1",
-    "title": "多口USB电源适配器",
-    "describe": "",
-    "url": "https://static.home.mi.com/app/shop/img?id=shop_0c4c1cde7e2ff397ea4bbc24bb16cd1a.jpeg&t=webp",
-    "link": "/activity?cid=oed6fd0393b6297e1",
-    "ratednum": 2000,
-    "soldnum": 640,
-    "price": 129,
-    "oprice": 169
+    "gid" : "890",
+    "title": "全天候机能城市背包",
+    "describe": "拒水性3-4级，背负升级",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_4b6dfabbc1c80fa33df4189d1b323d26.jpeg",
+    "link":"/detail?gid=890",
+    "price": 189,
+    "mark":true
   },
   {
-    "id": "oed6fd0393b6297e1",
-    "title": "萌托斯·法式手工甜品",
-    "describe": "",
-    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_093f784845f89d87fa711f433c78f1a9.jpeg&t=webp",
-    "link": "/activity?cid=oed6fd0393b6297e1",
-    "ratednum": 1000,
-    "soldnum": 800,
-    "price": 99,
-    "oprice": 109
+    "gid" : "891",
+    "title": "时尚菱格双肩包",
+    "describe": "防泼水，背负舒适",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_c8c20e8ad6a0e573679f1669fc68a99b.jpeg",
+    "link":"/detail?gid=891",
+    "price": 249,
+    "mark":false
   },
   {
-    "id": "oed6fd0393b6297e1",
-    "title": "极米Z5家用智能投影",
-    "describe": "",
-    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_7372aeb265665cc1134cdf9608bf069b.jpeg&t=webp",
-    "link": "/activity?cid=oed6fd0393b6297e1",
-    "ratednum": 1000,
-    "soldnum": 430,
-    "price": 2599,
-    "oprice": 3499
+    "gid" : "655",
+    "title": "90分百搭运动折叠包",
+    "describe": "三重背法，轻便可折叠",
+    "url": "https://static.home.mi.com/app/shop/img?id=shop_f04e5b9bbd25c7aecb7fa396412192f3.jpeg",
+    "link":"/detail?gid=655",
+    "price": 49,
+    "mark":false
+  },
+  {
+    "gid" : "759",
+    "title": "都市简约双肩背包",
+    "describe": "防泼水，背负舒适",
+    "url": "https://static.home.mi.com/app/shop/img?id=shop_25c5118ca5d365eecee7d4b69fbfa068.jpeg",
+    "link":"/detail?gid=759",
+    "price": 169,
+    "mark":false
+  },
+  {
+    "gid" : "890",
+    "title": "全天候机能城市背包",
+    "describe": "拒水性3-4级，背负升级",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_4b6dfabbc1c80fa33df4189d1b323d26.jpeg",
+    "link":"/detail?gid=890",
+    "price": 189,
+    "mark":true
+  },
+  {
+    "gid" : "891",
+    "title": "时尚菱格双肩包",
+    "describe": "防泼水，背负舒适",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_c8c20e8ad6a0e573679f1669fc68a99b.jpeg",
+    "link":"/detail?gid=891",
+    "price": 249,
+    "mark":false
+  },
+  {
+    "gid" : "655",
+    "title": "90分百搭运动折叠包",
+    "describe": "三重背法，轻便可折叠",
+    "url": "https://static.home.mi.com/app/shop/img?id=shop_f04e5b9bbd25c7aecb7fa396412192f3.jpeg",
+    "link":"/detail?gid=655",
+    "price": 49,
+    "mark":false
+  },
+  {
+    "gid" : "759",
+    "title": "都市简约双肩背包",
+    "describe": "防泼水，背负舒适",
+    "url": "https://static.home.mi.com/app/shop/img?id=shop_25c5118ca5d365eecee7d4b69fbfa068.jpeg",
+    "link":"/detail?gid=759",
+    "price": 169,
+    "mark":false
+  },
+  {
+    "gid" : "890",
+    "title": "全天候机能城市背包",
+    "describe": "拒水性3-4级，背负升级",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_4b6dfabbc1c80fa33df4189d1b323d26.jpeg",
+    "link":"/detail?gid=890",
+    "price": 189,
+    "mark":true
+  },
+  {
+    "gid" : "891",
+    "title": "时尚菱格双肩包",
+    "describe": "防泼水，背负舒适",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_c8c20e8ad6a0e573679f1669fc68a99b.jpeg",
+    "link":"/detail?gid=891",
+    "price": 249,
+    "mark":false
+  },
+  {
+    "gid" : "655",
+    "title": "90分百搭运动折叠包",
+    "describe": "三重背法，轻便可折叠",
+    "url": "https://static.home.mi.com/app/shop/img?id=shop_f04e5b9bbd25c7aecb7fa396412192f3.jpeg",
+    "link":"/detail?gid=655",
+    "price": 49,
+    "mark":false
+  },
+  {
+    "gid" : "759",
+    "title": "都市简约双肩背包",
+    "describe": "防泼水，背负舒适",
+    "url": "https://static.home.mi.com/app/shop/img?id=shop_25c5118ca5d365eecee7d4b69fbfa068.jpeg",
+    "link":"/detail?gid=759",
+    "price": 169,
+    "mark":false
   }
 ]
