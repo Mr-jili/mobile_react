@@ -19,27 +19,84 @@ app.use((req, res, next) => {
   else next();
 });
 
-let dataNameArr = ["family", "jiadian", "phone", "video", "riza", "clothes", "healthy", "tableware", "intelligence", "xihu", "baby", "xiangbao", "diet", "parts", "travel"];
-let typeBanner = require('./mock/typeBanner.json');
-let mainData = require('./mock/main.json');
+// 首页首屏数据
+app.get('/init',(req,res) => {
+  let sliders = require('./mock/sliders.json');
+  let activity = require('./mock/activity.json');
+  let recommend =  require('./mock/recommend.json');
+  let crowdfunding =  require('./mock/crowdfunding.json');
 
-// 首页数据
+  res.json({sliders,activity,recommend,crowdfunding});
+});
+//　滚动加载 传一个id给我，然后返回对应的数据
 app.get('/main', (req, res) => {
-  res.json(mainData)
+  let {id} = req.query;
+  switch (id) {
+    case 'G0001':
+      id = 'recommend';
+      break;
+    case 'G0002':
+      id = 'family';
+      break;
+    case 'G0003':
+      id = 'jiadian';
+      break;
+    case 'G0004':
+      id = 'phone';
+      break;
+    case 'G0005':
+      id = 'video';
+      break;
+    case 'G0006':
+      id = 'riza';
+      break;
+    case 'G0007':
+      id = 'clothes';
+      break;
+    case 'G0008':
+      id = 'healthy';
+      break;
+    case 'G0009':
+      id = 'tableware';
+      break;
+    case 'G0010':
+      id = 'intelligence';
+      break;
+    case 'G0011':
+      id = 'xihu';
+      break;
+    case 'G0012':
+      id = 'xiangbao';
+      break;
+    case 'G0013':
+      id = 'baby';
+      break;
+    case 'G0014':
+      id = 'diet';
+      break;
+    case 'G0015':
+      id = 'parts';
+      break;
+    case 'G0016':
+      id = 'travel';
+      break;
+    case 'G0017':
+      id = 'brand';
+      break;
+  }
+  let data = require(`./mock/${id}.json`);
+  res.json(data)
 });
 
 //　分类数据
 app.get('/goodscategory', (req, res) => {
-  let result = {};
-  result.banner =  typeBanner;
-  dataNameArr.forEach((item) => {
-    result[item] = require(`./mock/${item}.json`).slice(1);
-  });
-  res.json(result);
+
+
+  res.json({"msg": "ok"});
 });
 
 // 品味数据
-app.post('/savour',(req,res) => {
+app.post('/savour', (req, res) => {
 
 });
 

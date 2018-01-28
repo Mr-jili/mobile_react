@@ -21,21 +21,23 @@
 项目启用     端口 localhost:3000
 
 数据属性名
-手机 phone
-居家 family
-服饰 clothes
-智能 intelligence
-餐具 tableware
-影音 video
-家电 jiadian
-饮食 diet
-健康 healthy
-洗护 xihu
-日杂 riza
-箱包 xiangbao
-配件 parts
-婴童 baby
-出行 travel
+有品推荐 recommend G0001
+居家 family G0002
+家电 jiadian G0003
+手机 phone G0004
+影音 video G0005
+日杂 riza G0006
+服饰 clothes G0007
+健康 healthy G0008
+餐厨 tableware G0009
+智能 intelligence G0010
+洗护 xihu G0011
+箱包 xiangbao G0012
+婴童 baby G0013
+饮食 diet G0014
+配件 parts G0015
+出行 travel G0016
+品牌 brand G0017
 
 首页数据请求
 '/main'
@@ -43,11 +45,6 @@
 '/goodscategory'
 品味页面请求
 '/savour'
-
-
-
-
-
 
 
 首页轮播图 sliders:[]

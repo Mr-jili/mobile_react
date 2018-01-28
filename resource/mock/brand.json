@@ -46,5 +46,17 @@
     "title":"最生活",
     "url": "https://static.home.mi.com/app/shop/img?id=shop_c4396107bf41747ea1691722df9e75e4.jpeg&w=453&h=429&t=webp",
     "link":"/flagshipstore?id=21&title=最生活"
+  },
+  {
+    "id" : "367",
+    "title":"cottonsmith",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_d7536184c27801176c7bd586a2b4dafb.jpeg&w=360&h=360",
+    "link":"/flagshipstore?id=367&title=cottonsmith"
+  },
+  {
+    "id" : "371",
+    "title":"cottonsmith",
+    "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_99f459e8193141ffa60612a19026270a.jpeg&w=360&h=360",
+    "link":"/flagshipstore?id=371&title=乐范"
   }
 ]
