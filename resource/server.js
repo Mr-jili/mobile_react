@@ -19,8 +19,28 @@ app.use((req, res, next) => {
   else next();
 });
 
+let dataNameArr = ["family", "jiadian", "phone", "video", "riza", "clothes", "healthy", "tableware", "intelligence", "xihu", "baby", "xiangbao", "diet", "parts", "travel"];
+let typeBanner = require('./mock/typeBanner.json');
+let mainData = require('./mock/main.json');
+
+// 首页数据
 app.get('/main', (req, res) => {
-  res.json({"msg": "ok"})
+  res.json(mainData)
+});
+
+//　分类数据
+app.get('/goodscategory', (req, res) => {
+  let result = {};
+  result.banner =  typeBanner;
+  dataNameArr.forEach((item) => {
+    result[item] = require(`./mock/${item}.json`).slice(1);
+  });
+  res.json(result);
+});
+
+// 品味数据
+app.post('/savour',(req,res) => {
+
 });
 
 /*

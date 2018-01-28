@@ -7,5 +7,5 @@ function getMainData() {
 }
 //
 function getGoodsData() {
-  return axios('/scategory')
+  return axios('/goodscategory')
 }

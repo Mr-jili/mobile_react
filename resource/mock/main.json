@@ -20,7 +20,7 @@
       "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_940e96da0d8707e657c58c5d7278e64a.jpeg&w=1080&h=450&crop=a_0_0_1080_480&t=webp",
       "link": "https://home.mi.com/detail?gid=100982"
     }
-  ], //轮播
+  ],
   "activity": [
     {
       "pId": "有品上新",
@@ -47,7 +47,7 @@
       "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_f3b0463f876a98e82d5e7592536472ce.jpeg&w=270&h=300&t=webp",
       "link": "https://home.mi.com/app/shop/content?id=of210d0391acc6412"
     }
-  ], //活动导航
+  ],
   "recommend": [
     {
       "pId": "p873dd039bd147603",
@@ -66,7 +66,7 @@
       "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_4b0cd606a1cfb18160eca203722d247d.jpeg&w=540&h=420&t=webp",
       "link": "https://home.mi.com/app/shop/content?id=m9c66d039bd8a27b1"
     }
-  ], // 推荐
+  ],
   "crowdfunding": [
     {
       "gid": 100998,
@@ -101,7 +101,7 @@
       "actualPerson": 10644,
       "color": "#c04343"
     }
-  ], // 众筹
+  ],
   "hotItems": [
     {
       "gid": "100622",
@@ -143,7 +143,7 @@
       "link": "/detail?gid=100570",
       "price": 116
     }
-  ], // 热门
+  ],
   "newItems": [
     {
       "gid": "101004",
@@ -177,7 +177,7 @@
       "link": "/detail?gid=100918",
       "price": 399
     }
-  ], // 新品
+  ],
   "limit": [
     {
       "id": "oed6fd0393b6297e1",
@@ -223,7 +223,7 @@
       "price": 2599,
       "oprice": 3499
     }
-  ], // 限时购
+  ],
   "brand":[
     {
       "id" : "18",
@@ -273,7 +273,7 @@
       "url": "https://static.home.mi.com/app/shop/img?id=shop_c4396107bf41747ea1691722df9e75e4.jpeg&w=453&h=429&t=webp",
       "link":"/flagshipstore?id=21&title=最生活"
     }
-  ], // 品牌
+  ],
   "phone":[
     {
       "gid" : "100264",
@@ -316,16 +316,5 @@
       "price": 2299,
       "mark":false
     }
-  ] // 手机
+  ]
 }
-
-/*
-    {
-      "gid" : "",
-      "title": "",
-      "describe": "",
-      "url": "",
-      "link":"",
-      "price": 239
-    }
-*/
