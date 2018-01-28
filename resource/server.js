@@ -22,3 +22,16 @@ app.use((req, res, next) => {
 app.get('/main', (req, res) => {
   res.json({"msg": "ok"})
 });
+
+/*
+* {
+  "code": 0,
+  "message": "ok",
+  "result": {
+    "code": 0,
+    "message": "",
+    "description": "",
+    "data": {
+    }
+  }
+}*/
