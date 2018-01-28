@@ -38,6 +38,11 @@
 配件 parts G0015
 出行 travel G0016
 品牌 brand G0017
+小米众筹 crowdfunding G0018
+热门 hotItems G0019
+新品 newItems G0020
+限时购 limit G0021
+
 
 首页数据请求
 '/main'
