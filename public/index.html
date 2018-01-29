@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="https://youpin.mi.com/favicon.ico">
     <title>有品</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+    <script type="text/javascript" charset="UTF-8">
+      /* Rem mobile phone ADAPTS. */
+      let html = document.documentElement || document.body,
+        screenW = html.clientWidth,
+        designW = 640;
+      let computed = () => {
+        html.style.fontSize = screenW > designW ? "100px" : screenW / designW * 100 + "px";
+      };
+      window.addEventListener("load", computed, false);
+      window.addEventListener("size", computed, false);
+    </script>
+</head>
+<body>
+<div id="root" class="mhome"></div>
+</body>
 </html>

@@ -9,6 +9,7 @@ import UserCenter from "./containers/UserCenter/UserCenter";
 import Savour from "./containers/Savour/Savour";
 import Goodscategory from "./containers/Goodscategory/Goodscategory";
 import store from './store';
+import "../src/common/basic.css";
 
 ReactDOM.render((
   <Provider store={store}>
