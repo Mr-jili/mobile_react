@@ -1,6 +1,8 @@
 let express = require('express');
 let app = express();
 app.listen(9999);
+let fs = require('fs');
+let path = require('path');
 let session = require('express-session');
 let bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -20,7 +22,8 @@ app.use((req, res, next) => {
 });
 let id = '';
 app.use((req, res, next) => {
-  switch (req.query.id) {
+  let tempId = req.query.id || req.body.id;
+  switch (tempId) {
     case 'G0001':
       id = 'recommend';
       break;
@@ -88,27 +91,28 @@ app.use((req, res, next) => {
   next();
 });
 
-// 首页首屏数据
-app.get('/init', (req, res) => {
+// 首页接口 首屏数据
+app.post('/init', (req, res) => {
   let sliders = require('./mock/sliders.json');
   let activity = require('./mock/activity.json');
   let recommend = require('./mock/recommend.json');
   let crowdfunding = require('./mock/crowdfunding.json');
   res.json({sliders, activity, recommend, crowdfunding});
 });
+
 //　滚动加载 传一个id给我，然后返回对应的数据
-app.get('/main', (req, res) => {
+app.post('/main', (req, res) => {
   let data = require(`./mock/${id}.json`);
-  res.json(data)
+  res.json(data);
 });
 
-//　分类数据
-app.get('/goodscategory', (req, res) => {
+//　分类数据接口
+app.post('/goodscategory', (req, res) => {
   let result = {};
   result.listLink = require('./mock/listLink.json');
   result.banner = require('./mock/typeBanner.json');
   if (!id) {
-    result.data = require('./mock/lev_baby.json');
+    result.data = require('./mock/lev_family.json');
   }
   else if (id === 'phone') {
     result.data = require(`./mock/${id}.json`).slice(1);
@@ -122,7 +126,14 @@ app.get('/goodscategory', (req, res) => {
   res.json(result);
 });
 
-// 品味数据 post请求 需要参数offset,limit
+// 点击商品||banner图 跳转请求
+app.post('/default/:id', (req, res) => {
+  let {aid, gid} = req.body;
+  // 根据
+
+});
+
+// 品味数据接口 post请求 需要参数offset,limit
 app.post('/savour', (req, res) => {
   let {offset, limit} = req.body;
   let savour = require('./mock/savour.json');
@@ -130,11 +141,150 @@ app.post('/savour', (req, res) => {
   res.json(savour)
 });
 
-app.get('/savour', (req, res) => {
+app.post('/content', (req, res) => {
   //aid: 所属种类id article_id : 内容id
-  let {gid, article_id} = req.query;
+  let {gid, article_id} = req.body;
 
   res.json({});
+});
+
+let crypto = require('crypto'); // 加密处理插件
+let userList = []; // 所有用户数据
+let userID = '';
+fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
+  if (err) return [];
+  userList = JSON.parse(data);
+});
+// 获取用户购物车数据
+app.post('/cart', (req, res) => {
+  if (!userID) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  // let {username} = req.body;
+  // let user = userList.find((item) => {
+  //   return item.mobile === username || item.username === username;
+  // }) || {};
+  // let userId = user.userid; // 转换出用户的ID
+  let userCart = [];
+  fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+    if (err) return console.log('读取失败!');
+    userCart = JSON.parse(data);
+    let findCart = userCart.find((item) => item.userId === userID) || []; //userId
+    res.json({"userCart": findCart.cart});
+  });
+});
+
+// 修改用户购物车数据
+app.put('/cart', (req, res) => {
+  let {cid, number} = req.query;
+  // let keys = Object.keys(req.query);
+  if (!userID) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let userCart = [];
+  fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+    if (err) return console.log('读取失败!');
+    userCart = JSON.parse(data);
+    let curCartIndex, curProIndex;
+    let findCart = userCart.find((item, index) => {
+      curCartIndex = index;
+      return item.userId === userID;//userId
+    });
+    let curProduct = findCart['cart'].find((item, index) => {
+      curProIndex = index;
+      return item.cid === cid;
+    });
+    if(!curProduct){
+      res.json({"userCart": findCart.cart});
+      return ;
+    }
+    curProduct.number = parseInt(number);
+    fs.writeFile('./mock/userCart.json', JSON.stringify(userCart), 'utf-8', (err) => {
+      if (err) return console.log('写入失败!');
+    });
+    res.json({"userCart": findCart.cart});
+  });
+});
+
+// 添加新商品到购物车
+app.get("/cart",(req,res) => {
+  if (!userID) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {cid} = req.query;
+
+});
+
+// 注册接口
+app.post('/register', (req, res) => {
+  let {username, password} = req.body;
+  let user = userList.find((item) => {
+    return item.mobile === username || item.username === username;
+  });
+  if (user) {
+    res.json({user: null, msg: "用户已存在!!!", success: '', err: 1})
+  } else {
+    password = crypto.createHash('md5').update(password).digest('base64');
+    let temp = parseInt(userList[userList.length - 1].userid.slice(1));
+    userList.forEach((item) => {
+      let tempItem = parseInt(item.userid.slice(1));
+      if (tempItem > temp) {
+        temp = tempItem;
+      }
+    });
+    let userInfo = {
+      "userid": `U${temp + 1}`,
+      "userimg": "",
+      "username": 'E' + Math.random().toFixed(7) * 10000000,
+      "password": password,
+      "email": "",
+      "mobile": username,
+      "bill": {
+        "all": [],
+        "pendingPayment": [],
+        "pendingReceived": [],
+        "pendingEvaluate": [],
+        "refund": [],
+        "received": []
+      },
+      "cart": [],
+      "assets": {},
+      "collection": {},
+      "address": {},
+      "news": {},
+      "help": {}
+    };
+    userList.push(userInfo);
+    fs.writeFile('./mock/userInfo.json', JSON.stringify(userList), 'utf-8', (err) => {
+      if (err) return console.log('error')
+    });
+    res.json({user: username, msg: "", success: "ok", err: 0});
+  }
+});
+
+// 登录接口
+app.post('/login', (req, res) => {
+  let {username, password} = req.body;
+  let _password = crypto.createHash('md5').update(password).digest('base64');
+  let user = userList.find((item) => {
+    return (item.mobile === username || item.username === username) && (item.password === _password);
+  });
+
+  if (user) {
+    req.session.user = username;
+    userID = user.userid;
+    res.json({user: username, msg: '', success: 'ok', err: 0});
+  } else {
+    res.json({user: null, msg: '用户名或密码不正确', success: 'no', err: 1});
+  }
+});
+
+// 验证登录状态
+app.get('/validate', function (req, res) {
+  res.json({user: req.session.user, msg: "", success: '', err: 0})
 });
 
 
