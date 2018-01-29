@@ -15,7 +15,7 @@ ReactDOM.render((
     <HashRouter>
       <App>
         <Switch>
-          <Route path='/' component={Main}/>
+          <Route path='/' exact component={Main}/>
           <Route path='/goodscategory' component={Goodscategory}/>
           <Route path='/savour' component={Savour}/>
           <Route path='/cart' component={Cart}/>
