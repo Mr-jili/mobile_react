@@ -8,7 +8,7 @@ export default class Savour extends React.Component {
         super();
         this.state= {
             list: []
-        }
+        } 
     }
 
     componentDidMount(){
