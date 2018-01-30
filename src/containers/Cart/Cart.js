@@ -6,6 +6,14 @@ import Recomend from "./Split/Recomend";
 import NoGoods from "./Split/NoGoods";
 import NotLogged from "./Split/NotLogged";
 
+/*   1. 判断是否登录 ：但是现在没有写好登陆，所以现在先调登录接口，假使已经登陆了，待登陆页面写好，再切换至校验是否登陆接口
+*
+*    2. 现在假使已经登陆
+*
+*/
+
+import {} from ""
+
 export default class Cart extends React.Component {
   render() {
     return (
@@ -23,7 +31,7 @@ export default class Cart extends React.Component {
            如果没有登陆  不添加样式*/}
 
           {/*=========== 没有登陆开始 ===========*/}
-          <NotLogged/>
+          {/*<NotLogged/>*/}
           {/*=========== 没有登陆结束 ===========*/}
 
           {/*=========== 有登陆开始 ===========*/}
