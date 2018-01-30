@@ -40,15 +40,15 @@
 
 
 
-首页初始化 post
+首页初始化
 '/init'
-首页数据请求 post
+首页数据请求
 '/main' {id}
-分页数据请求 post
+分页数据请求
 '/goodscategory' {id}
 品味页面请求
 '/savour' {"offset":0,"limit":5}
-购物车请求 post
+购物车请求
 '/cart'
 注册 post
 '/register'  {"username":"","password":""}

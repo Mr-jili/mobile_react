@@ -24,9 +24,13 @@
 添加商品到购物车 addCartData         get   ?gid=gid&number=number
 移除购物车中的商品 delCartData       delete  ?gid=gid
 <--------个人中心接口-------->
+获取个人信息
 注册  toRegister                   post {username, password}
 登录  toLogin                      post {username, password}
 校验是否登陆                         get
 <--------搜索接口-------->
+获取历史记录和热门搜索 getHistory      get
+搜索结果 searchInfo                 post {info}
+清空历史记录 clearHistorySearch      delete
 
 <--------详情页接口-------->

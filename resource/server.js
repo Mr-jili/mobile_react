@@ -104,7 +104,7 @@ app.post('/init', (req, res) => {
   res.json({sliders, activity, recommend, crowdfunding});
 });
 
-//　滚动加载 传一个id给我，然后返回对应的数据
+//　首页 滚动加载 传一个id给我，然后返回对应的数据
 app.post('/main', (req, res) => {
   let data = require(`./mock/${id}.json`);
   if (id === 'allData') {
@@ -184,19 +184,14 @@ fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
 
 // 获取用户购物车数据
 app.post('/cart', (req, res) => {
-  if (!userID) {
+  if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
-  // let {username} = req.body;
-  // let user = userList.find((item) => {
-  //   return item.mobile === username || item.username === username;
-  // }) || {};
-  // let userId = user.userid; // 转换出用户的ID
   fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
     if (err) return console.log('读取失败!');
     let userCart = JSON.parse(data);
-    let findCart = userCart.find((item) => item.userId === userID) || []; //userId
+    let findCart = userCart.find((item) => item.userId === req.session.user) || [];
     let recommend = require('./mock/allData.json');
     recommend = recommend.slice(7, 15);
     res.json({"userCart": findCart.cart, recommend});
@@ -205,19 +200,18 @@ app.post('/cart', (req, res) => {
 
 // 修改用户购物车数据
 app.put('/cart', (req, res) => {
-  let {gid, number} = req.query;
-  // let keys = Object.keys(req.query);
-  if (!userID) {
+  if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
+  let {gid, number} = req.query;
   fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
     if (err) return console.log('读取失败!');
     let userCart = JSON.parse(data);
     let curCartIndex, curProIndex;
     let findCart = userCart.find((item, index) => {
       curCartIndex = index;
-      return item.userId === userID;//userId
+      return item.userId === req.session.user;//userId
     });
     let curProduct = findCart['cart'].find((item, index) => {
       curProIndex = index;
@@ -237,12 +231,11 @@ app.put('/cart', (req, res) => {
 
 // 添加新商品到购物车
 app.get("/cart", (req, res) => {
-  if (!userID) {
+  if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
   let {gid, number} = req.query;
-  // let allData = [];
   let addProduct = new Promise((resolve, reject) => {
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
@@ -264,7 +257,7 @@ app.get("/cart", (req, res) => {
     let userCart = JSON.parse(fs.readFileSync('./mock/userCart.json', 'utf-8'));
     userCart.forEach((item) => {
       let proIndxe = 0;
-      if (item.userId === userID) {
+      if (item.userId === req.session.user) {
         let flag = item.cart.some((item, index) => {
           proIndxe = index;
           return item.gid === gid;
@@ -284,33 +277,11 @@ app.get("/cart", (req, res) => {
       res.json({"msg": "添加成功！", err: 0})
     });
   });
-  // fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
-  //   if (err) return;
-  //   allData = JSON.parse(data);
-  //   let commodity = allData.find((item) => {
-  //     return item.gid === gid;
-  //   });
-  //   commodity.number = parseInt(number);
-  //
-  //   let userCart = [];
-  //   fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
-  //     if (err) return;
-  //     userCart = JSON.parse(data);
-  //     userCart.forEach((item) => {
-  //       if (item.userId === userID) {
-  //         item.cart.push(commodity);
-  //       }
-  //     });
-  //     fs.writeFile('./mock/userCart.json', JSON.stringify(userCart), 'utf-8', (err) => {
-  //       if (err) return console.log('写入失败');
-  //     });
-  //   });
-  // });
 });
 
 // 移除选中商品
 app.delete('/cart', (req, res) => {
-  if (!userID) {
+  if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
@@ -326,7 +297,7 @@ app.delete('/cart', (req, res) => {
   });
   progress.then((result) => {
     let userCart = JSON.parse(result);
-    let user = userCart.find((item) => item.userId === userID);
+    let user = userCart.find((item) => item.userId === req.session.user);
     user.cart = user.cart.filter((item) => item.gid !== gid);
     return userCart;
   }).then((result) => {
@@ -335,16 +306,74 @@ app.delete('/cart', (req, res) => {
       res.json({"msg": "移除成功", err: 0});
     })
   });
+});
 
-  // fs.readFile('./mock/userChart.json', 'utf-8', (err, data) => {
-  //   if (err) return console.log('读取失败');
-  //   let userCart = JSON.parse(data);
-  //
-  //   let user = userCart.find((item) => item.userId === userID);
-  //   user = user.cart.filter((item) => item.gid !== gid);
-  // });
-  //
-  // res.json({"msg": "移除成功", err: 0});
+// 获取热门搜索和历史搜索
+app.get('/search', (req, res) => {
+  let hotP = new Promise((resolve, reject) => {
+    fs.readFile('./mock/hotSearch.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  let historyP = new Promise((resolve, reject) => {
+    fs.readFile('./mock/historySearch.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  hotP.then((hot) => {
+    let obj = {};
+    obj["hot"] = hot;
+    historyP.then((history) => {
+      obj["history"] = history;
+      res.json(obj);
+    })
+  })
+});
+
+// 搜索接口
+app.post('/search', (req, res) => {
+  let {info} = req.body;
+  let dataSource = new Promise((resolve, reject) => {
+    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  dataSource.then((result) => {
+    let searchResult = [];
+    result.forEach((item) => {
+      if (item.title.includes(info) || item.describe.includes(info)) {
+        let temp = {
+          "gid": item.gid,
+          "title": item.title
+        };
+        searchResult.push(temp);
+      }
+    });
+    res.json(searchResult)
+  });
+});
+
+// 清空历史搜索
+app.delete('/search', (req, res) => {
+  fs.writeFile('./mock/historySearch.json', '[]', 'utf-8', (err) => {
+    if (err) {
+      res.json({"msg": "清空失败!", err: 1});
+      return;
+    }
+    res.json({"msg": "清空成功!", err: 0})
+  })
 });
 
 // 注册接口
@@ -394,25 +423,67 @@ app.post('/register', (req, res) => {
   }
 });
 
+
+let tempCode = '!@#$%^&*()_+';
 // 登录接口
 app.post('/login', (req, res) => {
-  let {username, password} = req.body;
-  let _password = crypto.createHash('md5').update(password).digest('base64');
+  let {username, password, mobilecode} = req.body;
+  let _password;
+  if (password) {
+    _password = crypto.createHash('md5').update(password).digest('base64');
+  }
   let user = userList.find((item) => {
-    return (item.mobile === username || item.username === username) && (item.password === _password);
+    return (item.mobile === username) && (password ? (item.password === _password) : (tempCode === mobilecode));
   });
-
   if (user) {
-    req.session.user = username;
+    req.session.user = user.userid;
     userID = user.userid;
-    res.json({user: username, msg: '', success: 'ok', err: 0});
+    res.json({user: user.userid, msg: '', success: 'ok', err: 0});
+    tempCode = '!@#$%^&*()_+';
   } else {
     res.json({user: null, msg: '用户名或密码不正确', success: 'no', err: 1});
   }
 });
 
+// 验证码获取
+app.get('/phonecode', (req, res) => {
+  let {mobile} = req.query;
+  let user = userList.find((item) => item.mobile === mobile);
+  if (user) {
+    res.json({"msg": "该手机号已被注册！", "err": 1});
+    return;
+  }
+  let randomCode = '';
+  for (let i = 0; i < 6; i++) {
+    randomCode += Math.round(Math.random() * 9);
+  }
+  tempCode = randomCode;
+  res.json({"mobileCode": randomCode, "err": 0});
+});
+
+// 获取个人信息
+app.post('/userInfo', (req, res) => {
+  // let {userId} = req.body;
+  fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
+    if (err) return console.log('读取失败');
+    let userList = JSON.parse(data);
+    let userInfo = userList.find((item) => item.userid === req.session.user);
+    let tempInfo = {};
+    tempInfo.userid = userInfo.userid;
+    tempInfo.userimg = userInfo.userimg;
+    tempInfo.username = userInfo.username;
+    tempInfo.bill = userInfo.bill;
+    tempInfo.assets = userInfo.assets;
+    tempInfo.collection = userInfo.collection;
+    tempInfo.address = userInfo.address;
+    tempInfo.news = userInfo.news;
+    tempInfo.help = userInfo.help;
+    res.json(tempInfo);
+  });
+});
+
 // 验证登录状态
-app.get('/validate', function (req, res) {
+app.get('/validate', (req, res) => {
   res.json({user: req.session.user, msg: "", success: '', err: 0})
 });
 
