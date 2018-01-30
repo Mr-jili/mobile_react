@@ -1,9 +1,11 @@
 import React from 'react';
+import actions from '../../store/actions/JL/savour'
+import {connect} from 'react-redux'
 import './Savour.less'
 import {ajax} from '../Savour/util'
 import Header from '../../components/Header/Header'
 
-export default class Savour extends React.Component {
+ class Savour extends React.Component {
     constructor(){
         super();
         this.state= {
@@ -26,8 +28,8 @@ export default class Savour extends React.Component {
         })
     }
 
-
-  render(){
+    render(){
+      console.log(this.props);
       return (
       <div className="savour_main">
           <Header back={false}>品味</Header>
@@ -45,4 +47,5 @@ export default class Savour extends React.Component {
     )
   }
 }
+export default connect(state=>({...state.list}),actions)(Savour);
 
