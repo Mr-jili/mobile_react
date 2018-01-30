@@ -1,7 +1,7 @@
 import React from 'react';
 import './Savour.less'
 import {ajax} from '../Savour/util'
-
+import Header from '../../components/Header/Header'
 
 export default class Savour extends React.Component {
     constructor(){
@@ -30,7 +30,7 @@ export default class Savour extends React.Component {
   render(){
       return (
       <div className="savour_main">
-          <div className="savour_taste">品味</div>
+          <Header back={false}>品味</Header>
               <ul className="savour_container"  style={{marginTop:'45px'}}>
                   {this.state.list.map((item,index)=>(
                       <li key={index}>
