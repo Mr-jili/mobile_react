@@ -40,18 +40,84 @@
           }
         }
 
-        .user-input{
+        .user-register-input{
           width: 2.8rem;
           height: .85rem;
           border-radius: .1rem;
           overflow: hidden;
+          display: flex;
+          flex-direction:column;
+          justify-content: center;
+          background: #ffffff;
 
-          ul{
+          .region-core{
+            padding: 0 .1rem;
+            display: flex;
+            height: .42rem;
+            border-bottom: .01rem solid #F3F3F3;
+
+            .city-list{
+              padding: .1rem .1rem .1rem 0;
+              margin-right: .08rem;
+              color:#333;
+              border-right: 1px solid #e0e0e0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              span{
+                font-size: .14rem;
+              }
+            }
+
+            .phone-count{
+              display: flex;
+              flex:1;
+              padding: .12rem 0;
+              font-size: .16rem;
+              border:none;
+              outline: none;
+            }
+          }
+
+          .pwd-panel{
+            padding: 0 .1rem;
+            display: flex;
+            height: .42rem;
+
+            .check-numBox{
+              display: flex;
+              width: 55%;
+
+              .check-num{
+                padding: .12rem 0;
+                font-size: .16rem;
+                border:none;
+                outline: none;
+              }
+            }
+
+            .get-num{
+              display: flex;
+              flex:1;
+              padding: .1rem .2rem;
+              border-left: 1px solid #e0e0e0;
+
+              a{
+                cursor: pointer;
+                color:#003ab5;
+                font-size: .14rem;
+              }
+            }
+          }
+
+          /*ul{
             width: 100%;
 
             li{
               height: .42rem;
               position: relative;
+
               input{
                 position: absolute;
                 width: 100%;
@@ -64,10 +130,16 @@
               }
 
               &:nth-child(1){
+                width: 80%;
+                display: flex;
                 border-bottom: .01rem solid #F3F3F3;
+
+                span{
+
+                }
               }
             }
-          }
+          }*/
         }
 
         .login_phone{
@@ -186,6 +258,7 @@
             color:#757575;
             text-align: center;
             font-size: .14rem;
+            height: .9rem;
 
             span{
               margin-right: .05rem;

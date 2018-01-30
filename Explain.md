@@ -1,24 +1,18 @@
 ## 项目页面
-首页：main
-分类：goodscategory
-品味：savour
-{
-  article_id, id
-  url,跳转连接
-  display_mode, 暂时没用
-  from, 来源
-  title, 标题
-  subtitle, 不标题
-  pic_url, 图片路径
-  pic_urls, 补充图片路径
-}
-购物车：cart
-个人：usercenter
-详情：detail
 
 项目初始化   $ yarn install;
 服务server  端口 localhost:9999
 项目启用     端口 localhost:3000
+
+
+首页：main
+分类：goodscategory
+品味：savour
+购物车：cart
+个人：usercenter
+产品详情：detail
+宣传详情：content
+搜索: search
 
 数据属性名
 有品推荐 recommend G0001
@@ -42,101 +36,64 @@
 热门 hotItems G0019
 新品 newItems G0020
 限时购 limit G0021
+更多商品 allData G9999
 
 
-首页数据请求
-'/main'
-分页数据请求
-'/goodscategory'
+
+首页初始化 post
+'/init'
+首页数据请求 post
+'/main' {id}
+分页数据请求 post
+'/goodscategory' {id}
 品味页面请求
-'/savour'
+'/savour' {"offset":0,"limit":5}
+购物车请求 post
+'/cart'
+注册 post
+'/register'  {"username":"","password":""}
+登录 post
+'/login' {"username":"","password":""}
+搜索 post
+'/search' {"search":""}
+
+分工
+姬利 品味
+陈万军 首页
+王宇 分页
+王俊 购物车
+李义超 个人中心
 
 
-首页轮播图 sliders:[]
-活动导航: activity: [{
-  aId : 分类id
-  url: 图片地址,
-  title: 标题,
-  describe: 描述,
-  link: 跳转地址
+用户数据
+{
+    "userid": "U10001",          --用户id
+    "userimg": "",               --用户邮箱
+    "username": "yangbo",        --用户名
+    "password": "4QrcOUm6Wau+VuBX8g+IPg==", --用户密码
+    "mobile": "15134578149",     --用户手机
+    "bill": {                    --我的订单
+      "all": [],                 --全部订单
+      "pendingPayment": [],      --待付款
+      "pendingReceived": [],     --待收货
+      "pendingEvaluate":[],      --待评价
+      "refund": [],              --退款订单
+      "received": []             --已收货
+    },
+    "cart": [                    --购物车
+      {
+        "from": "小米/米家自营",
+        "minfreight": 0,
+        "isSelected": true,
+        "pic_url": "http://i1.mifile.cn/a1/pms_1477916442.08799062.jpg",
+        "title": "米家空气净化器Pro 白色",
+        "price": 1499,
+        "number": 1
+      }
+    ],
+    "assets": {},                --我的资产
+    "collection": {},            --我的收藏
+    "address": {},               --地址管理
+    "news": {},                  --消息中心
+    "help": {}                   --帮助和反馈
   }
-}]
-分类 {
-  "recommend" : [
-    {
-      aId : 商品id,
-      title: 标题,
-      describe: 描述,
-      url: 图片地址,
-      link: 跳转路径
-    }
-  ], // 有品推荐
-  "crowdfunding": [
-    {
-      aId : 商品id，
-      title: 标题，
-      describe: 描述,
-      url: 图片地址,
-      link: 跳转路径,
-      price: 价格,
-      ratedPerson: 额定人数,
-      actualPerson:实际人数，
-      ratio: 比率 actualPerson/ratedPerson *100%
-    }
-  ], //小米众筹
-  "hot":[
-    {
-      gId : 商品id,
-      title: 标题,
-      describe: 描述,
-      url: 图片地址,
-      link: 跳转路径,
-      price: 价格
-    }
-  ], // 热门商品
-  "new":[
-    {
-      aId : 商品id,
-      title: 标题,
-      describe: 描述,
-      url: 图片地址,
-      link: 跳转路径,
-      price: 价格
-    }
-  ], // 新品
-  "limit":[
-    {
-      aId : 商品id,
-      title: 标题,
-      describe: 描述,
-      url: 图片地址,
-      link: 跳转路径
-      price: 价格,
-      ratednum: 产品总数,
-      soldnum: 已售数量,
-      ratio: 比率 soldnum/ratednum*100%
-    }
-  ], // 限时购
-  "brand": [
-    {
-      aId : 商品id,
-      title: 标题,
-      describe: 描述,
-      url: 图片地址,
-      link: 跳转路径
-    }
-  ], // 品牌
-  "phone":[
-    {
-       aId : 商品id,
-       title: 标题,
-       describe: 描述,
-       url: 图片地址,
-       link: 跳转路径,
-       mark: 是否有活动
-    }
-  ] // 手机
-  "home" :
-  ... 后面的格式都跟随手机数据格式
-}
-
