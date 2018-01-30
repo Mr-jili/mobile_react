@@ -1,0 +1,23 @@
+[
+  {
+    "userid": "U10001",
+    "userimg": "",
+    "username": "yangbo",
+    "password": "4QrcOUm6Wau+VuBX8g+IPg==",
+    "mobile": "15134578149",
+    "bill": {
+      "all": [],
+      "pendingPayment": [],
+      "pendingReceived": [],
+      "pendingEvaluate": [],
+      "refund": [],
+      "received": []
+    },
+    "cart": [],
+    "assets": {},
+    "collection": {},
+    "address": {},
+    "news": {},
+    "help": {}
+  }
+]

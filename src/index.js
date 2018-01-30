@@ -10,6 +10,8 @@ import Savour from "./containers/Savour/Savour";
 import Goodscategory from "./containers/Goodscategory/Goodscategory";
 import store from './store';
 import "../src/common/basic.css";
+import ServiceLogin from "./containers/ServiceLogin/ServiceLogin";
+import ServiceRegister from "./containers/ServiceRegister/ServiceRegister";
 
 ReactDOM.render((
   <Provider store={store}>
@@ -21,6 +23,8 @@ ReactDOM.render((
           <Route path='/savour' component={Savour}/>
           <Route path='/cart' component={Cart}/>
           <Route path='/usercenter' component={UserCenter}/>
+          <Route path='/login' component={ServiceLogin}/>
+          <Route path='/register' component={ServiceRegister}/>
           <Redirect to='/'/>
         </Switch>
       </App>
