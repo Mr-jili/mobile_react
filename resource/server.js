@@ -196,9 +196,9 @@ app.put('/cart', (req, res) => {
       curProIndex = index;
       return item.cid === cid;
     });
-    if(!curProduct){
+    if (!curProduct) {
       res.json({"userCart": findCart.cart});
-      return ;
+      return;
     }
     curProduct.number = parseInt(number);
     fs.writeFile('./mock/userCart.json', JSON.stringify(userCart), 'utf-8', (err) => {
@@ -209,13 +209,38 @@ app.put('/cart', (req, res) => {
 });
 
 // 添加新商品到购物车
-app.get("/cart",(req,res) => {
+app.get("/cart", (req, res) => {
   if (!userID) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
-  let {cid} = req.query;
+  let {gid,number} = req.query;
+  let allData = [];
 
+  fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+    if (err) return;
+    allData = JSON.parse(data);
+    let commodity = allData.find((item) => {
+      return item.gid === gid;
+    });
+    commodity.number = parseInt(number);
+
+    let userCart = [];
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) return;
+      userCart = JSON.parse(data);
+      userCart.forEach((item) => {
+        if (item.userId === userID) {
+          item.cart.push(commodity);
+        }
+      });
+      fs.writeFile('./mock/userCart.json',JSON.stringify(userCart),'utf-8',(err) => {
+        if (err) return console.log('写入失败');
+      });
+    });
+  });
+
+  res.json({err: 0})
 });
 
 // 注册接口

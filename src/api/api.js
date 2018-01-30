@@ -1,53 +1,52 @@
 import axios from './index';
 
-
 // 首页数据初始化请求
-function mainInit() {
+export function mainInit() {
   return axios.post('/init');
 }
 
 // 首页数据初始化请求
-function getMainData(id) {
+export function getMainData(id) {
   return axios.post('/main', {id});
 }
 
 // 获取分类数据
-function getGoodsData(id) {
+export function getGoodsData(id) {
   return axios.post('/goodscategory', {id})
 }
 
 //　分类  进入详情
-function goodsDefault(aid, gid) {
+export function goodsDefault(aid, gid) {
   return axios.post('/default', {aid, gid});
 }
 
 // 品味数据
-function getSavour(offset, limit) {
+export function getSavour(offset, limit) {
   return axios.post('/savour', {offset, limit});
 }
 
 // 品味  进入详情
-function savourDefault(id) {
+export function savourDetail(id) {
   return axios.post('/content', {id})
 }
 
 // 获取购物车数据
-function cartData() {
+export function getCartData() {
   return axios.post('/cart');
 }
 
 // 修改商品
-function editCartData(cid,number) {
+export function editCartData(cid,number) {
   return axios.put(`/cart?cid=${cid}&number=${number}`)
 }
 
 //  添加商品到购物车
-function addCartData(cid) {
-  return axios.get(`/cart?cid=${cid}`)
+export function addCartData(gid,number) {
+  return axios.get(`/cart?gid=${gid}&number=${number}`)
 }
 
 // 注册
-export function toReg(username, password) {
+export function toRegister(username, password) {
   return axios.post('/register', {username, password});
 }
 
