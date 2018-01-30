@@ -19,6 +19,7 @@ export function getGoodsData() {
 export function getLevelData(id) {
   return axios.get(`/goodscategory?id=${id}`);
 }
+
 //　分类  进入详情
 export function goodsDetail(aid, gid) {
   return axios.post('/detail', {aid, gid});
@@ -54,14 +55,39 @@ export function delCartData(gid) {
   return axios.delete(`/cart?gid=${gid}`)
 }
 
+// 获取热门搜索和历史记录
+export function getHistory() {
+  return axios.get('/search');
+}
+
+// 搜索接口
+export function searchInfo(info) {
+  return axios.post('/search', {info});
+}
+
+// 清空历史搜索
+export function clearHistorySearch() {
+  return axios.delete('/search');
+}
+
+// 获取验证码
+export function getCode(mobile) {
+  return axios.get(`/phonecode?mobile=${mobile}`);
+}
+
 // 注册
 export function toRegister(username, password) {
   return axios.post('/register', {username, password});
 }
 
 // 登录
-export function toLogin(username, password) {
+export function toLogin(username, password) { // password || mobilecode
   return axios.post('/login', {username, password})
+}
+
+// 获取个人信息
+export function getUserInfo(userId) {
+  return axios.post('/userInfo', {userId});
 }
 
 // 校验是否登陆
