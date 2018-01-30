@@ -10,14 +10,18 @@ export function getMainData(id) {
   return axios.post('/main', {id});
 }
 
-// 获取分类数据
-export function getGoodsData(id) {
-  return axios.post('/goodscategory', {id})
+// 获取分类初始数据
+export function getGoodsData() {
+  return axios.post('/goodscategory')
 }
 
+// 获取二级分类列表
+export function getLevelData(id) {
+  return axios.get(`/goodscategory?id=${id}`);
+}
 //　分类  进入详情
-export function goodsDefault(aid, gid) {
-  return axios.post('/default', {aid, gid});
+export function goodsDetail(aid, gid) {
+  return axios.post('/detail', {aid, gid});
 }
 
 // 品味数据
@@ -26,8 +30,8 @@ export function getSavour(offset, limit) {
 }
 
 // 品味  进入详情
-export function savourDetail(id) {
-  return axios.post('/content', {id})
+export function savourDetail(gid) {
+  return axios.post('/content', {gid})
 }
 
 // 获取购物车数据
@@ -36,13 +40,18 @@ export function getCartData() {
 }
 
 // 修改商品
-export function editCartData(cid,number) {
-  return axios.put(`/cart?cid=${cid}&number=${number}`)
+export function editCartData(gid, number) {
+  return axios.put(`/cart?gid=${gid}&number=${number}`)
 }
 
-//  添加商品到购物车
-export function addCartData(gid,number) {
+// 添加商品到购物车
+export function addCartData(gid, number) {
   return axios.get(`/cart?gid=${gid}&number=${number}`)
+}
+
+// 移除购物车中的商品
+export function delCartData(gid) {
+  return axios.delete(`/cart?gid=${gid}`)
 }
 
 // 注册

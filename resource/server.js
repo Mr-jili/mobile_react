@@ -6,6 +6,7 @@ let path = require('path');
 let session = require('express-session');
 let bodyParser = require('body-parser');
 app.use(bodyParser.json());
+app.use(express.static('resource'));
 app.use(session({
   resave: true,
   saveUninitialized: true,
@@ -112,7 +113,25 @@ app.post('/goodscategory', (req, res) => {
   result.listLink = require('./mock/listLink.json');
   result.banner = require('./mock/typeBanner.json');
   if (!id) {
-    result.data = require('./mock/lev_family.json');
+    result.data = require('./mock/lev_recommend.json');
+  }
+  else if (id === 'phone') {
+    result.data = require(`./mock/${id}.json`).slice(1);
+  }
+  else if (id === 'brand') {
+    result.data = require(`./mock/${id}.json`);
+  }
+  else {
+    result.data = require(`./mock/lev_${id}.json`);
+  }
+  res.json(result);
+});
+
+// 获取指定类型分类
+app.get('/goodscategory', (req, res) => {
+  let result = {};
+  if (!id) {
+    result.data = require('./mock/lev_recommend.json');
   }
   else if (id === 'phone') {
     result.data = require(`./mock/${id}.json`).slice(1);
@@ -151,10 +170,12 @@ app.post('/content', (req, res) => {
 let crypto = require('crypto'); // 加密处理插件
 let userList = []; // 所有用户数据
 let userID = '';
+
 fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
   if (err) return [];
   userList = JSON.parse(data);
 });
+
 // 获取用户购物车数据
 app.post('/cart', (req, res) => {
   if (!userID) {
@@ -177,16 +198,15 @@ app.post('/cart', (req, res) => {
 
 // 修改用户购物车数据
 app.put('/cart', (req, res) => {
-  let {cid, number} = req.query;
+  let {gid, number} = req.query;
   // let keys = Object.keys(req.query);
   if (!userID) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
-  let userCart = [];
   fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
     if (err) return console.log('读取失败!');
-    userCart = JSON.parse(data);
+    let userCart = JSON.parse(data);
     let curCartIndex, curProIndex;
     let findCart = userCart.find((item, index) => {
       curCartIndex = index;
@@ -194,7 +214,7 @@ app.put('/cart', (req, res) => {
     });
     let curProduct = findCart['cart'].find((item, index) => {
       curProIndex = index;
-      return item.cid === cid;
+      return item.gid === gid;
     });
     if (!curProduct) {
       res.json({"userCart": findCart.cart});
@@ -214,33 +234,67 @@ app.get("/cart", (req, res) => {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
-  let {gid,number} = req.query;
-  let allData = [];
+  let {gid, number} = req.query;
+  // let allData = [];
+  let addProduct = new Promise((resolve, reject) => {
+    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(data);
+    });
+  });
 
-  fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
-    if (err) return;
-    allData = JSON.parse(data);
+  addProduct.then((result) => {
+    let allData = JSON.parse(result);
     let commodity = allData.find((item) => {
       return item.gid === gid;
     });
     commodity.number = parseInt(number);
-
-    let userCart = [];
-    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
-      if (err) return;
-      userCart = JSON.parse(data);
-      userCart.forEach((item) => {
-        if (item.userId === userID) {
-          item.cart.push(commodity);
-        }
-      });
-      fs.writeFile('./mock/userCart.json',JSON.stringify(userCart),'utf-8',(err) => {
-        if (err) return console.log('写入失败');
-      });
+    return commodity;
+  }).then((result) => {
+    let userCart = JSON.parse(fs.readFileSync('./mock/userCart.json', 'utf-8'));
+    userCart.forEach((item) => {
+      if (item.userId === userID) {
+        item.cart.push(result);
+      }
+    });
+    return userCart;
+  }).then((result) => {
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return res.json({"msg": "添加失败！", err: 1});
+      res.json({"msg": "添加成功！", err: 0})
     });
   });
+  // fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+  //   if (err) return;
+  //   allData = JSON.parse(data);
+  //   let commodity = allData.find((item) => {
+  //     return item.gid === gid;
+  //   });
+  //   commodity.number = parseInt(number);
+  //
+  //   let userCart = [];
+  //   fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+  //     if (err) return;
+  //     userCart = JSON.parse(data);
+  //     userCart.forEach((item) => {
+  //       if (item.userId === userID) {
+  //         item.cart.push(commodity);
+  //       }
+  //     });
+  //     fs.writeFile('./mock/userCart.json', JSON.stringify(userCart), 'utf-8', (err) => {
+  //       if (err) return console.log('写入失败');
+  //     });
+  //   });
+  // });
+});
 
-  res.json({err: 0})
+// 移除选中商品
+app.delete('/cart', (req, res) => {
+  let {gid} = req.query;
+  res.json({"msg": "移除成功", err: 0});
 });
 
 // 注册接口
