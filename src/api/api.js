@@ -86,8 +86,8 @@ export function toLogin(username, password) { // password || mobilecode
 }
 
 // 获取个人信息
-export function getUserInfo(userId) {
-  return axios.post('/userInfo', {userId});
+export function getUserInfo() {
+  return axios.post('/userInfo');
 }
 
 // 校验是否登陆

@@ -39,7 +39,6 @@
 更多商品 allData G9999
 
 
-
 首页初始化
 '/init'
 首页数据请求
@@ -65,35 +64,297 @@
 李义超 个人中心
 
 
-用户数据
+***首页首屏数据***
+【成功】
 {
-    "userid": "U10001",          --用户id
-    "userimg": "",               --用户邮箱
-    "username": "yangbo",        --用户名
-    "password": "4QrcOUm6Wau+VuBX8g+IPg==", --用户密码
-    "mobile": "15134578149",     --用户手机
-    "bill": {                    --我的订单
-      "all": [],                 --全部订单
-      "pendingPayment": [],      --待付款
-      "pendingReceived": [],     --待收货
-      "pendingEvaluate":[],      --待评价
-      "refund": [],              --退款订单
-      "received": []             --已收货
-    },
-    "cart": [                    --购物车
-      {
-        "from": "小米/米家自营",
-        "minfreight": 0,
-        "isSelected": true,
-        "pic_url": "http://i1.mifile.cn/a1/pms_1477916442.08799062.jpg",
-        "title": "米家空气净化器Pro 白色",
-        "price": 1499,
-        "number": 1
-      }
-    ],
-    "assets": {},                --我的资产
-    "collection": {},            --我的收藏
-    "address": {},               --地址管理
-    "news": {},                  --消息中心
-    "help": {}                   --帮助和反馈
+  "sliders": [
+    {
+      "url": "",
+      "link": ""
+    }
+  ],
+  "activity": [
+    {
+      "gid": "",
+      "url": "",
+      "link": ""
+    }
+  ],
+  "recommend": [
+    {
+      "gid": "",
+      "title": "",
+      "describe": "",
+      "url": "",
+      "link": ""
+    }
+  ],
+  "crowdfunding": [
+    {
+      "gid": 100998,
+      "title": "",
+      "describe": "",
+      "url": "",
+      "link": "",
+      "price": 199,
+      "ratedPerson": 2000,
+      "actualPerson": 8106,
+      "color": "#c04343"
+    }
+  ]
+}
+
+***获取指定种类的数据***
+【发送】
+{"id":""}
+【成功】
+[
+  {
+    "gid": "",
+    "url": "",
+    "link": "/detail?gid=738"
+  },
+  {
+    "gid": "",
+    "title": "",
+    "describe": "",
+    "url": "",
+    "link": "/detail?gid=100991",
+    "price": 1489,
+    "mark": false
   }
+]
+
+***分类初始数据***
+【成功】
+{
+  "listLink": [
+    {
+      "id": "",
+      "linkName": ""
+    }
+  ],
+  "banner": {
+    "G0001": {
+      "url": "",
+      "link": ""
+    }
+  },
+  "data": [
+    {
+      "gid": "",
+      "title": "",
+      "url": "",
+      "link": ""
+    }
+  ]
+}
+【失败】
+
+***获取二级分类***
+【发送】
+{
+  "data": [
+    {
+      "gid": "100264",
+      "title": "床垫",
+      "url": "",
+      "link": "/detail?gid=100264"
+    }
+  ]
+}
+【成功】
+
+***获取品味数据***
+【发送】
+{"offset":0,"limit":5}
+【有数据】
+{
+    "hasMore": true,
+    "savour": [
+        {
+            "article_id": 1141,
+            "url": "",
+            "display_mode": 1,
+            "from": "",
+            "title": "",
+            "subtitle": "",
+            "pic_url": "",
+            "pic_urls": ["",""],
+            "favor": 0,
+            "like": 0,
+            "hit": 28881
+        },
+        ......
+    ]
+}
+【没数据】
+{
+    "hasMore": false,
+    "savour": []
+}
+
+***获取购物车数据***
+【成功】
+{
+  "userCart": [
+    {
+      "gid": "",
+      "from": "",
+      "minfreight": 0,
+      "isSelected": true,
+      "url": "",
+      "title": "",
+      "describe": "",
+      "price": 1499,
+      "mark": false,
+      "number": 1
+    }
+  ],
+  "recommend": [
+    {
+      "gid": "",
+      "title": "",
+      "describe": "",
+      "url": "",
+      "link": "/detail?gid=100656",
+      "price": 149,
+      "mark": false,
+      "isSelected": true,
+      "minfreight": 0,
+      "from": ""
+    }
+  ]
+}
+
+【失败】
+{
+    "user": null,
+    "msg": "请先登录",
+    "success": "",
+    "err": 1
+}
+
+***修改购物车中的商品***
+【发送】
+`/cart?gid=${gid}&number=${number}`
+【成功】
+{
+  "userCart": [
+    {
+      "gid": "",
+      "from": "",
+      "minfreight": 150,
+      "isSelected": true,
+      "url": "",
+      "title": "",
+      "describe": "",
+      "price": 1499,
+      "mark": false,
+      "number": 15 // 修改后的数量
+    }
+  ]
+}
+【失败】
+{
+  "userCart": [
+    {
+      "gid": "",
+      "from": "",
+      "minfreight": 150,
+      "isSelected": true,
+      "url": "",
+      "title": "",
+      "describe": "",
+      "price": 1499,
+      "mark": false,
+      "number": 10 // 返回之前的结果
+    }
+  ]
+}
+
+***添加商品到购物车***
+【发送】
+`/cart?gid=${gid}&number=${number}`
+【成功】
+{
+    "msg": "添加成功！",
+    "err": 0
+}
+【失败】
+？
+
+*** 删除购物车中的商品
+【发送】
+`cart?gid=${gid}`
+【成功】
+{
+    "msg": "移除成功",
+    "err": 0
+}
+【失败】
+?
+
+***获取验证码***
+【发送】
+/phonecode?mobile=15134578149
+【成功】
+{
+    "mobileCode": "834842",
+    "err": 0
+}
+【失败】
+{
+    "msg": "该手机号已被注册！",
+    "err": 1
+}
+
+***登录***
+【发送】
+{"username":"15134578149","mobilecode":"834842"}
+或
+{"username":"15134578149","password":"123456"}
+【成功】
+{
+    "user": "U10001",
+    "msg": "",
+    "success": "ok",
+    "err": 0
+}
+
+【失败】
+{
+    "user": null,
+    "msg": "用户名或密码不正确",
+    "success": "no",
+    "err": 1
+}
+
+***获取个人信息***
+【成功】
+{
+  "userid": "U10001",          --用户id
+  "userimg": "",               --用户邮箱
+  "username": "      ",        --用户名
+  "password": "",              --用户密码
+  "mobile": "",                --用户手机
+  "bill": {                    --我的订单
+    "all": [],                 --全部订单
+    "pendingPayment": [],      --待付款
+    "pendingReceived": [],     --待收货
+    "pendingEvaluate":[],      --待评价
+    "refund": [],              --退款订单
+    "received": []             --已收货
+  },
+  "cart": [],                  --购物车
+  "assets": {},                --我的资产
+  "collection": {},            --我的收藏
+  "address": {},               --地址管理
+  "news": {},                  --消息中心
+  "help": {}                   --帮助和反馈
+}
+【失败】
+{
+    "msg": "用户错误！",
+    "err": 1
+}

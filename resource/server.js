@@ -108,7 +108,9 @@ app.post('/init', (req, res) => {
 app.post('/main', (req, res) => {
   let data = require(`./mock/${id}.json`);
   if (id === 'allData') {
-    data = data.slice(0, 11);
+    data = data.slice(0, 10);
+  } else {
+    data = data.slice(0, 5);
   }
   res.json(data);
 });
@@ -146,7 +148,7 @@ app.get('/goodscategory', (req, res) => {
     result.data = require(`./mock/${id}.json`);
   }
   else {
-    result.data = require(`./mock/lev_${id}.json`);
+    result.data = require(`./mock/lev_${id}.json`).slice(1);
   }
   res.json(result);
 });
@@ -161,9 +163,10 @@ app.post('/default/:id', (req, res) => {
 // 品味数据接口 post请求 需要参数offset,limit
 app.post('/savour', (req, res) => {
   let {offset, limit} = req.body;
-  let savour = require('./mock/savour.json');
+  let savour = require('./mock/savour.json') || [];
+  let hasMore = offset < savour.length;
   savour = savour.slice(offset, limit + offset);
-  res.json(savour)
+  res.json({hasMore, savour})
 });
 
 app.post('/content', (req, res) => {
@@ -246,6 +249,8 @@ app.get("/cart", (req, res) => {
     });
   });
 
+  // 如果传入的商品id查找不到，应该返回添加失败
+
   addProduct.then((result) => {
     let allData = JSON.parse(result);
     let commodity = allData.find((item) => {
@@ -256,14 +261,14 @@ app.get("/cart", (req, res) => {
   }).then((result) => {
     let userCart = JSON.parse(fs.readFileSync('./mock/userCart.json', 'utf-8'));
     userCart.forEach((item) => {
-      let proIndxe = 0;
+      let proIndex = 0;
       if (item.userId === req.session.user) {
         let flag = item.cart.some((item, index) => {
           proIndxe = index;
           return item.gid === gid;
         });
         if (flag) {
-          item.cart[proIndxe].number += parseInt(number);
+          item.cart[proIndex].number += parseInt(number);
         }
         else {
           item.cart.push(result);
@@ -463,7 +468,10 @@ app.get('/phonecode', (req, res) => {
 
 // 获取个人信息
 app.post('/userInfo', (req, res) => {
-  // let {userId} = req.body;
+  if (!req.session.user) {
+    res.json({"msg": "用户错误！", "err": 1});
+    return;
+  }
   fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
     if (err) return console.log('读取失败');
     let userList = JSON.parse(data);
