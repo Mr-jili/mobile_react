@@ -5,7 +5,7 @@
     "link":"/detail?gid=100852"
   },
   {
-    "gid" : "100907 ",
+    "gid" : "100907",
     "title": "三合一冲锋衣",
     "describe": "防水防风，耐磨抗撕裂，内胆可拆卸",
     "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_419b5741b4c1b0e6544f70e716b47733.jpeg",
@@ -77,7 +77,7 @@
     "mark":false
   },
   {
-    "gid" : "100907 ",
+    "gid" : "100907",
     "title": "三合一冲锋衣",
     "describe": "防水防风，耐磨抗撕裂，内胆可拆卸",
     "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_419b5741b4c1b0e6544f70e716b47733.jpeg",
@@ -112,6 +112,4 @@
     "price": 149,
     "mark":false
   }
-
-
 ]
