@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux';
 import main from './main';
+import mySavour from './savour'
 // 合并reducers
 let reducer = combineReducers({
-    main
+    main,mySavour
 });
 
 export default reducer;

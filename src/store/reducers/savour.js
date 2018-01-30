@@ -1,13 +1,16 @@
 import * as Types from '../action-types'
 let initSavour={
-    list:{},
-    offset:0,
-    limit:8
+  list:[],
+  isLoad:true
 };
-export let getSavour=(state=initSavour,action)=>{
+
+
+export let mySavour=(state=initSavour,action)=>{
     if(action.type===Types.SET_SAVOUR){
-        return {...state,...action.list};
+        return {...action.savour,isLoad:true};
     }
     return state;
 };
+
+export default mySavour
 
