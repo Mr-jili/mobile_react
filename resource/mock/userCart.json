@@ -7,9 +7,11 @@
         "from": "小米/米家自营",
         "minfreight": 150,
         "isSelected": true,
-        "pic_url": "http://i1.mifile.cn/a1/pms_1477916442.08799062.jpg",
+        "url": "http://i1.mifile.cn/a1/pms_1477916442.08799062.jpg",
         "title": "米家空气净化器Pro 白色",
+        "describe": "玲珑小巧，边充边放",
         "price": 1499,
+        "mark": false,
         "number": 10
       },
       {
@@ -17,9 +19,11 @@
         "from": "有品配送",
         "minfreight": 0,
         "isSelected": true,
-        "pic_url": "https://static.home.mi.com/app/shop/img?id=shop_3fab4ff937c9b8bd7631ad54191d3114.jpeg",
+        "url": "https://static.home.mi.com/app/shop/img?id=shop_3fab4ff937c9b8bd7631ad54191d3114.jpeg",
         "title": "每晚随身暖心羽绒小披毯",
+        "describe": "玲珑小巧，边充边放",
         "price": 199,
+        "mark": false,
         "number": 8
       },
       {
@@ -27,10 +31,25 @@
         "from": "广东小厨科技有限公司",
         "minfreight": 0,
         "isSelected": true,
-        "pic_url": "https://shop.io.mi-img.com/app/shop/img?id=shop_aa3ba1decbd262e71aa16c2a8a99927a.jpeg",
+        "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_aa3ba1decbd262e71aa16c2a8a99927a.jpeg",
         "title": "圈厨多功能家用电火锅",
+        "describe": "玲珑小巧，边充边放",
         "price": 239,
+        "mark": false,
         "number": 2
+      },
+      {
+        "gid": "100857",
+        "title": "FOXIO 口红充电宝",
+        "describe": "玲珑小巧，边充边放",
+        "url": "https://shop.io.mi-img.com/app/shop/img?id=shop_f34bf1cde5a36bbfa84351b9685be8aa.jpeg",
+        "link": "/detail?gid=100857",
+        "price": 119,
+        "mark": false,
+        "isSelected": true,
+        "minfreight": 0,
+        "from": "有品配送",
+        "number": 10
       }
     ]
   }

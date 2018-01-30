@@ -88,6 +88,9 @@ app.use((req, res, next) => {
     case 'G0021':
       id = 'limit';
       break;
+    case 'G9999':
+      id = 'allData';
+      break;
   }
   next();
 });
@@ -104,6 +107,9 @@ app.post('/init', (req, res) => {
 //　滚动加载 传一个id给我，然后返回对应的数据
 app.post('/main', (req, res) => {
   let data = require(`./mock/${id}.json`);
+  if (id === 'allData') {
+    data = data.slice(0, 11);
+  }
   res.json(data);
 });
 
@@ -187,12 +193,13 @@ app.post('/cart', (req, res) => {
   //   return item.mobile === username || item.username === username;
   // }) || {};
   // let userId = user.userid; // 转换出用户的ID
-  let userCart = [];
   fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
     if (err) return console.log('读取失败!');
-    userCart = JSON.parse(data);
+    let userCart = JSON.parse(data);
     let findCart = userCart.find((item) => item.userId === userID) || []; //userId
-    res.json({"userCart": findCart.cart});
+    let recommend = require('./mock/allData.json');
+    recommend = recommend.slice(7, 15);
+    res.json({"userCart": findCart.cart, recommend});
   });
 });
 
@@ -251,13 +258,23 @@ app.get("/cart", (req, res) => {
     let commodity = allData.find((item) => {
       return item.gid === gid;
     });
-    commodity.number = parseInt(number);
+    commodity.number = parseInt(number) || 1;
     return commodity;
   }).then((result) => {
     let userCart = JSON.parse(fs.readFileSync('./mock/userCart.json', 'utf-8'));
     userCart.forEach((item) => {
+      let proIndxe = 0;
       if (item.userId === userID) {
-        item.cart.push(result);
+        let flag = item.cart.some((item, index) => {
+          proIndxe = index;
+          return item.gid === gid;
+        });
+        if (flag) {
+          item.cart[proIndxe].number += parseInt(number);
+        }
+        else {
+          item.cart.push(result);
+        }
       }
     });
     return userCart;

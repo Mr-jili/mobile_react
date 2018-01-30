@@ -36,6 +36,8 @@
 热门 hotItems G0019
 新品 newItems G0020
 限时购 limit G0021
+更多商品 allData G9999
+
 
 
 首页初始化 post
