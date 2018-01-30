@@ -310,8 +310,41 @@ app.get("/cart", (req, res) => {
 
 // 移除选中商品
 app.delete('/cart', (req, res) => {
+  if (!userID) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
   let {gid} = req.query;
-  res.json({"msg": "移除成功", err: 0});
+  let progress = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(data);
+    });
+  });
+  progress.then((result) => {
+    let userCart = JSON.parse(result);
+    let user = userCart.find((item) => item.userId === userID);
+    user.cart = user.cart.filter((item) => item.gid !== gid);
+    return userCart;
+  }).then((result) => {
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return res.json({"msg": "移除失败", err: 0});
+      res.json({"msg": "移除成功", err: 0});
+    })
+  });
+
+  // fs.readFile('./mock/userChart.json', 'utf-8', (err, data) => {
+  //   if (err) return console.log('读取失败');
+  //   let userCart = JSON.parse(data);
+  //
+  //   let user = userCart.find((item) => item.userId === userID);
+  //   user = user.cart.filter((item) => item.gid !== gid);
+  // });
+  //
+  // res.json({"msg": "移除成功", err: 0});
 });
 
 // 注册接口

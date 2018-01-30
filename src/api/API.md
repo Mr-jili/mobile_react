@@ -22,7 +22,7 @@
 获取购物车数据  getCartData         post
 修改商品数量    editCartData        put  ?gid=gid&number=number
 添加商品到购物车 addCartData         get   ?gid=gid&number=number
-移除购物车中的商品 delCartData       delete  ?gid=gid 暂未启用
+移除购物车中的商品 delCartData       delete  ?gid=gid
 <--------个人中心接口-------->
 注册  toRegister                   post {username, password}
 登录  toLogin                      post {username, password}
