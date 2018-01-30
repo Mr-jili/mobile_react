@@ -9,7 +9,7 @@ class Header extends React.Component {
   render(){
       console.log(this.props);
       return (
-      <div className="header" >
+      <div className="header">
           {this.props.back?<i className="header_icon" onClick={this.goodBack}>
               <img src="https://static.home.mi.com/youpin/static/m/res/images/std_tittlebar_main_device_back_normal.png" alt=""/>
           </i>:''}
