@@ -7,7 +7,6 @@ class Header extends React.Component {
         this.props.history.goBack();
   };
   render(){
-      console.log(this.props);
       return (
       <div className="header">
           {this.props.back?<i className="header_icon" onClick={this.goodBack}>
