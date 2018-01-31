@@ -84,15 +84,21 @@ export function delCartData(gid) {
   return axios.post(`/cart/delete`, {gid});
 }
 
-// 修改选中状态
+// 修改单个商品选中状态
 export function changeSelect(gid, state) {
   return axios.get(`/cart/singlestate?gid=${gid}&state=${state}`)
+}
+
+// 修改分组商品选中状态
+export  function changePartSelect(from,state) {
+  return axios.get(`/cart/partstate?from=${from}&state=${state}`)
 }
 
 // 修改所有商品选中状态
 export function changeAllSelect(state) {
   return axios.get(`/cart/allstate?state=${state}`)
 }
+
 
 /*----------------------------*/
 

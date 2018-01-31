@@ -460,7 +460,7 @@ app.post('/cart/delete', (req, res) => {
   })
 });
 
-// 修改选中状态
+// 修改单个商品选中状态
 app.get('/cart/singlestate', (req, res) => {
   if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
@@ -488,7 +488,41 @@ app.get('/cart/singlestate', (req, res) => {
   })
 });
 
-// 全部选中状态
+// 修改分组商品选中状态
+app.get('/cart/partstate',(req,res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {from,state} = req.query;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+
+  backData.then((result) => {
+    let userCart = result.find(item => item.userId === req.session.user);
+    for (let i = 0; i < userCart.cart.length; i++) {
+      let temp = userCart.cart[i];
+      from = from.replace(/['"]/g,'');
+      if(temp.from === from){
+        temp.isSelected = JSON.parse(state);
+      }
+    }
+
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return console.log('修改失败');
+      res.json({"msg": "ok", "err": 0});
+    })
+  })
+});
+
+// 修改所有商品选中状态
 app.get('/cart/allstate', (req, res) => {
   if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
@@ -697,14 +731,12 @@ app.post('/userInfo', (req, res) => {
   });
 });
 
-
 /*-------------------------------*/
 
 // 验证登录状态
 app.get('/validate', (req, res) => {
   res.json({user: req.session.user, msg: "", success: '', err: 0})
 });
-
 
 /*
 * {
