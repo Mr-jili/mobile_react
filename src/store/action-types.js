@@ -1,10 +1,6 @@
 export const INIT_STATE = 'INIT_STATE';
 
-
 export const CHANGE_SAVOUR='CHANGE_SAVOUR'; // 品味改变状态
-
-//登录或注册时把获得的数据存在redux中
-export const SET_USER_INFO = "SET_USER_INFO";
 
 // 购物车获取是否登陆状态
 export const GET_WHETHER_LOGIN = "GET_WHETHER_LOGIN";
