@@ -1,5 +1,9 @@
 import React from 'react';
 import "./UserCenter.less";
+import {toValidate} from "../../api/api.js";
+import {connect} from "react-redux";
+import actions from "../../store/actions/login";
+import {withRouter} from "react-router-dom";
 
 import user from "../../images/icon_default_head_portrait.png";
 import right_arw from "../../images/device_shop_right_arrow.png";
@@ -13,9 +17,23 @@ import address from "../../images/personal_icon_address.png";
 import message from "../../images/set_icon_message_new.png";
 import feed from "../../images/personal_icon_feedback.png";
 
+class UserCenter extends React.Component {
 
-export default class UserCenter extends React.Component {
+  async componentWillMount() {
+    let validate = await toValidate();
+    let {username} = this.props.login;
+    let $userInfo = this.userInfo;
+    if (validate.user) {
+      this.quit.style.display="block";
+      $userInfo.innerHTML=username;
+    }else{
+      $userInfo.innerHTML="请登录";
+      this.quit.style.display="none";
+    }
+  }
+
   render() {
+
     return (
       <div className="lyc-user-center">
         <div className="lyc-user-list">
@@ -25,7 +43,7 @@ export default class UserCenter extends React.Component {
                 <img src={user}/>
               </div>
               <div className="lyc-user-login">
-                <span>请登录</span>
+                <span ref={x => this.userInfo = x}>请登录</span>
               </div>
             </div>
             <div className="lyc-user-right">
@@ -124,9 +142,11 @@ export default class UserCenter extends React.Component {
               </div>
             </div>
           </div>
-          <div className="lyc-user-quit">退出</div>
+          <div className="lyc-user-quit" ref={x=>this.quit=x}>退出</div>
         </div>
       </div>
     )
   }
 }
+
+export default withRouter(connect(state => ({...state}), actions)(UserCenter));

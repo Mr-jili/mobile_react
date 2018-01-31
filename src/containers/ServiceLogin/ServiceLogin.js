@@ -1,10 +1,83 @@
 import React from 'react';
 import "./ServiceLogin.less";
-
+import {connect} from "react-redux";
+import actions from "../../store/actions/login";
 import mi_logo from "../../images/mi_logo.jpg";
+import {withRouter} from "react-router-dom";
 
-export default class ServiceLogin extends React.Component {
-  render(){
+class ServiceLogin extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      login_tipAry: [
+        "请输入用户名~~",
+        "手机号码格式不正确~~",
+        "请输入密码~~",
+        "用户名或者密码不正确~~"
+      ]
+    }
+  }
+
+  handleClick = () => {
+    let reg = /^1\d{10}$/;
+    let $box = this.dialogBox;
+    let $user = this.userna.value;
+    let $psw = this.psw.value;
+    let $phoneTips = this.loginTips;
+
+    console.log(this.props);
+
+    if ($user === "") {
+      $box.style.display = "flex";
+      $phoneTips.innerHTML = this.state.login_tipAry[0];//手机未输入提示错误信息
+      return;
+    }
+
+    if (!reg.test($user)) {//验证手机号，不匹配出现相应提示
+      $box.style.display = "flex";
+      $phoneTips.innerHTML = this.state.login_tipAry[1];
+      return;
+    }
+
+    if ($user !== "" && $psw === "") {//手机号已经输入但是密码未输入
+      $box.style.display = "flex";
+      $phoneTips.innerHTML = this.state.login_tipAry[2];
+      return;
+    }
+
+    //判断用户名和密码
+    console.log(this.props);
+    let {username, password} = this.props.login;
+    if ($user !== username || $psw !== password) {
+      $box.style.display = "flex";
+      $phoneTips.innerHTML = this.state.login_tipAry[3];
+      return;
+    }
+
+    this.props.toLoginAPI(this.userna.value, this.psw.value, this.props.history);
+  };
+
+  //用户名一旦输入相应提示信息消失
+  handleInputUser = (e) => {
+    let $box = this.dialogBox;
+    let val = e.target.value;
+
+    if (val !== "") {
+      $box.style.display = "none";
+    }
+  };
+
+  //密码一旦输入相应提示消失
+  handlePsw = (e) => {
+    let $box = this.dialogBox;
+    let val = e.target.value;
+
+    if (val !== "") {
+      $box.style.display = "none";
+    }
+  };
+
+  render() {
     return (
       <div className="lyc-user-layout">
         <div className="user-layout-panel">
@@ -19,15 +92,23 @@ export default class ServiceLogin extends React.Component {
               <div className="user-input">
                 <ul className="user-input-list">
                   <li>
-                    <input type="text" placeholder="邮箱/手机号码/小米ID"/>
+                    <input type="text" placeholder="邮箱/手机号码/小米ID" ref={x => this.userna = x}
+                           onKeyUp={this.handleInputUser}/>
                   </li>
                   <li>
-                    <input type="text" placeholder="密码"/>
+                    <input type="password" placeholder="密码" ref={x => this.psw = x} onKeyUp={this.handlePsw}/>
                   </li>
                 </ul>
               </div>
+
+              <div className="login-dialog" ref={x => this.dialogBox = x}>
+                <div className="login-logo">!</div>
+                <p className="login-tit" ref={x => this.loginTips = x}></p>
+              </div>
+
               <div className="login_phone">
-                <input className="btn_login" type="submit" value="登录"/>
+                <button className="btn_login" onClick={this.handleClick}>登录
+                </button>
               </div>
               <div className="others_logo">
                 <span className="phone_msg_log">
@@ -56,3 +137,5 @@ export default class ServiceLogin extends React.Component {
     )
   }
 }
+
+export default withRouter(connect(state => ({...state}), actions)(ServiceLogin));

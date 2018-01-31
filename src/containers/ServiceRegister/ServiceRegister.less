@@ -100,7 +100,7 @@
             .get-num{
               display: flex;
               flex:1;
-              padding: .1rem .2rem;
+              padding: .1rem .1rem;
               border-left: 1px solid #e0e0e0;
 
               a{
@@ -110,36 +110,36 @@
               }
             }
           }
+        }
 
-          /*ul{
-            width: 100%;
+        .phone-dialog{
+          height: .2rem;
+          margin-bottom: .05rem;
+          line-height: .2rem;
+          color:#f56700;
+          padding-top: .14rem;
+          display: none;
+          flex-direction: row;
+          align-items: center;
 
-            li{
-              height: .42rem;
-              position: relative;
+          .dialog-logo{
+            height: .14rem;
+            width: .14rem;
+            border-radius: 50%;
+            color: #ffffff;
+            background: #f56700;
+            font-size: .08rem;
+            text-align: center;
+            line-height: .14rem;
+          }
 
-              input{
-                position: absolute;
-                width: 100%;
-                height: .42rem;
-                color:#333;
-                font-size: .16rem;
-                border:none;
-                outline:none;
-                text-indent: .1rem;
-              }
-
-              &:nth-child(1){
-                width: 80%;
-                display: flex;
-                border-bottom: .01rem solid #F3F3F3;
-
-                span{
-
-                }
-              }
-            }
-          }*/
+          .dialog-tit{
+            height: .28rem;
+            width: 80%;
+            font-size: .12rem;
+            padding-left: .1rem;
+            line-height: .28rem;
+          }
         }
 
         .login_phone{
@@ -219,6 +219,7 @@
               &:nth-child(1){
                 font-size: .5rem;
                 color:rgb(2,136,209);
+                margin-top: -.05rem;
               }
               &:nth-child(2){
                 color:rgb(211,47,47);
