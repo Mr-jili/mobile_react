@@ -30,3 +30,9 @@ export const SET_GOODSDATA = "SET_GOODSDATA";
 
 //设置二级分类数据
 export const SET_GOODS_LEVEL_DATA = "SET_GOODS_LEVEL_DATA";
+
+//首页数据
+export const GET_HOME_DATA = "GET_HOME_DATA";
+//首页加载热量组件
+export const GET_LOADER_HOME_DATA = "GET_LOADER_HOME_DATA";
+

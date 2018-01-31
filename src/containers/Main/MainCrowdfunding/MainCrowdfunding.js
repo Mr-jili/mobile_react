@@ -5,21 +5,27 @@ import TRow from "../common/TRow/TRow";
 
 export default class MainCrowdfunding extends Component {
     render() {
+        let crowdfunding = this.props.crowdfunding||[];
+
         return (
             <div className="cwj-crowd-funding-box">
                 <Title title="小米众筹"/>
-                <TRow price="99" title={"LuckyME 金元宝贺岁红包"}/>
+                <TRow  crowdfunding={crowdfunding}/>
                 <div className="crowd-funding-footer">
-                    <div className="statistical">
-                        <span><i>24698</i>人参与</span>
-                        <span>爆</span>
-                        <span><i>1234%</i></span>
-                    </div>
-                    <div className="statistical">
-                        <span><i>24698</i>人参与</span>
-                        <span>爆</span>
-                        <span><i>1234%</i></span>
-                    </div>
+                    {
+                        crowdfunding.map((item,index)=>{
+                            if(index>=1){
+                                return (
+                                    <div className="statistical" key={index}>
+                                        <span><i>{item.actualPerson}</i>人参与</span>
+                                        <span>爆</span>
+                                        <span><i>{item.actualPerson}%</i></span>
+                                    </div>
+                                )
+                            }
+
+                        })
+                    }
                 </div>
             </div>
         )
