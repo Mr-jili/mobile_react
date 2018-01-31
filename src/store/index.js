@@ -5,4 +5,5 @@ import reduxThunk from 'redux-thunk';
 import reduxPromise from 'redux-promise';
 
 let store = createStore(reducer,applyMiddleware(reduxLogger,reduxThunk,reduxPromise));
+window._store=store;
 export default store;
