@@ -95,6 +95,8 @@ app.use((req, res, next) => {
   next();
 });
 
+/*-------------------------------*/
+
 // 首页接口 首屏数据
 app.post('/init', (req, res) => {
   let sliders = require('./mock/sliders.json');
@@ -114,6 +116,8 @@ app.post('/main', (req, res) => {
   }
   res.json(data);
 });
+
+/*-------------------------------*/
 
 //　分类数据接口
 app.post('/goodscategory', (req, res) => {
@@ -154,11 +158,13 @@ app.get('/goodscategory', (req, res) => {
 });
 
 // 点击商品||banner图 跳转请求
-app.post('/default/:id', (req, res) => {
-  let {aid, gid} = req.body;
+app.post('/commodity/:gid', (req, res) => {
+  let {gid} = req.params;
   // 根据
-
 });
+
+
+/*-------------------------------*/
 
 // 品味数据接口 post请求 需要参数offset,limit
 app.post('/savour', (req, res) => {
@@ -176,6 +182,8 @@ app.post('/content', (req, res) => {
   res.json({});
 });
 
+/*-------------------------------*/
+
 let crypto = require('crypto'); // 加密处理插件
 let userList = []; // 所有用户数据
 let userID = '';
@@ -184,6 +192,185 @@ fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
   if (err) return [];
   userList = JSON.parse(data);
 });
+
+/*-------------------------------*/
+
+// 获取商品详情
+app.post('/detail/:gid', (req, res) => {
+  let {gid} = req.params;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+
+  backData.then((result) => {
+    let temp = result.find((item) => item.gid === gid);
+    if (temp) {
+      res.json(temp);
+    }
+    else {
+      res.json({"msg": "没找到符合条件的商品！", "err": 1})
+    }
+  });
+});
+
+// 获取评价
+app.post('/evaluate/:gid', (req, res) => {
+  let {gid} = req.params;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userEvaluate.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    });
+  });
+  backData.then((result) => {
+    let temp = result.find((item) => item.gid === gid);
+    if (temp) {
+      res.json(temp.eva);
+    }
+    else {
+      res.json([])
+    }
+  }).catch((err) => {
+    res.json({"msg": "对不起！程序挂掉了！", "err": 1})
+  })
+});
+
+// 获取和修改  商品收藏状态
+app.get('/collection/:gid', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {gid} = req.params;
+  let {type} = req.query;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+  backData.then((result) => {
+    let curUser = result.find(item => item.userid === req.session.user);
+    let eva = curUser.coll.find(item => item === gid);
+    if (!type) {
+      if (eva) {
+        res.json({"collState": true});
+      }
+      else {
+        res.json({"collState": false})
+      }
+    } else {
+      if (eva) {
+        curUser.coll = curUser.coll.filter(item => item !== gid);
+        fs.writeFile('./mock/userCollection.json', JSON.stringify(result), (err) => {
+          if (err) return res.json({"msg": "修改失败"});
+          res.json({"collState": false});
+        });
+      }
+      else {
+        curUser.coll.push(gid);
+        fs.writeFile('./mock/userCollection.json', JSON.stringify(result), (err) => {
+          if (err) return res.json({"msg": "修改失败"});
+          res.json({"collState": true})
+        });
+      }
+    }
+  })
+});
+
+// 获取购物车数量
+app.get('/collLength', (req, res) => {
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    });
+  });
+  if (!req.session.user) {
+    res.json({collLength: 0, "err": 0});
+    return;
+  }
+  backData.then((result) => {
+    let curCart = result.find(item => item.userId === req.session.user);
+    let collLength = curCart.cart.reduce((prev, next) => {
+      return prev + next.number;
+    }, 0);
+    res.json({collLength, "err": 0});
+  });
+});
+
+// 添加新商品到购物车 返回购物车商品数量
+app.get("/cart", (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {gid, number} = req.query;
+  let addProduct = new Promise((resolve, reject) => {
+    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(data);
+    });
+  });
+
+  // 如果传入的商品id查找不到，应该返回添加失败
+
+  addProduct.then((result) => {
+    let allData = JSON.parse(result);
+    let commodity = allData.find((item) => {
+      return item.gid === gid;
+    });
+    commodity.number = parseInt(number) || 1;
+    return commodity;
+  }).then((result) => {
+    let userCart = JSON.parse(fs.readFileSync('./mock/userCart.json', 'utf-8'));
+    userCart.forEach((item) => {
+      let proIndex = 0;
+      if (item.userId === req.session.user) {
+        let flag = item.cart.some((item, index) => {
+          proIndex = index;
+          return item.gid === gid;
+        });
+        if (flag) {
+          item.cart[proIndex].number += parseInt(number);
+        }
+        else {
+          item.cart.push(result);
+        }
+      }
+    });
+    return userCart;
+  }).then((result) => {
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return res.json({"msg": "添加失败！", err: 1});
+      let curCart = result.find(item => item.userId === req.session.user);
+      let collLength = curCart.cart.reduce((prev, next) => {
+        return prev + next.number;
+      }, 0);
+      res.json({"msg": "添加成功！", collLength, "err": 0})
+    });
+  });
+});
+
+/*-------------------------------*/
 
 // 获取用户购物车数据
 app.post('/cart', (req, res) => {
@@ -232,86 +419,105 @@ app.put('/cart', (req, res) => {
   });
 });
 
-// 添加新商品到购物车
-app.get("/cart", (req, res) => {
-  if (!req.session.user) {
-    res.json({user: null, msg: "请先登录", success: '', err: 1});
-    return;
-  }
-  let {gid, number} = req.query;
-  let addProduct = new Promise((resolve, reject) => {
-    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(data);
-    });
-  });
-
-  // 如果传入的商品id查找不到，应该返回添加失败
-
-  addProduct.then((result) => {
-    let allData = JSON.parse(result);
-    let commodity = allData.find((item) => {
-      return item.gid === gid;
-    });
-    commodity.number = parseInt(number) || 1;
-    return commodity;
-  }).then((result) => {
-    let userCart = JSON.parse(fs.readFileSync('./mock/userCart.json', 'utf-8'));
-    userCart.forEach((item) => {
-      let proIndex = 0;
-      if (item.userId === req.session.user) {
-        let flag = item.cart.some((item, index) => {
-          proIndxe = index;
-          return item.gid === gid;
-        });
-        if (flag) {
-          item.cart[proIndex].number += parseInt(number);
-        }
-        else {
-          item.cart.push(result);
-        }
-      }
-    });
-    return userCart;
-  }).then((result) => {
-    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
-      if (err) return res.json({"msg": "添加失败！", err: 1});
-      res.json({"msg": "添加成功！", err: 0})
-    });
-  });
-});
-
 // 移除选中商品
-app.delete('/cart', (req, res) => {
+app.post('/cart/delete', (req, res) => {
   if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
-  let {gid} = req.query;
+  let {gid} = req.body;
   let progress = new Promise((resolve, reject) => {
     fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
       if (err) {
         reject(err);
         return;
       }
-      resolve(data);
+      resolve(JSON.parse(data));
     });
   });
   progress.then((result) => {
-    let userCart = JSON.parse(result);
-    let user = userCart.find((item) => item.userId === req.session.user);
-    user.cart = user.cart.filter((item) => item.gid !== gid);
-    return userCart;
-  }).then((result) => {
+    let user = result.find((item) => item.userId === req.session.user);
+    let ex = user.cart.find((item) => {
+      return gid.some(gitItem => item.gid === gitItem);
+    });
+
+    if (!ex) {
+      res.json({"msg": "没找到有效商品", err: 1});
+      return;
+    }
+
+    for (let i = 0; i < gid.length; i++) {
+      let temp = gid[i];
+      user.cart = user.cart.filter((item) => {
+        return item.gid !== temp;
+      });
+    }
+
     fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
       if (err) return res.json({"msg": "移除失败", err: 0});
       res.json({"msg": "移除成功", err: 0});
     })
-  });
+  })
 });
+
+// 修改选中状态
+app.get('/cart/singlestate', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {gid, state} = req.query;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  backData.then((result) => {
+    let userCart = result.find(item => item.userId === req.session.user);
+    let eva = userCart.cart.find(item => item.gid === gid);
+    eva.isSelected = JSON.parse(state);
+
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return console.log('修改失败');
+      res.json({"msg": "ok", "err": 0});
+    })
+  })
+});
+
+// 全部选中状态
+app.get('/cart/allstate', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {state} = req.query;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  backData.then((result) => {
+    let userCart = result.find(item => item.userId === req.session.user);
+    userCart.cart.forEach((item) => {
+      item.isSelected = JSON.parse(state);
+    });
+
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return console.log('修改失败');
+      res.json({"msg": "ok", "err": 0});
+    })
+  })
+});
+
+/*-------------------------------*/
 
 // 获取热门搜索和历史搜索
 app.get('/search', (req, res) => {
@@ -381,6 +587,8 @@ app.delete('/search', (req, res) => {
   })
 });
 
+/*-------------------------------*/
+
 // 注册接口
 app.post('/register', (req, res) => {
   let {username, password} = req.body;
@@ -427,7 +635,6 @@ app.post('/register', (req, res) => {
     res.json({user: username, msg: "", success: "ok", err: 0});
   }
 });
-
 
 let tempCode = '!@#$%^&*()_+';
 // 登录接口
@@ -489,6 +696,9 @@ app.post('/userInfo', (req, res) => {
     res.json(tempInfo);
   });
 });
+
+
+/*-------------------------------*/
 
 // 验证登录状态
 app.get('/validate', (req, res) => {
