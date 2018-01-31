@@ -6,11 +6,13 @@ import ThreeRow from "../common/ThreeRow/ThreeRow";
 
 export default class MainHot extends Component {
     render() {
+        let homeDatas = this.props.homeLoaderData;
+        // console.log(homeDatas);
         return (
             <div className='cwj-main-hot-box'>
                 <Title title="热门"/>
-                <TRow title="鹿客智能指纹锁Classic" price="199"/>
-                <ThreeRow  title="鹿客智能指纹锁Classic" price="199"/>
+                <TRow  crowdfunding={[]} homeDatas={homeDatas} />
+                <ThreeRow  homeDatas={homeDatas} />
             </div>
         )
     }
