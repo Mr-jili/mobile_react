@@ -12,6 +12,7 @@ import store from './store';
 import "../src/common/basic.css";
 import ServiceLogin from "./containers/ServiceLogin/ServiceLogin";
 import ServiceRegister from "./containers/ServiceRegister/ServiceRegister";
+import Detail from "./containers/Detaill/Detail";
 
 ReactDOM.render((
   <Provider store={store}>
@@ -25,6 +26,7 @@ ReactDOM.render((
           <Route path='/usercenter' component={UserCenter}/>
           <Route path='/login' component={ServiceLogin}/>
           <Route path='/register' component={ServiceRegister}/>
+          <Route path='/detail' component={Detail}/>
           <Redirect to='/'/>
         </Switch>
       </App>
