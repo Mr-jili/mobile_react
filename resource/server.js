@@ -186,11 +186,26 @@ app.post('/content', (req, res) => {
 
 let crypto = require('crypto'); // 加密处理插件
 let userList = []; // 所有用户数据
+let userCart = []; // 所有用户购物车
+let userCollection = []; // 所有用户收藏
+let userBill = []; // 所有用户订单
 let userID = '';
 
 fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
   if (err) return [];
   userList = JSON.parse(data);
+});
+fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+  if (err) return [];
+  userCart = JSON.parse(data);
+});
+fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
+  if (err) return [];
+  userCollection = JSON.parse(data);
+});
+fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
+  if (err) return [];
+  userBill = JSON.parse(data);
 });
 
 /*-------------------------------*/
@@ -262,7 +277,7 @@ app.get('/collection/:gid', (req, res) => {
     })
   });
   backData.then((result) => {
-    let curUser = result.find(item => item.userid === req.session.user);
+    let curUser = result.find(item => item.userId === req.session.user);
     let eva = curUser.coll.find(item => item === gid);
     if (!type) {
       if (eva) {
@@ -489,12 +504,12 @@ app.get('/cart/singlestate', (req, res) => {
 });
 
 // 修改分组商品选中状态
-app.get('/cart/partstate',(req,res) => {
+app.get('/cart/partstate', (req, res) => {
   if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
     return;
   }
-  let {from,state} = req.query;
+  let {from, state} = req.query;
   let backData = new Promise((resolve, reject) => {
     fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
       if (err) {
@@ -509,8 +524,8 @@ app.get('/cart/partstate',(req,res) => {
     let userCart = result.find(item => item.userId === req.session.user);
     for (let i = 0; i < userCart.cart.length; i++) {
       let temp = userCart.cart[i];
-      from = from.replace(/['"]/g,'');
-      if(temp.from === from){
+      from = from.replace(/['"]/g, '');
+      if (temp.from === from) {
         temp.isSelected = JSON.parse(state);
       }
     }
@@ -551,7 +566,7 @@ app.get('/cart/allstate', (req, res) => {
   })
 });
 
-// 
+//
 
 /*-------------------------------*/
 
@@ -624,17 +639,27 @@ app.delete('/search', (req, res) => {
 });
 
 /*-------------------------------*/
+let tempCode = '!@#$%^&*()_+';
 
 // 注册接口
 app.post('/register', (req, res) => {
   let {username, password} = req.body;
   let user = userList.find((item) => {
-    return item.mobile === username || item.username === username;
+    return item.mobile === username;
   });
   if (user) {
-    res.json({user: null, msg: "用户已存在!!!", success: '', err: 1})
+    let findUser = userList.find((item) => {
+      return (item.mobile === username) && (tempCode === password)
+    });
+    if (findUser) {
+      req.session.user = user.userid;
+      res.json({user: user.userid, msg: '', success: 'ok', err: 0});
+      tempCode = '!@#$%^&*()_+';
+    } else {
+      res.json({user: null, msg: '验证码不正确', success: 'no', err: 1});
+    }
   } else {
-    password = crypto.createHash('md5').update(password).digest('base64');
+    password = crypto.createHash('md5').update('!@#$%^&*()_+').digest('base64');
     let temp = parseInt(userList[userList.length - 1].userid.slice(1));
     userList.forEach((item) => {
       let tempItem = parseInt(item.userid.slice(1));
@@ -642,7 +667,7 @@ app.post('/register', (req, res) => {
         temp = tempItem;
       }
     });
-    let userInfo = {
+    let userInfoItem = {
       "userid": `U${temp + 1}`,
       "userimg": "",
       "username": 'E' + Math.random().toFixed(7) * 10000000,
@@ -664,24 +689,48 @@ app.post('/register', (req, res) => {
       "news": {},
       "help": {}
     };
-    userList.push(userInfo);
+    let userCartItem = {
+      "userId": `U${temp + 1}`,
+      "cart": []
+    };
+    let userCollectionItem = {
+      "userId": `U${temp + 1}`,
+      "coll": []
+    };
+    let userBillItem = {
+      "userId": `U${temp + 1}`,
+      "bill": []
+    };
+
+    userList.push(userInfoItem);
+    userCart.push(userCartItem);
+    userCollection.push(userCollectionItem);
+    userBill.push(userBillItem);
     fs.writeFile('./mock/userInfo.json', JSON.stringify(userList), 'utf-8', (err) => {
-      if (err) return console.log('error')
+      if (err) return console.log('用户列表写入失败');
+
+      fs.writeFile('./mock/userCart.json', JSON.stringify(userCart), (err) => {
+        if (err) return console.log('用户购物车列表写入失败');
+
+        fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
+          if (err) return console.log('用户收藏列表写入失败');
+
+          fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
+            if (err) return console.log('用户订单列表写入失败');
+            res.json({user: username, msg: "", success: "ok", err: 0});
+          });
+        });
+      });
     });
-    res.json({user: username, msg: "", success: "ok", err: 0});
   }
 });
 
-let tempCode = '!@#$%^&*()_+';
 // 登录接口
 app.post('/login', (req, res) => {
-  let {username, password, mobilecode} = req.body;
-  let _password;
-  if (password) {
-    _password = crypto.createHash('md5').update(password).digest('base64');
-  }
+  let {username, password} = req.body;
+  let _password = crypto.createHash('md5').update(password).digest('base64');
   let user = userList.find((item) => {
-    return (item.mobile === username) && (password ? (item.password === _password) : (tempCode === mobilecode));
+    return (item.mobile === username) && (item.password === _password);
   });
   if (user) {
     req.session.user = user.userid;
@@ -696,17 +745,23 @@ app.post('/login', (req, res) => {
 // 验证码获取
 app.get('/phonecode', (req, res) => {
   let {mobile} = req.query;
-  let user = userList.find((item) => item.mobile === mobile);
-  if (user) {
-    res.json({"msg": "该手机号已被注册！", "err": 1});
-    return;
-  }
+  // let user = userList.find((item) => item.mobile === mobile);
+  // if (user) {
+  //   res.json({"msg": "该手机号已被注册！", "err": 1});
+  //   return;
+  // }
   let randomCode = '';
   for (let i = 0; i < 6; i++) {
     randomCode += Math.round(Math.random() * 9);
   }
   tempCode = randomCode;
   res.json({"mobileCode": randomCode, "err": 0});
+});
+
+// 退出登录
+app.delete('/signout', (req, res) => {
+  req.session.user = null;
+  res.json({user: req.session.user, msg: '退出成功', success: 'ok', err: 0})
 });
 
 // 获取个人信息
@@ -737,7 +792,11 @@ app.post('/userInfo', (req, res) => {
 
 // 验证登录状态
 app.get('/validate', (req, res) => {
-  res.json({user: req.session.user, msg: "", success: '', err: 0})
+  if (req.session.user) {
+    res.json({user: req.session.user, msg: "已登录", success: '', err: 0})
+  } else {
+    res.json({user: null, msg: "未登录", success: '', err: 1})
+  }
 });
 
 /*

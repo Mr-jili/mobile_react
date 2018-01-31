@@ -66,7 +66,6 @@ export function addCartData(gid, number = 1) {
   return axios.get(`/cart?gid=${gid}&number=${number}`)
 }
 
-
 /*----------------------------*/
 
 // 获取购物车数据
@@ -90,7 +89,7 @@ export function changeSelect(gid, state) {
 }
 
 // 修改分组商品选中状态
-export  function changePartSelect(from,state) {
+export function changePartSelect(from, state) {
   return axios.get(`/cart/partstate?from=${from}&state=${state}`)
 }
 
@@ -98,7 +97,6 @@ export  function changePartSelect(from,state) {
 export function changeAllSelect(state) {
   return axios.get(`/cart/allstate?state=${state}`)
 }
-
 
 /*----------------------------*/
 
@@ -132,6 +130,11 @@ export function toRegister(username, password) {
 // 登录
 export function toLogin(username, password) { // password || mobilecode
   return axios.post('/login', {username, password})
+}
+
+// 退出登录
+export function signOut() {
+  return axios.delete('/signout');
 }
 
 // 获取个人信息
