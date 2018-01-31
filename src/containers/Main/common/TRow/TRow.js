@@ -3,32 +3,54 @@ import "./index.less";
 
 export default class TRow extends Component {
     render() {
+        //小米众筹
+        let crowdfunding = this.props.crowdfunding;
+        //热门组件
+        let hotDatas = this.props.homeDatas || [];
+
         return (
             <div className='t-row-box'>
-                <div className='row-tool'>
-                    <img alt="1" src="https://shop.io.mi-img.com/app/shop/img?id=shop_dc4955a7f668f79135bf689005746475.png&w=537&h=426,https://shop.io.mi-img.com/app/shop/img?id=shop_1d26c4fec9f7de43e090f5058a6532b2.png&w=540&h=420&t=webp"/>
-                    <div className="t-row-text">
-                        <p className="row-title">
-                            {this.props.title}
-                        </p>
-                        <span className="row-price">
-                          ￥{this.props.price}
+                {
+                    crowdfunding.map((item, index) => {
+                            if (index >= 1) {
+                                return (
+                                    <div className='row-tool' key={index}>
+                                        <img alt="1" src={item.url}/>
+                                        <div className="t-row-text">
+                                            <p className="row-title">
+                                                {item.title}
+                                            </p>
+                                            <span className="row-price">
+                                                ￥{item.price}
                     </span>
-
-                    </div>
-                </div>
-                <div className='row-tool'>
-                    <img alt="1" src="https://shop.io.mi-img.com/app/shop/img?id=shop_dc4955a7f668f79135bf689005746475.png&w=537&h=426,https://shop.io.mi-img.com/app/shop/img?id=shop_1d26c4fec9f7de43e090f5058a6532b2.png&w=540&h=420&t=webp"/>
-                    <div className="t-row-text">
-                        <p className="row-title">
-                            {this.props.title}
-                        </p>
-                        <span className="row-price">
-                          ￥{this.props.price}
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        }
+                    )
+                }
+                {/*首页按需加载组件热门*/}
+                {
+                    hotDatas.map((item, index) => {
+                            if (index < 2) {
+                                return (
+                                    <div className='row-tool' key={index}>
+                                        <img alt="1" src={item.url}/>
+                                        <div className="t-row-text">
+                                            <p className="row-title">
+                                                {item.title}
+                                            </p>
+                                            <span className="row-price">
+                                                ￥{item.price}
                     </span>
-
-                    </div>
-                </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        }
+                    )
+                }
 
             </div>
         )
