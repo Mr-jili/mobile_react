@@ -3,54 +3,161 @@ import "./index.less";
 
 export default class ThreeRow extends Component {
     render() {
-        return (
-            <div className="three-row-box">
-                <div className='three-row'>
-                    <img
-                        src="https://shop.io.mi-img.com/app/shop/img?id=shop_981a33087adfcf321882fa94af7e3dc9.jpeg&w=540&h=846&t=webp"
-                        alt=""/>
-                    <div className="t-row-text">
-                        <p className="row-title">
-                            {this.props.title}
-                        </p>
-                        <p className="row-alt">
-                            头层牛皮鞋身鞋里，亲肤吸汗透气防臭
-                        </p>
-                        <span className="row-price">
-                          ￥{this.props.price}
-                             </span>
 
-                    </div>
-                </div>
-                <div className='three-row'>
-                    <div className='row-tool'>
-                        <img alt="1"
-                             src="https://shop.io.mi-img.com/app/shop/img?id=shop_dc4955a7f668f79135bf689005746475.png&w=537&h=426,https://shop.io.mi-img.com/app/shop/img?id=shop_1d26c4fec9f7de43e090f5058a6532b2.png&w=540&h=420&t=webp"/>
+        //热门组件
+        let hotDatas = this.props.homeDatas || [];
+        let newGoods = this.props.newGoods || [];
+        if (hotDatas.length > 0) {
+            return (
+                <div className="three-row-box">
+                    <div className='three-row'>
+                        <img src={hotDatas[2].url}/>
                         <div className="t-row-text">
                             <p className="row-title">
-                                {this.props.title}
+                                {hotDatas[2].title}
                             </p>
-                            <span className="row-price">
-                            ￥{this.props.price}
-                            </span>
+                            <p className="row-alt">
+                                {hotDatas[2].describe}
+                            </p>
+                            <span className="row-price"> ￥{hotDatas[2].price}</span>
+                        </div>
 
+                    </div>
+                    {/*you*/}
+                    <div className='three-row'>
+                        <div className='row-tool'>
+                            <img alt="1"
+                                 src={hotDatas[3].url}/>
+                            <div className="t-row-text">
+                                <p className="row-title">
+                                    {hotDatas[3].title}
+                                </p>
+                                <span className="row-price">
+                ￥{hotDatas[3].price}
+                </span>
+
+                            </div>
+                        </div>
+                        <div className='row-tool'>
+                            <img alt="1"
+                                 src={hotDatas[4].url}/>
+                            <div className="t-row-text">
+                                <p className="row-title">
+                                    {hotDatas[4].title}
+                                </p>
+                                <span className="row-price">
+                ￥{hotDatas[4].price}
+                </span>
+
+                            </div>
                         </div>
                     </div>
-                    <div className='row-tool'>
-                        <img alt="1"
-                             src="https://shop.io.mi-img.com/app/shop/img?id=shop_dc4955a7f668f79135bf689005746475.png&w=537&h=426,https://shop.io.mi-img.com/app/shop/img?id=shop_1d26c4fec9f7de43e090f5058a6532b2.png&w=540&h=420&t=webp"/>
+
+                </div>
+            )
+        }else if (newGoods.length > 0) {
+            return (
+                <div className="three-row-box">
+                    <div className='three-row'>
+                        <img src={newGoods[1].url}/>
                         <div className="t-row-text">
                             <p className="row-title">
-                                {this.props.title}
+                                {newGoods[1].title}
                             </p>
-                            <span className="row-price">
-                          ￥{this.props.price}
-                             </span>
+                            <p className="row-alt">
+                                {newGoods[1].describe}
+                            </p>
+                            <span className="row-price"> ￥{newGoods[1].price}</span>
+                        </div>
 
+                    </div>
+                    {/*you*/}
+                    <div className='three-row'>
+                        <div className='row-tool'>
+                            <img alt="1"
+                                 src={newGoods[2].url}/>
+                            <div className="t-row-text">
+                                <p className="row-title">
+                                    {newGoods[2].title}
+                                </p>
+                                <span className="row-price">
+                ￥{newGoods[2].price}
+                </span>
+
+                            </div>
+                        </div>
+                        <div className='row-tool'>
+                            <img alt="1"
+                                 src={newGoods[3].url}/>
+                            <div className="t-row-text">
+                                <p className="row-title">
+                                    {newGoods[3].title}
+                                </p>
+                                <span className="row-price">
+                ￥{newGoods[3].price}
+                </span>
+
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
-        )
+            )
+        }
+        return null;
+
+
+        // let hots2 = hotDatas.length > 0 && hotDatas[2];
+        // let hots3 = hotDatas.length > 0 && hotDatas[3];
+        // let hots4 = hotDatas.length > 0 && hotDatas[4];
+        // return (
+        // <div className="three-row-box">
+        // <div className='three-row'>
+        // <img src={hots2.url}
+        //                 alt=""/>
+        //             <div className="t-row-text">
+        //                 <p className="row-title">
+        //                     {hots2.title}
+        //                 </p>
+        //                 <p className="row-alt">
+        //                     {hots2.describe}
+        //                 </p>
+        //                 <span className="row-price">
+        //         ￥{hots2.price}
+        //         </span>
+        //             </div>
+        //         </div>
+        //
+        //         {/*右侧*/}
+        //         <div className='three-row'>
+        //             <div className='row-tool'>
+        //                 <img alt="1"
+        //                      src={hots3.url}/>
+        //                 <div className="t-row-text">
+        //                     <p className="row-title">
+        //                         {hots3.title}
+        //                     </p>
+        //                     <span className="row-price">
+        //         ￥{hots3.price}
+        //         </span>
+        //
+        //                 </div>
+        //             </div>
+        //             <div className='row-tool'>
+        //                 <img alt="1"
+        //                      src={hots4.url}/>
+        //                 <div className="t-row-text">
+        //                     <p className="row-title">
+        //                         {hots4.title}
+        //                     </p>
+        //                     <span className="row-price">
+        //         ￥{hots4.price}
+        //         </span>
+        //
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     </div>
+        // )
     }
 }

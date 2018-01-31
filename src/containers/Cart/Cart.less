@@ -8,6 +8,23 @@
 //  font-size: 14/100rem;
 //  width: 100%;
 //}
+
+.cart {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  overflow: hidden;
+}
+
+.wj-cart-editor {
+  position: absolute;
+  right: 15/100rem;
+  top: 2/100rem;
+  color: rgb(51, 51, 51);
+  font-size: 12/100rem;
+}
+
 .wj-cart-content {
   position: absolute;
   top: 45/100rem;
@@ -92,7 +109,7 @@
           width: 16/100rem;
           height: 16/100rem;
           position: relative;
-          top: 4/100rem;
+          top: -4/100rem;
         }
 
         span {
@@ -114,9 +131,9 @@
       border-right: none;
       padding: 13/100rem 15/100rem;
 
-      &:nth-of-type(n+2) {
-        border-top: none;
-      }
+      //&:nth-of-type(n+2) {
+      //  border-top: none;
+      //}
 
       .icon {
         display: inline-block;
@@ -142,15 +159,17 @@
             display: block;
             width: 80/100rem;
             height: 80/100rem;
+            margin: auto;
           }
         }
         .wj-goods-r {
           display: flex;
+          flex: 1;
           flex-direction: column;
           .wj-goods-til {
             display: flex;
             word-wrap: break-word;
-            flex: 1;
+            /*flex: 1;*/
             font-size: 13/100rem;
             text-align: left;
             color: rgb(51, 51, 51);
@@ -202,6 +221,8 @@
             span {
               flex: 1;
               text-align: center;
+              font-size: 13/100rem;
+              color: rgb(102, 102, 102);
             }
 
           }
@@ -218,7 +239,7 @@
     justify-content: center;
     text-align: center;
     color: rgb(132, 95, 63);
-    height: 20/100rem;
+    /*height: 20/100rem;*/
     line-height: 20/100rem;
     padding: 11/100rem 0;
 
@@ -289,7 +310,7 @@
       p {
         font-size: 12/100rem;
         color: rgb(51, 51, 51);
-        height: 14/100rem;
+        /*height: 14/100rem;*/
         line-height: 14/100rem;
         padding: 8/100rem 0 0;
         word-wrap: break-word;

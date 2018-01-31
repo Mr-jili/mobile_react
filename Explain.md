@@ -194,6 +194,44 @@
     "savour": []
 }
 
+
+***商品详情***
+【未登录】
+{
+    "collLength": 0,
+    "err": 0
+}
+【登录】
+{
+    "collLength": 56,
+    "err": 0
+}
+
+***修改单个选中状态***
+【发送】
+get(`/cart/modifystate?gid=${gid}&state=${state}`)
+【成功】
+{
+    "msg": "ok",
+    "err": 0
+}
+
+***修改购物车中全部商品的选中状态***
+【发送】
+get(`/cart/allstate?state=${state}`)
+【成功】
+{
+    "msg": "ok",
+    "err": 0
+}
+【失败】
+{
+    "user": null,
+    "msg": "请先登录",
+    "success": "",
+    "err": 1
+}
+
 ***获取购物车数据***
 【成功】
 {

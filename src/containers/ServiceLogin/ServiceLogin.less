@@ -1,6 +1,8 @@
 .lyc-user-layout{
   position: relative;
   background: #eee;
+  z-index: 99;
+
 
   .user-layout-panel{
     .user-layout{
@@ -50,12 +52,12 @@
             width: 100%;
 
             li{
-              height: .42rem;
+              height: .41rem;
               position: relative;
               input{
                 position: absolute;
                 width: 100%;
-                height: .42rem;
+                height: .40rem;
                 color:#333;
                 font-size: .16rem;
                 border:none;
@@ -67,6 +69,36 @@
                 border-bottom: .01rem solid #F3F3F3;
               }
             }
+          }
+        }
+
+        .login-dialog{
+          height: .2rem;
+          margin-bottom: .05rem;
+          line-height: .2rem;
+          color:#f56700;
+          padding-top: .14rem;
+          display: none;
+          flex-direction: row;
+          align-items: center;
+
+          .login-logo{
+            height: .14rem;
+            width: .14rem;
+            border-radius: 50%;
+            color: #ffffff;
+            background: #f56700;
+            font-size: .08rem;
+            text-align: center;
+            line-height: .14rem;
+          }
+
+          .login-tit{
+            height: .28rem;
+            width: 80%;
+            font-size: .12rem;
+            padding-left: .1rem;
+            line-height: .28rem;
           }
         }
 
@@ -87,6 +119,7 @@
             border-radius: .2rem;
             border:.01rem solid rgba(186,186,186,.3);
             overflow: hidden;
+            outline: none;
           }
         }
 
