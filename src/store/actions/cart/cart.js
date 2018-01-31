@@ -1,5 +1,5 @@
 import * as Types from "../../action-types";
-import {toLogin, getCartData, editCartData} from "../../../api/api";
+import {toLogin, getCartData, editCartData, changeSelect, changePartSelect} from "../../../api/api";
 
 let actions = {
   // 获取是否登陆api状态
@@ -33,6 +33,26 @@ let actions = {
       dispatch({type: Types.SET_CART_DIALOG_STATUS, tips: {ifShow, text}});
     }
   },
+  // 购物车修改单个商品选中状态
+  getCartChangeSelectAPI(gid, state) {
+    return function (dispatch, getState) {
+      dispatch({type: Types.SET_CART_CHANGE_SELECT, payload: changeSelect(gid, state), status: state});
+    }
+  },
+  // 购物车修改分组商品选中状态
+  getCartChangePartSelectAPI(from, state) {
+    return function (dispatch, getState) {
+      dispatch({type: Types.SET_CART_CHANGE_SELECT, payload: changePartSelect(from, state), partState: state});
+    }
+  },
+
+  // 购物车修改所有商品选中状态
+  getCartChangeAllSelectAPI(from, state) {
+    return function (dispatch, getState) {
+      dispatch({type: Types.SET_CART_CHANGE_SELECT, payload: changeAllSelect(state), allState: state});
+    }
+  },
+
   // 购物车登陆成功后修改商品数量
   /*getEditorDataAPI(gid, number) {
     return function (dispatch, getState) {

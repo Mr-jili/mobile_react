@@ -7,7 +7,10 @@ let initState = {
   userCart: [],
   recommend: [],
   ifShow: "",
-  text: ""
+  text: "",
+  status: "",
+  partStatus: "",
+  allStatus: ""
 };
 
 export default function carts(state = initState, action) {
@@ -30,6 +33,15 @@ export default function carts(state = initState, action) {
     // 购物车登陆成功后修改商品数量
     case Types.SET_EDITOR_CART_DATA:
       return {...state, ...action.payload};
+    // 购物车修改单个商品选中状态
+    case Types.SET_CART_CHANGE_SELECT:
+      return {...state, status: action.status};
+    // 购物车修改分组商品选中状态
+    case Types.SET_CART_CHANGE_PART_SELECT:
+      return {...state, partStatus: action.partState};
+    // 购物车修改所有商品选中状态
+    case Types.SET_CART_CHANGE_ALL_SELECT:
+      return {...state, allStatus: action.allStatus};
   }
   return state;
 }

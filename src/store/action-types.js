@@ -20,6 +20,15 @@ export const SET_CART_DIALOG_STATUS = "SET_CART_DIALOG_STATUS";
 // 购物车登陆成功后修改商品数量
 export const SET_EDITOR_CART_DATA = "SET_EDITOR_CART_DATA";
 
+// 购物车修改单个商品选中状态
+export const SET_CART_CHANGE_SELECT = "SET_CART_CHANGE_SELECT";
+
+// 购物车修改分组商品选中状态
+export const SET_CART_CHANGE_PART_SELECT = "SET_CART_CHANGE_PART_SELECT";
+
+// 购物车修改所有商品选中状态
+export const SET_CART_CHANGE_ALL_SELECT = "SET_CART_CHANGE_ALL_SELECT";
+
 //==>商品分类部分
 //设置商品分类信息
 export const SET_GOODSDATA = "SET_GOODSDATA";
