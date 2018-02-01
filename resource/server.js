@@ -124,7 +124,7 @@ app.post('/goodscategory', (req, res) => {
   let result = {};
   result.listLink = require('./mock/listLink.json');
   result.banner = require('./mock/typeBanner.json');
-  if (!id) {
+  if (!id||id==='allData') {
     result.data = require('./mock/lev_recommend.json');
   }
   else if (id === 'phone') {

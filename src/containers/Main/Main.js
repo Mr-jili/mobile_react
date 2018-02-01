@@ -111,17 +111,20 @@ class Main extends React.Component {
             <Provider store={store}>
                 <div className="main-box" ref={x=>this.ele=x}>
                     <MainHeader/>
-                    <MainSlider sliders={sliders || []}/>
-                    <MainLink activity={activity || []}/>
-                    <MainRecommend recommend={recommend || []}/>
-                    <MainCrowdfunding crowdfunding={crowdfunding || []}/>
-                    <MainHot homeLoaderData={homeLoaderData || []}/>
-                    <NewGoogs newGoods={newGoods}/>
-                    <TimeBuy limit={limit}/>
-                    <MainBrand brand={brand}/>
-                    <MainPhone phone={phone}/>
-                    <MainMore allData={allData}/>
-                    <MainFooter/>
+                    <div className="cwj-main-body">
+                        <MainSlider sliders={sliders || []}/>
+                        <MainLink activity={activity || []}/>
+                        <MainRecommend recommend={recommend || []}/>
+                        <MainCrowdfunding crowdfunding={crowdfunding || []}/>
+                        <MainHot homeLoaderData={homeLoaderData || []}/>
+                        <NewGoogs newGoods={newGoods}/>
+                        <TimeBuy limit={limit}/>
+                        <MainBrand brand={brand}/>
+                        <MainPhone phone={phone}/>
+                        <MainMore allData={allData}/>
+                        <MainFooter/>
+                    </div>
+
                 </div>
             </Provider>
         )
