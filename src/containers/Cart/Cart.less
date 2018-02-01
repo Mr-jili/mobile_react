@@ -1,0 +1,402 @@
+// 外面大盒子
+//.top-bar{
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  height: 45/100rem;
+//  line-height: 45/100rem;
+//  font-size: 14/100rem;
+//  width: 100%;
+//}
+
+.cart {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  overflow: hidden;
+}
+
+.wj-cart-editor {
+  position: absolute;
+  right: 15/100rem;
+  top: 2/100rem;
+  color: rgb(51, 51, 51);
+  font-size: 12/100rem;
+}
+
+.wj-cart-content {
+  position: absolute;
+  top: 45/100rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 14/100rem;
+  overflow: hidden;
+
+  .wj-no-goods {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 148/100rem;
+    background: #FAFAFA;
+
+    img {
+      display: flex;
+      width: 91/100rem;
+      height: 85/100rem;
+    }
+
+    .wj-no-goods-r {
+      margin-left: 25/100rem;
+      p {
+        color: rgb(152, 131, 120);
+        font-size: 14/100rem;
+        padding-bottom: 12/100rem;
+      }
+      a {
+        display: flex;
+        background-color: rgb(226, 115, 104);
+        width: 77/100rem;
+        height: 23/100rem;
+        line-height: 23/100rem;
+        font-size: 13/100rem;
+        justify-content: center;
+        color: #ffffff;
+      }
+    }
+
+  }
+
+  .wj-goods-list {
+    background: #fff;
+    &:nth-of-type(n+2) {
+      margin-top: 10/100rem;
+    }
+    .wj-goods-top {
+      display: flex;
+      flex-direction: row;
+      padding: 0 15/100rem;
+      height: 42/100rem;
+      line-height: 42/100rem;
+
+      img {
+        display: inline-block;
+        width: 18/100rem;
+        height: 18/100rem;
+        font-size: 0;
+        position: relative;
+        top: 12/100rem;
+      }
+
+      h6 {
+        display: flex;
+        flex: 1;
+        text-align: left;
+        color: rgb(51, 51, 51);
+        font-size: 13/100rem;
+        font-weight: normal;
+        padding-left: 5/100rem;
+      }
+
+      .wj-goods-free-shipp {
+        display: inline-block;
+        font-size: 0;
+        img {
+          width: 16/100rem;
+          height: 16/100rem;
+          position: relative;
+          top: -4/100rem;
+        }
+
+        span {
+          display: inline-block;
+          font-size: 12/100rem;
+          color: rgb(153, 153, 153);
+          padding-left: 4/100rem;
+        }
+      }
+
+    }
+
+    .wj-goods-bot {
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      border: 1/100rem solid rgba(0, 0, 0, .06);
+      border-left: none;
+      border-right: none;
+      padding: 13/100rem 15/100rem;
+
+      //&:nth-of-type(n+2) {
+      //  border-top: none;
+      //}
+
+      .icon {
+        display: inline-block;
+        width: 18/100rem;
+        height: 18/100rem;
+        font-size: 0;
+        position: relative;
+        top: 30/100rem;
+      }
+
+      .wj-goods-products {
+        display: flex;
+        flex: 1 1 0%;
+        flex-direction: row;
+        .wj-goods-l {
+          display: flex;
+          width: 87/100rem;
+          height: 86/100rem;
+          margin: 0 5/100rem 0 10/100rem;
+          box-sizing: border-box;
+          border: 1/100rem solid rgba(0, 0, 0, .1);
+          img {
+            display: block;
+            width: 80/100rem;
+            height: 80/100rem;
+            margin: auto;
+          }
+        }
+        .wj-goods-r {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          .wj-goods-til {
+            display: flex;
+            word-wrap: break-word;
+            /*flex: 1;*/
+            font-size: 13/100rem;
+            text-align: left;
+            color: rgb(51, 51, 51);
+            line-height: 17/100rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            max-height: 34/100rem;
+          }
+          .wj-goods-mintotal {
+            word-wrap: break-word;
+            font-size: 12/100rem;
+            text-align: left;
+            color: rgb(153, 153, 153);
+            padding: 4/100rem 0;
+          }
+          .wj-goods-pricebar {
+            display: flex;
+            flex-direction: row;
+          }
+          .wj-goods-price {
+            display: flex;
+            line-height: 18/100rem;
+            word-wrap: break-word;
+            font-size: 12/100rem;
+            color: rgb(182, 9, 9);
+            position: relative;
+            top: 4/100rem;
+            span {
+              font-size: 15/100rem;
+              padding-left: 2/100rem;
+            }
+          }
+          .wj-goods-price-btn {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            margin-left: 20/100rem;
+            border: 1/100rem solid rgb(179, 179, 179);
+            line-height: 24/100rem;
+
+            img {
+              display: flex;
+              width: 24/100rem;
+              height: 24/100rem;
+            }
+
+            span {
+              flex: 1;
+              text-align: center;
+              font-size: 13/100rem;
+              color: rgb(102, 102, 102);
+            }
+
+          }
+        }
+      }
+
+    }
+
+  }
+
+  .wj-recomend-you-til {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    color: rgb(132, 95, 63);
+    /*height: 20/100rem;*/
+    line-height: 20/100rem;
+    padding: 11/100rem 0;
+
+    h5 {
+      font-weight: normal;
+      font-size: 16/100rem;
+      padding: 0 13/100rem;
+    }
+
+    span {
+      width: 27/100rem;
+      height: 1/100rem;
+      background-color: rgb(132, 95, 63);
+      position: relative;
+      top: 10/100rem;
+    }
+
+  }
+
+  .wj-recomend-you-listbar {
+    ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+  }
+
+  .wj-recomend-you-list {
+    display: flex;
+    flex-direction: column;
+    width: 49.8%;
+    border: 1/100rem solid rgb(239, 239, 239);
+    margin-bottom: 1.5/100rem;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    &:nth-of-type(even) {
+      /*width: 49.8%;
+      float: right;*/
+    }
+
+    .wj-recomend-you-top {
+      width: 100%;
+      background: #fff;
+      img {
+        display: block;
+        width: 116/100rem;
+        height: 116/100rem;
+        margin: 0 auto;
+      }
+      p {
+        font-size: 12/100rem;
+        color: rgb(132, 95, 63);
+        height: 20/100rem;
+        line-height: 20/100rem;
+        padding: 0 8/100rem 8/100rem;
+        word-wrap: break-word;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+    .wj-recomend-you-bot {
+      width: 100%;
+      background: #F7F7F7;
+      padding: 0 8/100rem;
+      p {
+        font-size: 12/100rem;
+        color: rgb(51, 51, 51);
+        /*height: 14/100rem;*/
+        line-height: 14/100rem;
+        padding: 8/100rem 0 0;
+        word-wrap: break-word;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      div {
+        font-size: 10/100rem;
+        color: rgb(182, 9, 9);
+        line-height: 15/100rem;
+        word-wrap: break-word;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding: 4/100rem 0;
+        span {
+          font-size: 13/100rem;
+        }
+      }
+    }
+  }
+
+}
+
+.wj-to-settle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  height: 54/100rem;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 1px solid rgb(214, 214, 214);
+
+  .wj-to-settle-l {
+    display: flex;
+    flex-direction: row;
+    padding-left: 15/100rem;
+    img {
+      display: flex;
+      width: 18/100rem;
+      height: 18/100rem;
+      position: relative;
+      top: 18/100rem;
+    }
+    span {
+      color: rgb(0, 0, 0);
+      font-size: 13/100rem;
+      line-height: 54/100rem;
+      padding-left: 10/100rem;
+    }
+  }
+
+  .wj-to-settle-r {
+    line-height: 54/100rem;
+    display: flex;
+    flex-direction: row;
+    span {
+      padding-right: 10/100rem;
+      font-size: 15/100rem;
+      color: rgb(182, 9, 9);
+      em {
+        &:nth-of-type(1) {
+          font-size: 13/100rem;
+        }
+        &:nth-of-type(2) {
+          font-size: 10/100rem;
+        }
+      }
+    }
+    a {
+      display: flex;
+      width: 100/100rem;
+      height: 54/100rem;
+      background-color: rgb(182, 9, 9);
+      justify-content: center;
+      color: #ffffff;
+      font-size: 13/100rem;
+    }
+  }
+
+}
