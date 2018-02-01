@@ -1,6 +1,6 @@
 export const INIT_STATE = 'INIT_STATE';
 
-export const CHANGE_SAVOUR='CHANGE_SAVOUR'; // 品味改变状态
+export const CHANGE_SAVOUR = 'CHANGE_SAVOUR'; // 品味改变状态
 
 // 购物车获取是否登陆状态
 export const GET_WHETHER_LOGIN = "GET_WHETHER_LOGIN";
@@ -35,6 +35,8 @@ export const GET_LOADER_HOME_DATA = "GET_LOADER_HOME_DATA";
 export const USER_LOGIN = "USER_LOGIN";//登录
 
 export const USER_INFO_QUIT = "USER_INFO_QUIT";//退出登录
+
+export const SET_USER_INFO = "SET_USER_INFO";//设置个人中心
 
 
 
