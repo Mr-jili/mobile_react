@@ -10,6 +10,7 @@ export const GET_EVALUATE='GET_EVALUATE';
 export const CHANGE_SAVOUR = 'CHANGE_SAVOUR';
 
 
+
 // 购物车获取是否登陆状态
 export const GET_WHETHER_LOGIN = "GET_WHETHER_LOGIN";
 
