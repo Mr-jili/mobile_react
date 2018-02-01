@@ -32,9 +32,13 @@ class UserCenter extends React.Component {
     let $userInfo = this.userInfo;
     this.loginState=validate.user;
     if (validate.user) {
+      this.toImg.style.display="none";
+      this.set.style.display="block";
       this.quit.style.display = "block";
       $userInfo.innerHTML = username;
     } else {
+      this.toImg.style.display="block";
+      this.set.style.display="none";
       $userInfo.innerHTML = "请登录";
       this.quit.style.display = "none";
     }
@@ -58,8 +62,11 @@ class UserCenter extends React.Component {
                 <span ref={x => this.userInfo = x}>请登录</span>
               </div>
             </div>
-            <div className="lyc-user-right" onClick={this.turnLogin}>
-              <img src={right_arw}/>
+            <div className="lyc-user-right">
+              <div className="set-user-info" ref={x=>this.set=x}>
+                <i className="iconfont icon-shezhi-tianchong"></i>
+              </div>
+              <img ref={x=>this.toImg=x} src={right_arw} onClick={this.turnLogin}/>
             </div>
           </div>
           <div className="lyc-user-orderBox">

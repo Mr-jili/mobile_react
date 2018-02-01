@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./ServiceRegister.less";
-import {withRouter,Link} from "react-router-dom"
+import {withRouter, Link} from "react-router-dom"
 import {connect} from "react-redux";
 import actions from "../../store/actions/register";
 import {getCode} from "../../api/api";
@@ -51,6 +51,16 @@ class ServiceRegister extends Component {
       $phoneTips.innerHTML = this.state.tipsAry[2];
       return;
     }
+
+    this.checkTurnUser();
+
+  };
+
+  //验证码填写之后就可以跳转到个人中心页了
+  checkTurnUser = () => {
+    if (this.phoneCheckNum) {
+      this.props.history.push("/usercenter");
+    }
   };
 
   //手机号码一旦输入相应提示信息消失
@@ -63,12 +73,14 @@ class ServiceRegister extends Component {
     }
   };
 
-  async getCodeFn(){
+  //获取API中的验证码的接口
+  async getCodeFn() {
     let $phoneNum = this.mobile.value;
-    let checkNode=await getCode($phoneNum);
-    setTimeout(()=>{
-      this.checkNum.value=checkNode.mobileCode;
-    },3000);
+    let checkNode = await getCode($phoneNum);
+    this.phoneCheckNum = checkNode.mobileCode;//将获取的验证码放到实例上。
+    setTimeout(() => {
+      this.checkNum.value = checkNode.mobileCode;
+    }, 3000);
   }
 
   //点击获取验证码，并且进入倒计时读秒状态
@@ -103,6 +115,7 @@ class ServiceRegister extends Component {
       this.timerBack();
     }
 
+    //执行获取的
     this.getCodeFn();
   };
   //实现倒计时
