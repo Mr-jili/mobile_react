@@ -32,11 +32,6 @@ export const GET_HOME_DATA = "GET_HOME_DATA";
 //首页加载热量组件
 export const GET_LOADER_HOME_DATA = "GET_LOADER_HOME_DATA";
 
-
-export const GET_CHECK_NODE = "GET_PHONE_NODE";//获取验证码
-
-export const SET_USER_INFO = "SET_USER_INFO";//登录或注册
-
 export const USER_LOGIN = "USER_LOGIN";//登录
 
 export const USER_INFO_QUIT = "USER_INFO_QUIT";//退出登录
