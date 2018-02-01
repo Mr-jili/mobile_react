@@ -567,7 +567,63 @@ app.get('/cart/allstate', (req, res) => {
   })
 });
 
-//
+/*-------------------------------*/
+// 获取支付列表
+app.post('/pay', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+
+  backData.then((result) => {
+    let userCart = result.find(item => item.userId === req.session.user);
+    let payList = userCart.cart.filter(item => item.isSelected);
+    res.json(payList);
+  })
+});
+
+app.post('/payverfication', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+
+  let {paypsd} = req.body;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  backData.then((result) => {
+    let user = result.find(item => item.userid === req.session.user);
+    if (user.paypsd === paypsd) {
+       res.json({
+         "msg":"支付成功",
+         "err":0,
+         "successCode":0
+       })
+    }else {
+      res.json({
+        "msg":"支付失败",
+        "err":1,
+        "successCode":1
+      })
+    }
+  })
+});
 
 /*-------------------------------*/
 
@@ -590,7 +646,7 @@ app.get('/search', (req, res) => {
 // 搜索接口
 app.post('/search', (req, res) => {
   let {info} = req.body;
-  if(!info) return res.json([]);
+  if (!info) return res.json([]);
   let dataSource = new Promise((resolve, reject) => {
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {

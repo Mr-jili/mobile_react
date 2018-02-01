@@ -19,7 +19,7 @@ class Search extends React.Component {
   render() {
     return (
       <div className='searchPage'>
-        <SearchInput detailVal={this.props.search.detailSearch} getDom={this.getDom}/>
+        <SearchInput detailVal={this.props.search.detailSearch}/>
         {(this.props.search.searchVal && this.props.search.searchResult.length) ? <SearchList/> : null}
         <div className='detailSearch'>
           <HotSearch hotSearch={this.props.search.hot}/>
