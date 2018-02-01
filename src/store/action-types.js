@@ -1,11 +1,15 @@
 export const INIT_STATE = 'INIT_STATE';
 
+<<<<<<< HEAD
 //品味改变状态
 export const CHANGE_SAVOUR='CHANGE_SAVOUR';
 //商品详情页面
 export const GET_DETAIL='GET_DETAIL';
 
 
+=======
+export const CHANGE_SAVOUR = 'CHANGE_SAVOUR'; // 品味改变状态
+>>>>>>> cb93f012bf846178671df27dd65bbb8f9b0898ad
 
 // 购物车获取是否登陆状态
 export const GET_WHETHER_LOGIN = "GET_WHETHER_LOGIN";
@@ -37,14 +41,11 @@ export const GET_HOME_DATA = "GET_HOME_DATA";
 //首页加载热量组件
 export const GET_LOADER_HOME_DATA = "GET_LOADER_HOME_DATA";
 
-
-export const GET_CHECK_NODE = "GET_PHONE_NODE";//获取验证码
-
-export const SET_USER_INFO = "SET_USER_INFO";//登录或注册
-
 export const USER_LOGIN = "USER_LOGIN";//登录
 
 export const USER_INFO_QUIT = "USER_INFO_QUIT";//退出登录
+
+export const SET_USER_INFO = "SET_USER_INFO";//设置个人中心
 
 
 

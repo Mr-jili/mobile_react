@@ -1,5 +1,5 @@
 import * as Types from "../action-types";
-import {toLogin, toValidate} from "../../api/api";
+import {toLogin, signOut} from "../../api/api";
 
 let actions = {
   toLoginAPI(username, password, history) {
@@ -12,6 +12,18 @@ let actions = {
       }).catch(err => {
         console.log(err);
       });
+    }
+  },
+  signOutAPI(username,history){
+    return function(getState,dispatch){
+      signOut(username).then(data=>{
+        dispatch({type:Types.USER_INFO_QUIT,userQuit:data});
+        if(!data.user){
+          history.push("/");
+        }
+      }).catch(err=>{
+        console.log(err);
+      })
     }
   }
 };

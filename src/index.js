@@ -8,11 +8,13 @@ import Main from "./containers/Main/Main";
 import UserCenter from "./containers/UserCenter/UserCenter";
 import Savour from "./containers/Savour/Savour";
 import Goodscategory from "./containers/Goodscategory/Goodscategory";
+import Pay from "./containers/Pay/Pay";
 import store from './store';
 import "../src/common/basic.css";
 import ServiceLogin from "./containers/ServiceLogin/ServiceLogin";
 import ServiceRegister from "./containers/ServiceRegister/ServiceRegister";
 import Detail from "./containers/Detaill/Detail";
+import Collection from "./containers/Collection/Collection";
 
 ReactDOM.render((
   <Provider store={store}>
@@ -27,6 +29,8 @@ ReactDOM.render((
           <Route path='/login' component={ServiceLogin}/>
           <Route path='/register' component={ServiceRegister}/>
           <Route path='/detail' component={Detail}/>
+          <Route path='/favor' component={Collection}/>
+          <Route path='/pay' component={Pay}/>{/*支付页面临时使用*/}
           <Redirect to='/'/>
         </Switch>
       </App>

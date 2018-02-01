@@ -103,15 +103,13 @@ class Main extends React.Component {
 
     }
 
+
     render() {
         let {sliders, activity, recommend, crowdfunding} = this.props.homedata;
-
         let {hot: homeLoaderData, newGoods, limit, brand,phone,allData} = this.state;
-
-
         return (
             <Provider store={store}>
-                <div className="main-box">
+                <div className="main-box" ref={x=>this.ele=x}>
                     <MainHeader/>
                     <MainSlider sliders={sliders || []}/>
                     <MainLink activity={activity || []}/>
