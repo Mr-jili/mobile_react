@@ -1,6 +1,14 @@
 export const INIT_STATE = 'INIT_STATE';
 
-export const CHANGE_SAVOUR = 'CHANGE_SAVOUR'; // 品味改变状态
+//商品详情页面
+export const GET_DETAIL='GET_DETAIL';
+
+//商品评价
+export const GET_EVALUATE='GET_EVALUATE';
+
+// 品味改变状态
+export const CHANGE_SAVOUR = 'CHANGE_SAVOUR';
+
 
 // 购物车获取是否登陆状态
 export const GET_WHETHER_LOGIN = "GET_WHETHER_LOGIN";
