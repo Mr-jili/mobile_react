@@ -3,7 +3,7 @@ import "./ServiceLogin.less";
 import {connect} from "react-redux";
 import actions from "../../store/actions/login";
 import mi_logo from "../../images/mi_logo.jpg";
-import {withRouter} from "react-router-dom";
+import {withRouter,Link} from "react-router-dom";
 
 class ServiceLogin extends React.Component {
   constructor() {
@@ -24,8 +24,6 @@ class ServiceLogin extends React.Component {
     let $user = this.userna.value;
     let $psw = this.psw.value;
     let $phoneTips = this.loginTips;
-
-    console.log(this.props);
 
     if ($user === "") {
       $box.style.display = "flex";
@@ -112,7 +110,7 @@ class ServiceLogin extends React.Component {
               </div>
               <div className="others_logo">
                 <span className="phone_msg_log">
-                  <a href="javascript:;">手机短信登录/注册</a>
+                  <Link to={"/register"}>手机短信登录/注册</Link>
                 </span>
                 <div className="others-tit">
                   <span>其他登录方式</span>
