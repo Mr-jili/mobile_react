@@ -14,6 +14,7 @@ import "../src/common/basic.css";
 import ServiceLogin from "./containers/ServiceLogin/ServiceLogin";
 import ServiceRegister from "./containers/ServiceRegister/ServiceRegister";
 import Detail from "./containers/Detaill/Detail";
+import Search from "./containers/Search/Search";
 import Collection from "./containers/Collection/Collection";
 
 ReactDOM.render((
@@ -28,7 +29,9 @@ ReactDOM.render((
           <Route path='/usercenter' component={UserCenter}/>
           <Route path='/login' component={ServiceLogin}/>
           <Route path='/register' component={ServiceRegister}/>
+
           <Route path='/detail' component={Detail}/>
+          <Route path='/search' component={Search}/>
           <Route path='/favor' component={Collection}/>
           <Route path='/pay' component={Pay}/>{/*支付页面临时使用*/}
           <Redirect to='/'/>

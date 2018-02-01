@@ -43,17 +43,17 @@ export function savourDetail(gid) {
 
 // 商品详情页面
 export function getCommodity(gid) {
-  return axios.post(`/detail/:${gid}`)
+  return axios.post(`/detail/${gid}`)
 }
 
 // 获取评价
 export function getEvaluate(gid) {
-  return axios.post(`/evaluate/:${gid}`)
+  return axios.post(`/evaluate/${gid}`)
 }
 
 // 收藏操作
 export function setCollection(gid, type) {
-  return axios.get(`/collection/:${gid}?type=${type}`);
+  return axios.get(`/collection/${gid}?type=${type}`);
 }
 
 // 获取购物车数量

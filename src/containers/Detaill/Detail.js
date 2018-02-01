@@ -28,11 +28,6 @@ class Detail extends React.Component {
        //  console.log(this.props.getEvaluate('100907'));
     }
 
-
-
-
-
-
   handBack=()=>{
       this.props.history.goBack();
   };

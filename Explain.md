@@ -341,11 +341,6 @@ get(`/cart/allstate?state=${state}`)
     "mobileCode": "834842",
     "err": 0
 }
-【失败】
-{
-    "msg": "该手机号已被注册！",
-    "err": 1
-}
 
 ***登录***
 【发送】
