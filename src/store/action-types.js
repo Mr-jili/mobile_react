@@ -4,7 +4,7 @@ export const INIT_STATE = 'INIT_STATE';
 export const GET_DETAIL='GET_DETAIL';
 
 //商品评价
-    export const GET_EVALUATE='GET_EVALUATE';
+export const GET_EVALUATE='GET_EVALUATE';
 
 // 品味改变状态
 export const CHANGE_SAVOUR = 'CHANGE_SAVOUR';
