@@ -4,12 +4,9 @@ import "./CWJ.less"
 export default class CWJ extends Component {
   render() {
       let phone= this.props.phone;
-      phone = phone.splice(1);
-
+      phone = phone.slice(1);
       if(phone.length>=1){
-          // console.log(phone);
           return(
-
               <div className="wj-product-list-big">
                   <ul>
                       {
