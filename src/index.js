@@ -29,6 +29,7 @@ ReactDOM.render((
           <Route path='/usercenter' component={UserCenter}/>
           <Route path='/login' component={ServiceLogin}/>
           <Route path='/register' component={ServiceRegister}/>
+
           <Route path='/detail' component={Detail}/>
           <Route path='/search' component={Search}/>
           <Route path='/favor' component={Collection}/>
