@@ -20,7 +20,8 @@
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0",
-    "swipe-js-iso": "^2.0.4"
+    "swipe-js-iso": "^2.0.4",
+    "swiper": "^4.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
