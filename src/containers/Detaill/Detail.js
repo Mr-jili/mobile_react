@@ -25,7 +25,8 @@ class Detail extends React.Component {
            // this.setState({list})
        // console.log(a);
        console.log(this.props.getDetailAPI('100907'));
-   }
+        console.log(this.props.getEvaluate('100907'));
+    }
 
 
 
