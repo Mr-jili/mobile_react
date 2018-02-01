@@ -56,4 +56,53 @@
       }
     }
   }
+  //  有数据参数
+  .collection-has-data{
+    font-size: 12px;
+    position: absolute;
+    width: 100%;
+    top: 45px;
+    height: 100%;
+    .goods-container{
+
+
+      .goods-wrrap{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        border-top: 1px solid #ccc;
+        align-items: center;
+        color: #000000;
+       justify-content:  space-between;
+        img{
+          margin-left: .1rem;
+          height: .92rem;
+          &:nth-of-type(2){
+
+            height: .16rem;
+            float: right;
+            margin-right: .2rem;
+          }
+        }
+        .goods-text-box{
+          flex:1;
+          margin-left:.2rem;
+          span{
+            font-size: .16rem;
+            flex: 1;
+            display: block;
+            line-height: .24rem;
+            &:nth-of-type(2){
+              color: rgb(182, 9, 9);
+            }
+          }
+        }
+      &:nth-last-child(1){
+        border-bottom: 1px solid #ccc;
+      }
+      }
+
+    }
+  }
 }

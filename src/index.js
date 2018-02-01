@@ -16,6 +16,7 @@ import ServiceRegister from "./containers/ServiceRegister/ServiceRegister";
 import Detail from "./containers/Detaill/Detail";
 import Search from "./containers/Search/Search";
 import Collection from "./containers/Collection/Collection";
+import Collections from "./containers/Collection/Collections";
 
 ReactDOM.render((
   <Provider store={store}>
@@ -32,7 +33,8 @@ ReactDOM.render((
 
           <Route path='/detail' component={Detail}/>
           <Route path='/search' component={Search}/>
-          <Route path='/favor' component={Collection}/>
+          <Route path='/favor' component={Collection}/>{/*收藏页面有数据临时使用*/}
+          <Route path='/favors' component={Collections}/>{/*收藏页面无数据临时使用*/}
           <Route path='/pay' component={Pay}/>{/*支付页面临时使用*/}
           <Redirect to='/'/>
         </Switch>
