@@ -1,8 +1,38 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
+import actions from '../../store/actions/detail'
 import './Detail.less'
+// import {getCommodity} from '../../api/api'
+
+
 
 class Detail extends React.Component {
+   constructor(){
+       super();
+       this.state={
+           list:{}
+       };
+   }
+
+    componentWillMount(){
+       // let list=this.props.location.state;
+       // if(list){
+       //     this.setState({list})
+       // }else {
+           // this.props.match.params.lessonId
+           // let a=await getCommodity(222);
+           // this.setState({list})
+       // console.log(a);
+       console.log(this.props.getDetailAPI('100907'));
+        console.log(this.props.getEvaluate('100907'));
+    }
+
+
+
+
+
+
   handBack=()=>{
       this.props.history.goBack();
   };
@@ -10,7 +40,11 @@ class Detail extends React.Component {
       // console.log(this.props);
   };
 
+
+
+
   render(){
+
       return (
         <div className="main">
             <div className="detail clearfix">
@@ -146,4 +180,6 @@ class Detail extends React.Component {
     )
   }
 }
-export default withRouter(Detail)
+
+// export default withRouter(Detail)
+export default connect(state=>({...state.detail}),actions)(Detail);

@@ -1,5 +1,5 @@
 import React from 'react';
-import actions from '../../store/actions/JL/savour'
+import actions from '../../store/actions/savour/savour'
 import {connect} from 'react-redux'
 import './Savour.less'
 import {ajax} from '../Savour/util'

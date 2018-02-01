@@ -213,7 +213,8 @@ fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
 // 获取商品详情
 app.post('/detail/:gid', (req, res) => {
   let {gid} = req.params;
-  let backData = new Promise((resolve, reject) => {
+    console.log(gid);
+    let backData = new Promise((resolve, reject) => {
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
         reject(err);
@@ -224,8 +225,8 @@ app.post('/detail/:gid', (req, res) => {
   });
 
   backData.then((result) => {
-    let temp = result.find((item) => item.gid === gid);
-    if (temp) {
+      let temp = result.find((item) => item.gid === gid);
+      if (temp) {
       res.json(temp);
     }
     else {
