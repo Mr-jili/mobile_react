@@ -1,5 +1,6 @@
 import React ,{ Component} from "react";
 import Header from "../../components/Header/Header";
+import "./index.less";
 
 export default class Collection extends Component{
     render(){
