@@ -100,6 +100,18 @@ export function changeAllSelect(state) {
 
 /*----------------------------*/
 
+// 获取支付列表
+export function getPayList() {
+  return axios.post('/pay')
+}
+
+// 验证支付密码
+export function verPayPassword(paypsd) {
+  return axios.post('/payverfication', {paypsd});
+}
+
+/*----------------------------*/
+
 // 获取热门搜索和历史记录
 export function getHistory() {
   return axios.get('/search');
