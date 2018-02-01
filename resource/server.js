@@ -124,7 +124,7 @@ app.post('/goodscategory', (req, res) => {
   let result = {};
   result.listLink = require('./mock/listLink.json');
   result.banner = require('./mock/typeBanner.json');
-  if (!id||id==='allData') {
+  if (!id || id === 'allData') {
     result.data = require('./mock/lev_recommend.json');
   }
   else if (id === 'phone') {
@@ -213,8 +213,8 @@ fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
 // 获取商品详情
 app.post('/detail/:gid', (req, res) => {
   let {gid} = req.params;
-    console.log(gid);
-    let backData = new Promise((resolve, reject) => {
+  console.log(gid);
+  let backData = new Promise((resolve, reject) => {
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
         reject(err);
@@ -225,8 +225,8 @@ app.post('/detail/:gid', (req, res) => {
   });
 
   backData.then((result) => {
-      let temp = result.find((item) => item.gid === gid);
-      if (temp) {
+    let temp = result.find((item) => item.gid === gid);
+    if (temp) {
       res.json(temp);
     }
     else {
@@ -573,8 +573,8 @@ app.get('/cart/allstate', (req, res) => {
 
 // 获取热门搜索和历史搜索
 app.get('/search', (req, res) => {
-  let hotP = new Promise((resolve, reject) => {
-    fs.readFile('./mock/hotSearch.json', 'utf-8', (err, data) => {
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/search.json', 'utf-8', (err, data) => {
       if (err) {
         reject(err);
         return;
@@ -582,28 +582,15 @@ app.get('/search', (req, res) => {
       resolve(JSON.parse(data));
     })
   });
-  let historyP = new Promise((resolve, reject) => {
-    fs.readFile('./mock/historySearch.json', 'utf-8', (err, data) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(JSON.parse(data));
-    })
-  });
-  hotP.then((hot) => {
-    let obj = {};
-    obj["hot"] = hot;
-    historyP.then((history) => {
-      obj["history"] = history;
-      res.json(obj);
-    })
+  backData.then((result) => {
+    res.json(result);
   })
 });
 
 // 搜索接口
 app.post('/search', (req, res) => {
   let {info} = req.body;
+  if(!info) return res.json([]);
   let dataSource = new Promise((resolve, reject) => {
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
@@ -616,6 +603,7 @@ app.post('/search', (req, res) => {
   dataSource.then((result) => {
     let searchResult = [];
     result.forEach((item) => {
+      if (searchResult.length > 10) return;
       if (item.title.includes(info) || item.describe.includes(info)) {
         let temp = {
           "gid": item.gid,
@@ -630,12 +618,24 @@ app.post('/search', (req, res) => {
 
 // 清空历史搜索
 app.delete('/search', (req, res) => {
-  fs.writeFile('./mock/historySearch.json', '[]', 'utf-8', (err) => {
-    if (err) {
-      res.json({"msg": "清空失败!", err: 1});
-      return;
-    }
-    res.json({"msg": "清空成功!", err: 0})
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/search.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+  backData.then((result) => {
+    result.history = [];
+    fs.writeFile('./mock/search.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) {
+        res.json({"msg": "清空失败!", err: 1});
+        return;
+      }
+      res.json({"msg": "清空成功!", err: 0})
+    })
   })
 });
 

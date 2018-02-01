@@ -30,12 +30,9 @@ ReactDOM.render((
           <Route path='/login' component={ServiceLogin}/>
           <Route path='/register' component={ServiceRegister}/>
           <Route path='/detail' component={Detail}/>
-<<<<<<< HEAD
           <Route path='/search' component={Search}/>
-=======
           <Route path='/favor' component={Collection}/>
           <Route path='/pay' component={Pay}/>{/*支付页面临时使用*/}
->>>>>>> e62a7fedc37b33a9692ccb1bebbc55883e8c17b6
           <Redirect to='/'/>
         </Switch>
       </App>
