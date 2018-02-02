@@ -1,9 +1,7 @@
 import * as Types from "../action-types";
 
 let initState = {
-  isLogin: {
-    user: "", msg: "", success: "", err: 1
-  },
+  ifLogin: "",
   userCart: [],
   recommend: [],
   ifShow: "",
@@ -17,7 +15,7 @@ export default function carts(state = initState, action) {
   switch (action.type) {
     // 获取是否登录状态
     case Types.GET_WHETHER_LOGIN:
-      return {...state, ...action.payload};
+      return {...state, ifLogin: action.payload};
     // 获取登录后的购物车数据和为您推荐数据
     case Types.GET_CART_DATA:
       return {...state, ...action.payload};

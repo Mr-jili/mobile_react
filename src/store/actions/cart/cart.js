@@ -11,22 +11,12 @@ import {
 
 let actions = {
   // 获取是否登陆api状态
-  // getToLoginAPI() {
-  //   return function (dispatch, getState) {
-  //     dispatch({type: Types.GET_WHETHER_LOGIN, payload: toValidate()});
-  //   }
-  // },
-  getToLoginAPI(username, password) {
-    return function (dispatch, getState) {
-      dispatch({type: Types.GET_WHETHER_LOGIN, payload: toLogin(username, password)});
-    }
+  getToLoginAPI() {
+    return {type: Types.GET_WHETHER_LOGIN, payload: toValidate()};
   },
   // 登录成功后发送请求获取购物车/为您推荐数据
   getCartDataAPI() {
-    return function (dispatch, getState) {
-      if (!getState().cart.isLogin.err) return;
-      dispatch({type: Types.GET_CART_DATA, payload: getCartData()});
-    }
+    return {type: Types.GET_CART_DATA, payload: getCartData()}
   },
   // 购物车数量增加
   getCartNumPlus(item, gid, number) {
