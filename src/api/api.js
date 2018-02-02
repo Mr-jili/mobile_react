@@ -162,6 +162,9 @@ export function getCollList() {
 }
 
 // 获取订单列表
+export function getBill() {
+  return axios.get('/userbill');
+}
 
 // 校验是否登陆
 export function toValidate() {
