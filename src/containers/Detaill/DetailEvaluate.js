@@ -2,10 +2,9 @@ import React,{Component} from 'react'
 import {connect} from "react-redux";
 import actions from "../../store/actions/detail/evaluate";
 
-
  class DetailEvaluate extends Component{
-    componentWillMount(){
-        this.props.getEvaluateAPI(this.props.index);
+    componentDidMount(){
+        this.props.getEvaluateAPI('100907');
     }
     render(){
         return (
@@ -25,7 +24,6 @@ import actions from "../../store/actions/detail/evaluate";
                                 <div className="detail_hengxian"> </div>
                             </li>
                         ))}
-
                     </ul>
                 </div>
             </div>
