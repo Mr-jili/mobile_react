@@ -1,9 +1,8 @@
 import * as Types from "../action-types";
 
 let initState = {
-  username: "15134578149",
-  password: "123456",
-  err: 1
+  username: "",
+  password: ""
 };
 
 function login(state = initState, action) {

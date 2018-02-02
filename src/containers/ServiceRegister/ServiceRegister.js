@@ -53,17 +53,18 @@ class ServiceRegister extends Component {
     }
 
     this.getRegister();//手机号验证码输入后跳转到个人中心
-    // this.checkTurnUser();
   };
 
-  /*//验证码填写之后就可以跳转到个人中心页了
-  checkTurnUser = () => {
-    console.log(2);
-    console.log(this.registerUser);
+  //获取API中手机号和验证码登录后显示随机生成的用户名
+  async getRegister() {
+    let $phoneNum = this.mobile.value;
+    let $checkNode = this.checkNum.value;
+    let checkNodeNum = await toRegister($phoneNum, $checkNode);
+    this.registerUser=checkNodeNum.user;
     if (this.registerUser) {
       this.props.history.push("/usercenter");
     }
-  };*/
+  }
 
   //手机号码一旦输入相应提示信息消失
   handleInputPhoneNum = (e) => {
@@ -83,19 +84,6 @@ class ServiceRegister extends Component {
     setTimeout(() => {
       this.checkNum.value = checkNode.mobileCode;
     }, 3000);
-  }
-
-  //获取API中手机号和验证码登录后显示随机生成的用户名
-  async getRegister() {
-    console.log(1);
-    let $phoneNum = this.mobile.value;
-    let $checkNode = this.checkNum.value;
-    let checkNodeNum = await toRegister($phoneNum, $checkNode);
-    this.registerUser=checkNodeNum.user;
-
-    if (this.registerUser) {
-      this.props.history.push("/usercenter");
-    }
   }
 
   //点击获取验证码，并且进入倒计时读秒状态

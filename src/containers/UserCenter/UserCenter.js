@@ -28,7 +28,7 @@ class UserCenter extends React.Component {
     this.loginState=validate.user;
     if (validate.user) {
       this.toImg.style.display="none";
-      this.set.style.display="flex";
+      this.set.style.display="block";
       this.quit.style.display = "block";
       $userInfo.innerHTML = username;
     } else {
@@ -75,9 +75,8 @@ class UserCenter extends React.Component {
               </div>
             </div>
             <div className="lyc-user-right">
-              <Link className="set-user-info" ref={x=>this.set=x} to={"/personaldata"}>
-                <span>设置</span>
-                <i className="iconfont icon-shezhi-tianchong"></i>
+              <Link className="set-user-info"  to={"/personaldata"}>
+                <i className="iconfont icon-shezhi-tianchong" ref={x=>this.set=x}></i>
               </Link>
               <img ref={x=>this.toImg=x} src={right_arw} onClick={this.turnLogin}/>
             </div>
