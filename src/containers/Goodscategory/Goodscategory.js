@@ -32,7 +32,7 @@ class Goodscategory extends React.Component {
       <div className="container">
         <div className="g-header">
           <div className="search" onClick={()=>{
-            this.props.history.push('/')
+            this.props.history.push('/search')
           }}>
             <img src={icon_search}/>
             <span>年货嗨抢，最高直降1000</span>
