@@ -3,7 +3,7 @@ import "./ServiceLogin.less";
 import {connect} from "react-redux";
 import actions from "../../store/actions/login";
 import mi_logo from "../../images/mi_logo.jpg";
-import {withRouter,Link} from "react-router-dom";
+import {withRouter, Link} from "react-router-dom";
 
 class ServiceLogin extends React.Component {
   constructor() {
@@ -58,6 +58,7 @@ class ServiceLogin extends React.Component {
   handleInputUser = (e) => {
     let $box = this.dialogBox;
     let val = e.target.value;
+    let $username=this.userna;
 
     if (val !== "") {
       $box.style.display = "none";
@@ -68,9 +69,21 @@ class ServiceLogin extends React.Component {
   handlePsw = (e) => {
     let $box = this.dialogBox;
     let val = e.target.value;
-
     if (val !== "") {
       $box.style.display = "none";
+    }
+  };
+
+  //改变密码的显示状态
+  handleChangeEyeColor = () => {
+    let $eye = this.eye;
+    let $psw = this.psw;
+    if ($psw.type === "password") {
+      $eye.style.color = "#33b4ff";
+      $psw.type = "text";
+    } else {
+      $eye.style.color="#333";
+      $psw.type = "password";
     }
   };
 
@@ -95,6 +108,7 @@ class ServiceLogin extends React.Component {
                   <li>
                     <input type="password" placeholder="密码" ref={x => this.psw = x} onKeyUp={this.handlePsw}/>
                   </li>
+                  <i className="iconfont icon-ai-eye" ref={x => this.eye = x} onClick={this.handleChangeEyeColor}></i>
                 </ul>
               </div>
 
