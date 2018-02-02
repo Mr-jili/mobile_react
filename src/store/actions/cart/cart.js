@@ -1,8 +1,21 @@
 import * as Types from "../../action-types";
-import {toLogin, getCartData, editCartData, changeSelect, changePartSelect} from "../../../api/api";
+import {
+  toLogin,
+  getCartData,
+  editCartData,
+  changeSelect,
+  changePartSelect,
+  changeAllSelect,
+  delCartData, toValidate
+} from "../../../api/api";
 
 let actions = {
   // 获取是否登陆api状态
+  // getToLoginAPI() {
+  //   return function (dispatch, getState) {
+  //     dispatch({type: Types.GET_WHETHER_LOGIN, payload: toValidate()});
+  //   }
+  // },
   getToLoginAPI(username, password) {
     return function (dispatch, getState) {
       dispatch({type: Types.GET_WHETHER_LOGIN, payload: toLogin(username, password)});
@@ -16,15 +29,17 @@ let actions = {
     }
   },
   // 购物车数量增加
-  getCartNumPlus(gid, number) {
+  getCartNumPlus(item, gid, number) {
     return function (dispatch, getState) {
-      dispatch({type: Types.SET_CART_NUM_PLUS, payload: editCartData(gid, number)});
+      if (number === 16) return;
+      dispatch({type: Types.SET_CART_NUM_PLUS, newAry: item, payload: editCartData(gid, number)});
     }
   },
   // 购物车数量减少
-  getCartNumMinus(gid, number) {
+  getCartNumMinus(item, gid, number) {
     return function (dispatch, getState) {
-      dispatch({type: Types.SET_CART_NUM_MINUS, payload: editCartData(gid, number)});
+      if (number === 0) return;
+      dispatch({type: Types.SET_CART_NUM_MINUS, newAry: item, payload: editCartData(gid, number)});
     }
   },
   // 购物车显示/隐藏模态框状态
@@ -34,31 +49,45 @@ let actions = {
     }
   },
   // 购物车修改单个商品选中状态
-  getCartChangeSelectAPI(gid, state) {
+  getCartChangeSelectAPI(item, gid, state) {
+    console.log(1111);
     return function (dispatch, getState) {
-      dispatch({type: Types.SET_CART_CHANGE_SELECT, payload: changeSelect(gid, state), status: state});
+      dispatch({type: Types.SET_CART_CHANGE_SELECT, childrenItem: item, payload: changeSelect(gid, state)});
     }
   },
   // 购物车修改分组商品选中状态
-  getCartChangePartSelectAPI(from, state) {
+  getCartChangePartSelectAPI(item, from, state) {
     return function (dispatch, getState) {
-      dispatch({type: Types.SET_CART_CHANGE_SELECT, payload: changePartSelect(from, state), partState: state});
+      dispatch({
+        type: Types.SET_CART_CHANGE_PART_SELECT,
+        parentItem: item,
+        payload: changePartSelect(from, state)
+      });
     }
   },
-
   // 购物车修改所有商品选中状态
-  getCartChangeAllSelectAPI(from, state) {
+  getCartChangeAllSelectAPI(state) {
     return function (dispatch, getState) {
-      dispatch({type: Types.SET_CART_CHANGE_SELECT, payload: changeAllSelect(state), allState: state});
+      dispatch({
+        type: Types.SET_CART_CHANGE_ALL_SELECT,
+        allStatus: state
+        //payload: changeAllSelect(state)
+      });
     }
   },
-
-  // 购物车登陆成功后修改商品数量
-  /*getEditorDataAPI(gid, number) {
+  // 购物车修改原来数据后存储的refactoring
+  editorCartChangeRefactor(value) {
     return function (dispatch, getState) {
-      dispatch({type: Types.SET_EDITOR_CART_DATA, payload: editCartData(gid, number)});
+      dispatch({type: Types.SET_CART_CHANGE_ALL_Refactor, value});
     }
-  }*/
+  },
+  // 移除购物车中的商品
+  removeCartListAPI(item, gid) {
+    return function (dispatch, getState) {
+      console.log(gid);
+      dispatch({type: Types.SET_CART_REMOVE_GOODS, newAry: item, payload: delCartData(gid)});
+    }
+  }
 };
 
 export default actions;

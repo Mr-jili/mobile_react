@@ -8,9 +8,9 @@ let initState = {
   recommend: [],
   ifShow: "",
   text: "",
-  status: "",
   partStatus: "",
-  allStatus: ""
+  allStatus: "",
+  refactor: []
 };
 
 export default function carts(state = initState, action) {
@@ -23,10 +23,10 @@ export default function carts(state = initState, action) {
       return {...state, ...action.payload};
     // 购物车数量增加
     case Types.SET_CART_NUM_PLUS:
-      return {...state, ...action.payload};
+      return {...state, refactor: action.newAry};
     // 购物车数量减少
     case Types.SET_CART_NUM_MINUS:
-      return {...state, ...action.payload};
+      return {...state, refactor: action.newAry};
     // 购物车显示/隐藏模态框状态
     case Types.SET_CART_DIALOG_STATUS:
       return {...state, ifShow: action.tips.ifShow, text: action.tips.text};
@@ -35,13 +35,20 @@ export default function carts(state = initState, action) {
       return {...state, ...action.payload};
     // 购物车修改单个商品选中状态
     case Types.SET_CART_CHANGE_SELECT:
-      return {...state, status: action.status};
+      return {...state, refactor: action.childrenItem};
     // 购物车修改分组商品选中状态
     case Types.SET_CART_CHANGE_PART_SELECT:
-      return {...state, partStatus: action.partState};
+      console.log(state);
+      return {...state, refactor: action.parentItem, partStatus: action.partStatus};
     // 购物车修改所有商品选中状态
     case Types.SET_CART_CHANGE_ALL_SELECT:
       return {...state, allStatus: action.allStatus};
+    // 购物车修改原来数据后存储的refactoring
+    case Types.SET_CART_CHANGE_ALL_Refactor:
+      return {...state, refactor: action.value};
+    // 移除购物车中的商品
+    case Types.SET_CART_REMOVE_GOODS:
+      return {...state, refactor: action.newAry};
   }
   return state;
 }

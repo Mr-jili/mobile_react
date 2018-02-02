@@ -29,6 +29,12 @@ export const SET_CART_CHANGE_PART_SELECT = "SET_CART_CHANGE_PART_SELECT";
 // 购物车修改所有商品选中状态
 export const SET_CART_CHANGE_ALL_SELECT = "SET_CART_CHANGE_ALL_SELECT";
 
+// 购物车修改原来数据后存储的refactoring
+export const SET_CART_CHANGE_ALL_Refactor = "SET_CART_CHANGE_ALL_Refactor";
+
+// 移除购物车中的商品
+export const SET_CART_REMOVE_GOODS = "SET_CART_REMOVE_GOODS";
+
 //==>商品分类部分
 //设置商品分类信息
 export const SET_GOODSDATA = "SET_GOODSDATA";
