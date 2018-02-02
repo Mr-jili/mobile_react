@@ -54,7 +54,22 @@
         "minfreight": 0,
         "from": "广东小厨科技有限公司",
         "number": 5
+      },
+      {
+        "gid": "700",
+        "title": "小米6",
+        "describe": "年货节手机专场",
+        "url": "https://static.home.mi.com/app/shop/img?id=shop_51225f14dca0dc9c584b7d55e49a8348.jpeg",
+        "link": "/detail?gid=700",
+        "price": 2299,
+        "mark": false,
+        "isSelected": true,
+        "delState": false,
+        "minfreight": 0,
+        "from": "小米/米家自营",
+        "number": 11
       }
     ]
   }
 ]
+

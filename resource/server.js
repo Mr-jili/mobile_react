@@ -186,34 +186,33 @@ app.post('/content', (req, res) => {
 
 let crypto = require('crypto'); // 加密处理插件
 let userList = []; // 所有用户数据
-let userCart = []; // 所有用户购物车
-let userCollection = []; // 所有用户收藏
-let userBill = []; // 所有用户订单
+// let userCart = []; // 所有用户购物车
+// let userCollection = []; // 所有用户收藏
+// let userBill = []; // 所有用户订单
 let userID = '';
 
 fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
   if (err) return [];
   userList = JSON.parse(data);
 });
-fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
-  if (err) return [];
-  userCart = JSON.parse(data);
-});
-fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
-  if (err) return [];
-  userCollection = JSON.parse(data);
-});
-fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
-  if (err) return [];
-  userBill = JSON.parse(data);
-});
+// fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+//   if (err) return [];
+//   userCart = JSON.parse(data);
+// });
+// fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
+//   if (err) return [];
+//   userCollection = JSON.parse(data);
+// });
+// fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
+//   if (err) return [];
+//   userBill = JSON.parse(data);
+// });
 
 /*-------------------------------*/
 
 // 获取商品详情
 app.post('/detail/:gid', (req, res) => {
   let {gid} = req.params;
-  console.log(gid);
   let backData = new Promise((resolve, reject) => {
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
@@ -780,7 +779,7 @@ app.post('/register', (req, res) => {
     let userInfoItem = {
       "userid": `U${temp + 1}`,
       "userimg": "",
-      "username": 'E' + (Math.random()* 10000000).toFixed(0),
+      "username": 'E' + (Math.random() * 10000000).toFixed(0),
       "password": password,
       "email": "",
       "mobile": username,
@@ -897,6 +896,25 @@ app.post('/userInfo', (req, res) => {
     tempInfo.help = userInfo.help;
     res.json(tempInfo);
   });
+});
+
+// 修改用户名
+app.post('/modifyusername', (req, res) => {
+  if (!req.session.user) {
+    res.json({"msg": "用户错误！", "err": 1});
+    return;
+  }
+  let {username} = req.body;
+  let user = userList.find(item => item.userid === req.session.user);
+  user.username = username;
+  fs.writeFile('./mock/userInfo.json',JSON.stringify(userList),'utf-8',(err) => {
+      if(err) {
+        res.json({"msg":"修改失败","err":1});
+        return;
+      }
+      res.json({"msg":"修改成功","err":0})
+  })
+
 });
 
 /*-------------------------------*/

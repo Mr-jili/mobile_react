@@ -1,58 +1,35 @@
 import React,{Component} from 'react'
-export default class DetailEvaluate extends Component{
+import {connect} from "react-redux";
+import actions from "../../store/actions/detail/evaluate";
+
+
+ class DetailEvaluate extends Component{
+    componentWillMount(){
+        this.props.getEvaluateAPI('100907');
+    }
     render(){
         return (
             <div>
                 <div className="detail_user clearfix">
                     <ul>
-                        <li>
-                            <div className="user_outer">
-                                <img src="https://s1.mi-img.com/mfsv2/avatar/s008/p01FmRF48sPx/Zp3v1owrnpnqdl.jpg" alt=""/>
-                                <span className="span1">啦啦啦啦啦</span>
-                                <span className="span2">2018.01.31 00:44</span>
-                            </div>
-                            <div className="p">
-                                还好，不过没达到预期。
-                            </div>
-                            <div className="detail_hengxian"> </div>
-                        </li>
-                        <li>
-                            <div className="user_outer">
-                                <img src="https://s1.mi-img.com/mfsv2/avatar/s008/p01FmRF48sPx/Zp3v1owrnpnqdl.jpg" alt=""/>
-                                <span className="span1">啦啦啦啦啦</span>
-                                <span className="span2">2018.01.31 00:44</span>
-                            </div>
-                            <div className="p">
-                                还好，不过没达到预期。
-                            </div>
-                            <div className="detail_hengxian"> </div>
-                        </li>
-                        <li>
-                            <div className="user_outer">
-                                <img src="https://s1.mi-img.com/mfsv2/avatar/s008/p01FmRF48sPx/Zp3v1owrnpnqdl.jpg" alt=""/>
-                                <span className="span1">啦啦啦啦啦</span>
-                                <span className="span2">2018.01.31 00:44</span>
-                            </div>
-                            <div className="p">
-                                还好，不过没达到预期。
-                            </div>
-                            <div className="detail_hengxian"> </div>
-                        </li>
+                        {this.props.list.map((item,index)=>(
+                            <li key={index}>
+                                <div className="user_outer">
+                                    <img src={item.userImg} alt=""/>
+                                    <span className="span1">{item.username}</span>
+                                    <span className="span2">{item.time}</span>
+                                </div>
+                                <div className="p">
+                                    {item.text}
+                                </div>
+                                <div className="detail_hengxian"> </div>
+                            </li>
+                        ))}
 
-                        <li>
-                            <div className="user_outer">
-                                <img src="https://s1.mi-img.com/mfsv2/avatar/s008/p01FmRF48sPx/Zp3v1owrnpnqdl.jpg" alt=""/>
-                                <span className="span1">啦啦啦啦啦</span>
-                                <span className="span2">2018.01.31 00:44</span>
-                            </div>
-                            <div className="p">
-                                还好，不过没达到预期。
-                            </div>
-                            <div className="detail_hengxian"> </div>
-                        </li>
                     </ul>
                 </div>
             </div>
         )
     }
 }
+export default connect(state=>({...state.evaluate}),actions)(DetailEvaluate);
