@@ -5,6 +5,8 @@ import goodscategory from './goodscategory'
 import cart from './cart';
 import register from "./register";
 import login from "./login";
+import detail from "./detail";
+import search from "./search";
 // 合并reducers
 let reducer = combineReducers({
   cart,
@@ -12,7 +14,9 @@ let reducer = combineReducers({
   mySavour,
   register,
   login,
-  goodscategory
+  goodscategory,
+  detail,
+  search
 });
 
 export default reducer;

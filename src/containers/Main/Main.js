@@ -103,27 +103,28 @@ class Main extends React.Component {
 
     }
 
+
     render() {
         let {sliders, activity, recommend, crowdfunding} = this.props.homedata;
-
         let {hot: homeLoaderData, newGoods, limit, brand,phone,allData} = this.state;
-
-
         return (
             <Provider store={store}>
-                <div className="main-box">
+                <div className="main-box" ref={x=>this.ele=x}>
                     <MainHeader/>
-                    <MainSlider sliders={sliders || []}/>
-                    <MainLink activity={activity || []}/>
-                    <MainRecommend recommend={recommend || []}/>
-                    <MainCrowdfunding crowdfunding={crowdfunding || []}/>
-                    <MainHot homeLoaderData={homeLoaderData || []}/>
-                    <NewGoogs newGoods={newGoods}/>
-                    <TimeBuy limit={limit}/>
-                    <MainBrand brand={brand}/>
-                    <MainPhone phone={phone}/>
-                    <MainMore allData={allData}/>
-                    <MainFooter/>
+                    <div className="cwj-main-body">
+                        <MainSlider sliders={sliders || []}/>
+                        <MainLink activity={activity || []}/>
+                        <MainRecommend recommend={recommend || []}/>
+                        <MainCrowdfunding crowdfunding={crowdfunding || []}/>
+                        <MainHot homeLoaderData={homeLoaderData || []}/>
+                        <NewGoogs newGoods={newGoods}/>
+                        <TimeBuy limit={limit}/>
+                        <MainBrand brand={brand}/>
+                        <MainPhone phone={phone}/>
+                        <MainMore allData={allData}/>
+                        <MainFooter/>
+                    </div>
+
                 </div>
             </Provider>
         )

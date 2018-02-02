@@ -1,11 +1,7 @@
 import * as Types from "../action-types";
-import {getCode,toRegister} from "../../api/api";
+import {toRegister} from "../../api/api";
 
 let actions ={
-  getCodeAPI(){//获取验证码
-
-  },
-
   toRegisterAPI(mobile,password,history){
     return function (dispatch, getState) {
       toRegister(mobile,password).then((data)=>{//data是服务端返回结果
