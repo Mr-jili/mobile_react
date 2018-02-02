@@ -124,7 +124,7 @@ app.post('/goodscategory', (req, res) => {
   let result = {};
   result.listLink = require('./mock/listLink.json');
   result.banner = require('./mock/typeBanner.json');
-  if (!id||id==='allData') {
+  if (!id || id === 'allData') {
     result.data = require('./mock/lev_recommend.json');
   }
   else if (id === 'phone') {
@@ -213,7 +213,12 @@ fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
 // 获取商品详情
 app.post('/detail/:gid', (req, res) => {
   let {gid} = req.params;
+<<<<<<< HEAD
     let backData = new Promise((resolve, reject) => {
+=======
+  console.log(gid);
+  let backData = new Promise((resolve, reject) => {
+>>>>>>> 16ab9603317c836afcf274a426522c1f7b898ff1
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
         reject(err);
@@ -224,8 +229,8 @@ app.post('/detail/:gid', (req, res) => {
   });
 
   backData.then((result) => {
-      let temp = result.find((item) => item.gid === gid);
-      if (temp) {
+    let temp = result.find((item) => item.gid === gid);
+    if (temp) {
       res.json(temp);
     }
     else {
@@ -279,7 +284,11 @@ app.get('/collection/:gid', (req, res) => {
   backData.then((result) => {
     let curUser = result.find(item => item.userId === req.session.user);
     let eva = curUser.coll.find(item => item === gid);
+<<<<<<< HEAD
     if (type==='undefined') {
+=======
+    if (type === 'undefined') {
+>>>>>>> 16ab9603317c836afcf274a426522c1f7b898ff1
       if (eva) {
         res.json({"collState": true});
       }
@@ -566,14 +575,123 @@ app.get('/cart/allstate', (req, res) => {
   })
 });
 
-//
+/*-------------------------------*/
+// 获取支付列表
+app.post('/pay', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+
+  backData.then((result) => {
+    let userCart = result.find(item => item.userId === req.session.user);
+    let payList = userCart.cart.filter(item => item.isSelected);
+    res.json(payList);
+  })
+});
+
+// 验证支付密码
+app.post('/payverfication', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+
+  let {paypsd} = req.body;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  let userCart = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  let userBill = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+
+  backData.then((result) => {
+    let user = result.find(item => item.userid === req.session.user);
+    if (user.paypsd === paypsd) {
+      userCart.then((cart) => {
+        let userCart = cart.find(item => item.userId === req.session.user);
+        let payEva = userCart.cart.filter(item => item.isSelected); // 保存支付商品列表
+        userCart.cart = userCart.cart.filter(item => !item.isSelected); // 过滤掉支付商品
+
+        // 将移除后的结果写入userCart
+        fs.writeFile('./mock/userCart.json', JSON.stringify(cart), 'utf-8', (err) => {
+          if (err) return console.log('移除支付商品失败');
+
+          userBill.then((bill) => {
+            let userBill = bill.find(item => item.userId === req.session.user);
+            let date = new Date();
+            let year = date.getFullYear();
+            let mouth = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+            let day = date.getDay() < 10 ? '0' + date.getDay() : date.getDay();
+            let hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+            let minute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+            // 订单格式
+            let billInfo = {
+              "pid": Math.round(Math.random() * 100000000000).toFixed(0),
+              "time": `${year}/${mouth}/${day}  ${hour}:${minute}`,
+              "state": "pendingReceived",
+              "commodity": payEva
+            };
+
+            userBill.bill = [...userBill.bill, billInfo]; // 合并订单列表内的商品
+
+            fs.writeFile('./mock/userBill.json', JSON.stringify(bill), 'utf-8', (err) => {
+              if (err) return console.log('添加新订单失败');
+              res.json({
+                "msg": "支付成功",
+                "err": 0,
+                "successCode": 0
+              })
+            })
+          })
+        })
+      });
+    } else {
+      res.json({
+        "msg": "支付失败",
+        "err": 1,
+        "successCode": 1
+      })
+    }
+  })
+});
 
 /*-------------------------------*/
 
 // 获取热门搜索和历史搜索
 app.get('/search', (req, res) => {
-  let hotP = new Promise((resolve, reject) => {
-    fs.readFile('./mock/hotSearch.json', 'utf-8', (err, data) => {
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/search.json', 'utf-8', (err, data) => {
       if (err) {
         reject(err);
         return;
@@ -581,28 +699,15 @@ app.get('/search', (req, res) => {
       resolve(JSON.parse(data));
     })
   });
-  let historyP = new Promise((resolve, reject) => {
-    fs.readFile('./mock/historySearch.json', 'utf-8', (err, data) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(JSON.parse(data));
-    })
-  });
-  hotP.then((hot) => {
-    let obj = {};
-    obj["hot"] = hot;
-    historyP.then((history) => {
-      obj["history"] = history;
-      res.json(obj);
-    })
+  backData.then((result) => {
+    res.json(result);
   })
 });
 
 // 搜索接口
 app.post('/search', (req, res) => {
   let {info} = req.body;
+  if (!info) return res.json([]);
   let dataSource = new Promise((resolve, reject) => {
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
@@ -615,6 +720,7 @@ app.post('/search', (req, res) => {
   dataSource.then((result) => {
     let searchResult = [];
     result.forEach((item) => {
+      if (searchResult.length > 10) return;
       if (item.title.includes(info) || item.describe.includes(info)) {
         let temp = {
           "gid": item.gid,
@@ -629,19 +735,31 @@ app.post('/search', (req, res) => {
 
 // 清空历史搜索
 app.delete('/search', (req, res) => {
-  fs.writeFile('./mock/historySearch.json', '[]', 'utf-8', (err) => {
-    if (err) {
-      res.json({"msg": "清空失败!", err: 1});
-      return;
-    }
-    res.json({"msg": "清空成功!", err: 0})
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/search.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+  backData.then((result) => {
+    result.history = [];
+    fs.writeFile('./mock/search.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) {
+        res.json({"msg": "清空失败!", err: 1});
+        return;
+      }
+      res.json({"msg": "清空成功!", err: 0})
+    })
   })
 });
 
 /*-------------------------------*/
 let tempCode = '!@#$%^&*()_+';
 
-// 注册接口
+// 注册接口 + 手机+验证码 登录
 app.post('/register', (req, res) => {
   let {username, password} = req.body;
   let user = userList.find((item) => {
@@ -670,7 +788,7 @@ app.post('/register', (req, res) => {
     let userInfoItem = {
       "userid": `U${temp + 1}`,
       "userimg": "",
-      "username": 'E' + Math.random().toFixed(7) * 10000000,
+      "username": 'E' + (Math.random()* 10000000).toFixed(0),
       "password": password,
       "email": "",
       "mobile": username,
@@ -715,9 +833,10 @@ app.post('/register', (req, res) => {
         fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
           if (err) return console.log('用户收藏列表写入失败');
 
-          fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
+          fs.writeFile('./mock/userBill.json', JSON.stringify(userBill), (err) => {
             if (err) return console.log('用户订单列表写入失败');
-            res.json({user: username, msg: "", success: "ok", err: 0});
+            req.session.user = userInfoItem.userid;
+            res.json({user: req.session.user, msg: "", success: "ok", err: 0});
           });
         });
       });
@@ -786,6 +905,74 @@ app.post('/userInfo', (req, res) => {
     tempInfo.help = userInfo.help;
     res.json(tempInfo);
   });
+});
+
+/*-------------------------------*/
+
+// 获取收藏列表
+app.get('/collectionlist', (req, res) => {
+  if (!req.session.user) {
+    res.json({"msg": "用户错误！", "err": 1});
+    return;
+  }
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+  let dataList = new Promise((resolve, reject) => {
+    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+
+  backData.then((result) => {
+    let user = result.find(item => item.userId === req.session.user);
+    let collList = user.coll;
+    dataList.then((dataList) => {
+      let backList = [];
+      for (let i = 0; i < collList.length; i++) {
+        let obj = collList[i];
+        dataList.forEach((item) => {
+          if (obj === item.gid) {
+            backList.push(item);
+          }
+        })
+      }
+      res.json({"msg": "返回成功", "err": 0, backList});
+    })
+  })
+});
+
+// 获取订单列表
+app.get('/userbill', (req, res) => {
+  if (!req.session.user) {
+    res.json({"msg": "用户错误！", "err": 1});
+    return;
+  }
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+
+  backData.then((result) => {
+    let user = result.find((item) => item.userId === req.session.user);
+    let bill = user.bill;
+    res.json({"msg": "订单列表", "err": 0, bill});
+  })
 });
 
 /*-------------------------------*/

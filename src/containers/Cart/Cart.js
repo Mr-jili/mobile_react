@@ -5,7 +5,8 @@ import Goods from "./Split/Goods";
 import Recomend from "./Split/Recomend";
 import NoGoods from "./Split/NoGoods";
 import NotLogged from "./Split/NotLogged";
-import Header from "../../components/Header/Header"
+import Header from "../../components/Header/Header";
+
 
 /*   1. 判断是否登录 ：但是现在没有写好登陆，所以现在先调登录接口，假使已经登陆了，待登陆页面写好，再切换至校验是否登陆接口
 *
@@ -22,31 +23,98 @@ class Cart extends React.Component {
   constructor() {
     super();
     this.state = {
-      editor: true
+      editor: true,
+      remove: "",
+      on: false
     };
   }
 
-  componentWillMount() {
-    // 验证是否登录过
-    let isLogin = this.props.getToLoginAPI("15134578149", "123456");
-    // 如果登陆获取购物车里面的数据
-    let getCartData = this.props.getCartDataAPI();
+  async componentWillMount() {
+    // 向后台发送请求确认是否登录
+    await this.props.getToLoginAPI();
+
+    // 获取redux登录状态
+    let {user} = this.props.ifLogin;
+    if (!!user) {
+      // 如果登陆获取购物车里面的数据
+      await this.props.getCartDataAPI();
+    }
   }
 
   // 点击右上角编辑按钮执行的事件
   handleEditor = (e) => {
     let target = e.target;
-    target.innerHTML = target.innerHTML === "编辑" ? "完成" : "编辑";
+    let newData = this.props.refactor;
+    if (target.innerHTML === "编辑") {
+      target.innerHTML = "完成";
+
+      // 刷新状态做准备
+      this.setState({remove: "删除所选", on: true});
+
+      // 清空所有的选中状态
+      newData.map(item => {
+
+        item.isSelected = false;
+        item.items.map(citem => {
+          citem.isflag = citem.isSelected;
+          citem.isSelected = false;
+          return citem;
+        });
+        return item;
+      });
+
+    } else {
+      target.innerHTML = "编辑";
+
+      // 跳转路由，刷新页面，重新还原所有的选中状态
+      if (this.state.on) {
+        // 刷新状态做准备
+        this.setState({on: false});
+        // alert(8)
+        this.props.history.replace("/cart");
+      }
+
+      // 还原清空所有的选中状态
+      // for (let i = 0; i < newData.length; i++) {
+      //   let obj = newData[i];
+      //   alert(obj.isSelected)
+      //   if(obj.isSelected){
+      //     obj.isSelected=true;
+      //   }
+      //
+      //   for (let m = 0; m < obj.items.length; m++) {
+      //     let obj1 = obj.items[m];
+      //     if(obj1.isSelected){
+      //       obj1.isSelected=true;
+      //       alert(9)
+      //     }
+      //   }
+      // }
+      // newData.map(item=>{
+      //   item.isSelected = true;
+      //   item.items.map(citem=>{
+      //     citem.isSelected = true;
+      //     return citem;
+      //   });
+      //   return item;
+      // });
+
+      this.setState({remove: "", on: false});
+    }
     this.setState({editor: !this.state.editor});
   };
 
   render() {
-    let {err, userCart, recommend} = this.props;
+    let {userCart, recommend} = this.props;
+    let err = null;
+    if(this.props.ifLogin){
+      err = this.props.ifLogin.user;
+    }
     let editorStatus = this.state.editor;
     let handleFnStyle = () => {
-      if (err === 0 && userCart.length) {
+      if (err && userCart.length) {
         return {bottom: ".54rem", overflowY: "scroll"};
-      } else if (err === 0 && userCart.length <= 0) {
+      } else if (err && userCart.length <= 0) {
         return {bottom: "0", overflowY: "scroll"};
       } else {
         return {bottom: "0", overflowY: "hidden"};
@@ -57,7 +125,7 @@ class Cart extends React.Component {
 
         {/*=========== 购物车头部插入区域开始 ===========*/}
         <Header back={true}>购物车
-          {err === 0 && userCart.length ? <em className="wj-cart-editor" onClick={this.handleEditor}>编辑</em> : null}
+          {err && userCart.length ? <em className="wj-cart-editor" onClick={this.handleEditor}>编辑</em> : null}
         </Header>
         {/*<div className="top-bar">*/}
         {/*顶部导航区域*/}
@@ -75,7 +143,7 @@ class Cart extends React.Component {
 
           {/*=====================================================*/}
           {
-            err === 0 ? (<div className="wj-is-logged">
+            err ? (<div className="wj-is-logged">
               <div className="wj-is-logged-scroll">
                 <Goods userCart={userCart} editorStatus={editorStatus}/>
                 <Recomend recommend={recommend}/>
@@ -105,7 +173,7 @@ class Cart extends React.Component {
 
         {/*如果购物车有商品，显示底部固定去结算区域开始*/}
         {
-          err === 0 && userCart.length ? <ToSettle/> : null
+          err && userCart.length ? <ToSettle remove={this.state.remove}/> : null
         }
         {/*如果购物车有商品，显示底部固定去结算区域结束*/}
       </div>

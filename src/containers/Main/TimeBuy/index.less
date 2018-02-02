@@ -1,12 +1,17 @@
 .cwj-time-buy {
   background: #ccc;
+  position: relative;
   .timer-group {
     display: flex;
     flex-direction: row;
-    flex: 0 0 16.66%;
+    flex: 0 0 18%;
     margin-top: 2px;
     align-items: center;
-    overflow: hidden;
+    overflow-x: scroll;
+    &::-webkit-scrollbar{
+      display: none;
+    }
+
     .timer-group-item {
       flex: 1;
       margin-right: 2px;
@@ -42,13 +47,12 @@
            justify-content: flex-start;
            align-items: center;
            position: relative;
-           width: 72px;
+           width: .72rem;
            height: 3px;
            border-radius: 1.5px;
            border-color: rgb(192, 67, 67);
            margin-right: 6px;
            display: inline-block;
-           position: relative;
            top: -4px;
           .div{
 
@@ -103,6 +107,8 @@
         }
       }
     }
+
   }
+
 
 }
