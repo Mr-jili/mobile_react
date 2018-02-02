@@ -17,6 +17,7 @@ import {connect, Provider} from "react-redux";
 import * as axiosData from "../../api/api.js";
 import main from "../../store/reducers/main";
 import store from "../../store/index";
+import Loading from "../../components/Loading/Loading";
 
 class Main extends React.Component {
     constructor() {
@@ -27,7 +28,8 @@ class Main extends React.Component {
             limit: [],
             brand: [],
             phone: [],
-            allData:[]
+            allData:[],
+            bl:true
         }
     }
     componentDidMount() {
@@ -104,12 +106,25 @@ class Main extends React.Component {
     }
 
 
+    // loading=()=>{
+    //
+    //     this.setState({
+    //         bl:false
+    //     })
+    // }
+
+
     render() {
+        //
+        // setTimeout(loading,3000)
+        // console.log(this.state.bl);
+
         let {sliders, activity, recommend, crowdfunding} = this.props.homedata;
         let {hot: homeLoaderData, newGoods, limit, brand,phone,allData} = this.state;
         return (
             <Provider store={store}>
                 <div className="main-box" ref={x=>this.ele=x}>
+                    {/*<Loading bl={true}/>*/}
                     <MainHeader/>
                     <div className="cwj-main-body">
                         <MainSlider sliders={sliders || []}/>
