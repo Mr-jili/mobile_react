@@ -5,7 +5,7 @@ import actions from "../../store/actions/detail/evaluate";
 
  class DetailEvaluate extends Component{
     componentWillMount(){
-        this.props.getEvaluateAPI('100907');
+        this.props.getEvaluateAPI(this.props.index);
     }
     render(){
         return (

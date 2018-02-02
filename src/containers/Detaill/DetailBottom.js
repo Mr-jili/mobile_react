@@ -13,14 +13,15 @@ class DetailBottom extends Component{
     }
       async componentDidMount(){
         this.props.getValidateAPI();
-        this.props.getCollection('700');
+        this.props.getCollection(this.props.index);
         await this.props.getDetailCollLen();
+
         // this.props.getDetailCart('700');
     }
 
     handLi1=()=>{
         this.props.isLogin(this.props.detailList.err,this.props.detailList.user);
-        this.props.getCollection('700',1);
+        this.props.getCollection(this.props.index,1);
     };
 
     handLi2=()=>{
@@ -35,12 +36,12 @@ class DetailBottom extends Component{
 
     handLi4=()=>{
         this.props.isLogin(this.props.detailList.err,this.props.detailList.user);
-        this.props.getDetailCart('700');
+        this.props.getDetailCart(this.props.index);
         let art1=this.refs.art1;
         clearTimeout(this.$timer1);
         this.$timer1=setTimeout(()=>{
             art1.style.display='block';
-        },1000);
+        },500);
         clearTimeout(this.$timer2);
         this.$timer2=setTimeout(()=>{
             art1.style.display='none';
