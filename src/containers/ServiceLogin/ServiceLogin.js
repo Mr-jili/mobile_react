@@ -3,7 +3,7 @@ import "./ServiceLogin.less";
 import {connect} from "react-redux";
 import actions from "../../store/actions/login";
 import mi_logo from "../../images/mi_logo.jpg";
-import {withRouter,Link} from "react-router-dom";
+import {withRouter, Link} from "react-router-dom";
 
 class ServiceLogin extends React.Component {
   constructor() {
@@ -18,35 +18,36 @@ class ServiceLogin extends React.Component {
     }
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
     let reg = /^1\d{10}$/;
     let $box = this.dialogBox;
-    let $user = this.userna.value;
-    let $psw = this.psw.value;
+    let $user = this.userna;
+    let $psw = this.psw;
     let $phoneTips = this.loginTips;
 
-    if ($user === "") {
+    if ($user.value === "") {
       $box.style.display = "flex";
       $phoneTips.innerHTML = this.state.login_tipAry[0];//手机未输入提示错误信息
+      $user.style.border="1px solid #f56700";
       return;
     }
 
-    if (!reg.test($user)) {//验证手机号，不匹配出现相应提示
+    if (!reg.test($user.value)) {//验证手机号，不匹配出现相应提示
       $box.style.display = "flex";
       $phoneTips.innerHTML = this.state.login_tipAry[1];
       return;
     }
 
-    if ($user !== "" && $psw === "") {//手机号已经输入但是密码未输入
+    if ($user.value !== "" && $psw.value === "") {//手机号已经输入但是密码未输入
       $box.style.display = "flex";
       $phoneTips.innerHTML = this.state.login_tipAry[2];
+      $psw.style.border="1px solid #f56700";
       return;
     }
 
     //判断用户名和密码
-    console.log(this.props);
     let {username, password} = this.props.login;
-    if ($user !== username || $psw !== password) {
+    if ($user.value !== username || $psw.value !== password) {
       $box.style.display = "flex";
       $phoneTips.innerHTML = this.state.login_tipAry[3];
       return;
@@ -65,13 +66,53 @@ class ServiceLogin extends React.Component {
     }
   };
 
+  //获取焦点后显示边框
+  handleFocusBorder=(e)=>{
+    let $username=this.userna;
+    let $psw=this.psw;
+    if(e.target.type==="text"){
+      $username.style.border="1px solid #f56700";
+      return;
+    }
+
+    if(e.target.type==="password"){
+      $psw.style.border="1px solid #f56700";
+      return;
+    }
+  };
+
+  //失去焦点后隐藏边框
+  handleBlurBorder=(e)=>{
+    let $username=this.userna;
+    let $psw=this.psw;
+    if(e.target.type==="text"){
+      $username.style.border="none";
+    }
+
+    if(e.target.type==="password"){
+      $psw.style.border="none";
+    }
+  };
+
   //密码一旦输入相应提示消失
   handlePsw = (e) => {
     let $box = this.dialogBox;
     let val = e.target.value;
-
     if (val !== "") {
       $box.style.display = "none";
+    }
+  };
+
+  //改变密码的显示状态
+  handleChangeEyeColor = () => {
+    let $eye = this.eye;
+    let $psw = this.psw;
+    if ($psw.type === "password") {
+      $eye.style.color = "#33b4ff";
+      $psw.type = "text";
+    } else {
+      $eye.style.color="#333";
+      $psw.type = "password";
     }
   };
 
@@ -90,12 +131,12 @@ class ServiceLogin extends React.Component {
               <div className="user-input">
                 <ul className="user-input-list">
                   <li>
-                    <input type="text" placeholder="邮箱/手机号码/小米ID" ref={x => this.userna = x}
-                           onKeyUp={this.handleInputUser}/>
+                    <input type="text" placeholder="邮箱/手机号码/小米ID" ref={x => this.userna = x} onKeyUp={this.handleInputUser} onFocus={this.handleFocusBorder} onBlur={this.handleBlurBorder}/>
                   </li>
                   <li>
-                    <input type="password" placeholder="密码" ref={x => this.psw = x} onKeyUp={this.handlePsw}/>
+                    <input type="password" placeholder="密码" ref={x => this.psw = x} onKeyUp={this.handlePsw} onFocus={this.handleFocusBorder} onBlur={this.handleBlurBorder}/>
                   </li>
+                  <i className="iconfont icon-ai-eye" ref={x => this.eye = x} onClick={this.handleChangeEyeColor}></i>
                 </ul>
               </div>
 

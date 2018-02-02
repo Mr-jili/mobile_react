@@ -33,8 +33,8 @@ class Savour extends React.Component {
     }
 
     loadMore=()=>{
-        let ele=this.refs.mainSavour;
-        ele.addEventListener('scroll',(e)=>{
+        let eleSavour=this.refs.mainSavour;
+        eleSavour.addEventListener('scroll',(e)=>{
             clearTimeout(this.$timer);
             this.$timer = setTimeout(() => {
                 let {scrollTop, scrollHeight, offsetHeight} = e.target;

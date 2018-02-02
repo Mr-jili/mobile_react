@@ -53,10 +53,12 @@
 
           ul{
             width: 100%;
+            position: relative;
 
             li{
               height: .41rem;
               position: relative;
+
               input{
                 position: absolute;
                 width: 100%;
@@ -69,8 +71,20 @@
               }
 
               &:nth-child(1){
+                border-radius: .1rem .1rem 0 0;
                 border-bottom: .01rem solid #F3F3F3;
               }
+
+              &:nth-child(2){
+                border-radius: 0 0 .1rem .1rem;
+              }
+            }
+
+            i{
+              position: absolute;
+              right: 0.1rem;
+              bottom: .05rem;
+              font-size: .2rem;
             }
           }
         }
@@ -99,7 +113,7 @@
           .login-tit{
             height: .28rem;
             width: 80%;
-            font-size: .12rem;
+            font-size: .14rem;
             padding-left: .1rem;
             line-height: .28rem;
           }

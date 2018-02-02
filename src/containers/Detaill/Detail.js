@@ -1,85 +1,61 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux'
-import actions from '../../store/actions/detail'
 import './Detail.less'
 import DetailHeader from "./DetailHeader";
-import DetailAddress from "./DetailAddress";
 import DetailEvaluate from "./DetailEvaluate";
-
-
-
+import DetailRoute from "./DetailBottom";
+import store from '../../store'
 
 class Detail extends React.Component {
-   constructor(){
-       super();
-   }
-
-    componentWillMount(){
-       // let list=this.props.location.state;
-       // if(list){
-       //     this.setState({list})
-       // }else {
-           // this.props.match.params.lessonId
-           // let a=await getCommodity(222);
-           // this.setState({list})
-       // console.log(a);
-       // console.log(this.props.getDetailAPI('100907'));
-       //  console.log(this.props.getEvaluate('100907'));
-    }
-
+  constructor(){
+      super();
+  }
   handBack=()=>{
       this.props.history.goBack();
   };
   handHome=()=>{
-      // console.log(this.props);
+      this.props.history.push('/');
   };
 
+  isLogin=(err,user)=>{
+         if(err===1&&user==null){
+             this.props.history.push('/login');
+         }
+  };
+  loginTrue1=(err,user)=>{
+      if(err!==1&&user!=null){
+          this.props.history.push('/cart')
+      }
+  };
+  loginTrue2=(err,user)=>{
+      if(err!==1&&user!=null){
+          this.props.history.push('/pay')
+      }
 
-
-
+  };
   render(){
-
       return (
-        <div className="main">
-            <DetailHeader handBack={this.handBack}/>
+              <div className="main">
+                  <DetailHeader handBack={this.handBack} handHome={this.handHome}/>
 
-            <DetailAddress/>
+                  <div className="detail_xiaomi clearfix">
+                      <img src="http://static.home.mi.com/app/shop/img?id=shop_72bacf474dfad998341d995c6fcb9db1.jpg&t=jpeg" alt=""/>
+                      <p>小米自营产品</p>
+                      <span>为发烧而生</span>
+                  </div>
 
-            <div className="detail_xiaomi clearfix">
-                <img src="http://static.home.mi.com/app/shop/img?id=shop_72bacf474dfad998341d995c6fcb9db1.jpg&t=jpeg" alt=""/>
-                <p>小米自营产品</p>
-                <span>为发烧而生</span>
-            </div>
-
-            <div className="detail_pingjia clearfix">
+                  <div className="detail_pingjia clearfix">
                 <span>
                     用户评价(1777)
                     <b>97%满意 <img src="https://static.home.mi.com/youpin/static/m/res/images/device_shop_right_arrow.png" alt=""/></b>
                 </span>
-            </div>
+                  </div>
 
-            <DetailEvaluate/>
+                  <DetailEvaluate/>
 
-            <ul className="detail_route">
-                <li>
-                    <img src="https://static.home.mi.com/youpin/static/m/res/images/device_shop_detail_unfavor_v2.png" alt=""/>
-                    <span>收藏</span>
-                </li>
-                <li>
-                    <img src="https://static.home.mi.com/youpin/static/m/res/images/shop_cart.png" alt=""/>
-                    <span>购物车</span>
-                </li>
-                <li>
-                    <span>立即购买</span>
-                </li>
-                <li>
-                    <span>计入购物车</span>
-                </li>
-            </ul>
-        </div>
+                  <DetailRoute isLogin={this.isLogin} loginTrue1={this.loginTrue1} loginTrue2={this.loginTrue2} store={store}/>
+              </div>
     )
   }
 }
 export default withRouter(Detail)
-// export default connect(state=>({...state.detail}),actions)(Detail);
