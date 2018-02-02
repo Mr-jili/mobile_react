@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Header from "../../components/Header/Header";
 import "./index.less";
 import {Link} from "react-router-dom"
+import CollectionList from "./CollectionList";
 
 export default class Collection extends Component {
     render() {
@@ -11,22 +12,15 @@ export default class Collection extends Component {
                     我的收藏
                 </Header>
                 <div className="collection-box">
-
-
-                    {/*1*/}
-
-                    <div className="collection-box-view">
-                        <img src="https://static.home.mi.com/youpin/static/m/res/images/std_shop_details_icon_wrong.png"/>
-                        <span>亲您还没有收藏的商品哦！</span>
-                        <div className="collection-box-look">
-                            <Link  className="react-view" to="/">
-                             去逛逛
-                            </Link>
-                        </div>
+                    <CollectionList/>
+                    <div className="collection-box-look">
+                        <Link  className="react-view" to="/">
+                            去逛逛
+                        </Link>
                     </div>
 
 
-                    {/*1*/}
+
 
                 </div>
             </div>

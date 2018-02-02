@@ -9,6 +9,7 @@ import detail from "./detail/detail";
 import evaluate from "./detail/evaluate";
 import isDetail from './detail/isDetailLogin'
 import search from "./search";
+import pay from './pay'
 // 合并reducers
 let reducer = combineReducers({
   cart,
@@ -20,7 +21,8 @@ let reducer = combineReducers({
   detail,
   evaluate,
   isDetail,
-  search
+  search,
+  pay
 });
 
 export default reducer;
