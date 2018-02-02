@@ -213,8 +213,12 @@ fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
 // 获取商品详情
 app.post('/detail/:gid', (req, res) => {
   let {gid} = req.params;
+<<<<<<< HEAD
+    let backData = new Promise((resolve, reject) => {
+=======
   console.log(gid);
   let backData = new Promise((resolve, reject) => {
+>>>>>>> 16ab9603317c836afcf274a426522c1f7b898ff1
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
         reject(err);
@@ -280,7 +284,11 @@ app.get('/collection/:gid', (req, res) => {
   backData.then((result) => {
     let curUser = result.find(item => item.userId === req.session.user);
     let eva = curUser.coll.find(item => item === gid);
+<<<<<<< HEAD
+    if (type==='undefined') {
+=======
     if (type === 'undefined') {
+>>>>>>> 16ab9603317c836afcf274a426522c1f7b898ff1
       if (eva) {
         res.json({"collState": true});
       }
@@ -297,7 +305,7 @@ app.get('/collection/:gid', (req, res) => {
       }
       else {
         curUser.coll.push(gid);
-        fs.writeFile('./mock/userCollection.json', JSON.stringify(result), (err) => {
+          fs.writeFile('./mock/userCollection.json', JSON.stringify(result), (err) => {
           if (err) return res.json({"msg": "修改失败"});
           res.json({"collState": true})
         });
