@@ -21,7 +21,6 @@ let reducer = combineReducers({
   detail,
   evaluate,
   isDetail,
-  search
   search,
   pay
 });
