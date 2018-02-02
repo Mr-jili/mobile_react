@@ -33,7 +33,7 @@ ReactDOM.render((
           <Route path='/login' component={ServiceLogin}/>
           <Route path='/register' component={ServiceRegister}/>
 
-          <Route path='/detail' component={Detail}/>
+          <Route path='/detail/:id' component={Detail}/>
           <Route path='/search' component={Search}/>
           <Route path='/favors' component={Collections}/>{/*收藏页面无数据临时使用*/}
           {/*<Route path='/favor' component={Collection}/>*/}

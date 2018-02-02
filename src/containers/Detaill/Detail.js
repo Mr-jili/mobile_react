@@ -10,6 +10,9 @@ class Detail extends React.Component {
   constructor(){
       super();
   }
+  componentDidMount(){
+      // localStorage.setItem('index',JSON.stringify(this.props.location.state))
+  }
   handBack=()=>{
       this.props.history.goBack();
   };
@@ -33,12 +36,11 @@ class Detail extends React.Component {
       }
 
   };
+
   render(){
-      console.log(this.props);
       return (
               <div className="main">
-                  <DetailHeader handBack={this.handBack} handHome={this.handHome}/>
-
+                  <DetailHeader handBack={this.handBack} handHome={this.handHome} index={this.props.match.params.id}/>
                   <div className="detail_xiaomi clearfix">
                       <img src="http://static.home.mi.com/app/shop/img?id=shop_72bacf474dfad998341d995c6fcb9db1.jpg&t=jpeg" alt=""/>
                       <p>小米自营产品</p>
@@ -52,7 +54,7 @@ class Detail extends React.Component {
                 </span>
                   </div>
 
-                  <DetailEvaluate/>
+                  <DetailEvaluate index={this.props.match.params.id}/>
 
                   <DetailRoute isLogin={this.isLogin} loginTrue1={this.loginTrue1} loginTrue2={this.loginTrue2} store={store}/>
               </div>
