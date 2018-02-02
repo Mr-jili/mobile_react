@@ -56,7 +56,7 @@ class Detail extends React.Component {
 
                   <DetailEvaluate index={this.props.match.params.id}/>
 
-                  <DetailRoute isLogin={this.isLogin} loginTrue1={this.loginTrue1} loginTrue2={this.loginTrue2} store={store}/>
+                  <DetailRoute isLogin={this.isLogin} loginTrue1={this.loginTrue1} loginTrue2={this.loginTrue2} store={store} index={this.props.match.params.id}/>
               </div>
     )
   }

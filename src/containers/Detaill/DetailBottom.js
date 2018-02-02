@@ -41,7 +41,7 @@ class DetailBottom extends Component{
         clearTimeout(this.$timer1);
         this.$timer1=setTimeout(()=>{
             art1.style.display='block';
-        },1000);
+        },500);
         clearTimeout(this.$timer2);
         this.$timer2=setTimeout(()=>{
             art1.style.display='none';
