@@ -1,9 +1,9 @@
 {
-  "detailSearch":{
+  "detailSearch": {
     "gid": "100656",
     "title": "运动休闲羽绒服"
   },
-  "hotSearch":[
+  "hot": [
     {
       "gid": "757",
       "title": "小米5X"
@@ -69,7 +69,7 @@
       "title": "小米电视4A 32英寸 体育版"
     }
   ],
-  "historySearch":[
+  "history": [
     {
       "gid": "700",
       "title": "小米6"

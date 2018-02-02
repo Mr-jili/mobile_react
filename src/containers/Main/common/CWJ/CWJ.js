@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import "./CWJ.less"
-
+import {Link} from "react-router-dom"
 export default class CWJ extends Component {
   render() {
       let phone= this.props.phone;
@@ -12,17 +12,19 @@ export default class CWJ extends Component {
                       {
                           phone.map((item,index)=>(
                               <li key={index}>
-                                  <div className="wj-product-list-top">
-                                      <div>
-                                          <img src={item.url} alt=""/>
+                                  <Link to={{pathname: `/detail/${item.gid}`}}>
+                                      <div className="wj-product-list-top">
+                                          <div>
+                                              <img src={item.url} alt=""/>
+                                          </div>
+                                          <p>{item.describe}
+                                          </p>
                                       </div>
-                                      <p>{item.describe}
-                                      </p>
-                                  </div>
-                                  <div className="wj-product-list-bot">
-                                      <p>{item.title}</p>
-                                      <p>￥<span>{item.price}</span></p>
-                                  </div>
+                                      <div className="wj-product-list-bot">
+                                          <p>{item.title}</p>
+                                          <p>￥<span>{item.price}</span></p>
+                                      </div>
+                                  </Link>
                               </li>
                           ))
                       }

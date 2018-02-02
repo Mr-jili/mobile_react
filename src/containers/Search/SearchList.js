@@ -1,14 +1,15 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import actions from "../../store/actions/search";
 
-export default class HistorySearch extends React.Component {
+class SearchList extends React.Component {
   render() {
     return (
-      <div className='history_search'>
-        <h3>历史搜索 <i className='clear_Btn' onClick={this.props.clearHistory}>清空</i></h3>
-        <ul className='history_list'>
+      <div className='search_list'>
+        <ul className='search_list_wrap'>
           {
-            this.props.historySearch.map((item, index) => {
+            this.props.search.searchResult.map((item, index) => {
               return (
                 <li key={index}>
                   <Link to={{pathname: `/detail/${item.gid}`}}>{item.title}</Link>
@@ -21,3 +22,5 @@ export default class HistorySearch extends React.Component {
     )
   }
 }
+
+export default connect(state => ({...state}), actions)(SearchList);
