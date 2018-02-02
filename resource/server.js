@@ -163,6 +163,7 @@ app.post('/commodity/:gid', (req, res) => {
   // 根据
 });
 
+
 /*-------------------------------*/
 
 // 品味数据接口 post请求 需要参数offset,limit
@@ -221,6 +222,7 @@ app.post('/detail/:gid', (req, res) => {
       resolve(JSON.parse(data));
     })
   });
+
   backData.then((result) => {
     let temp = result.find((item) => item.gid === gid);
     if (temp) {
