@@ -19,6 +19,7 @@ import Search from "./containers/Search/Search";
 import Collections from "./containers/Collection/Collections";
 
 import OrderList from "./containers/OrderList/OrderList";
+import PersonalData from "./containers/PersonalData/PersonalData";
 
 ReactDOM.render((
   <Provider store={store}>
@@ -38,6 +39,7 @@ ReactDOM.render((
           <Route path='/favors' component={Collections}/>{/*收藏页面无数据临时使用*/}
           {/*<Route path='/favor' component={Collection}/>*/}
           <Route path='/orderlist' component={OrderList}/>
+          <Route path='/personaldata' component={PersonalData}/>{/*个人资料*/}
           <Route path='/pay' exact={true} component={Pay}/>
           <Route path='/pay/password' component={PayPassword}/>
           <Redirect to='/'/>
