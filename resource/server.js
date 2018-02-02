@@ -780,7 +780,7 @@ app.post('/register', (req, res) => {
     let userInfoItem = {
       "userid": `U${temp + 1}`,
       "userimg": "",
-      "username": 'E' + Math.random().toFixed(7) * 10000000,
+      "username": 'E' + (Math.random()* 10000000).toFixed(0),
       "password": password,
       "email": "",
       "mobile": username,
