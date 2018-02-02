@@ -7,6 +7,7 @@ import register from "./register";
 import login from "./login";
 import detail from "./detail";
 import search from "./search";
+import pay from './pay'
 // 合并reducers
 let reducer = combineReducers({
   cart,
@@ -16,7 +17,8 @@ let reducer = combineReducers({
   login,
   goodscategory,
   detail,
-  search
+  search,
+  pay
 });
 
 export default reducer;
