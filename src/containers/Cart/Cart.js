@@ -5,7 +5,8 @@ import Goods from "./Split/Goods";
 import Recomend from "./Split/Recomend";
 import NoGoods from "./Split/NoGoods";
 import NotLogged from "./Split/NotLogged";
-import Header from "../../components/Header/Header"
+import Header from "../../components/Header/Header";
+
 
 /*   1. 判断是否登录 ：但是现在没有写好登陆，所以现在先调登录接口，假使已经登陆了，待登陆页面写好，再切换至校验是否登陆接口
 *
@@ -22,11 +23,22 @@ class Cart extends React.Component {
   constructor() {
     super();
     this.state = {
-      editor: true
+      editor: true,
+      remove: ""
     };
   }
 
   componentWillMount() {
+    //let isLogin = this.props.getToLoginAPI();
+    //this.props.getCartDataAPI();
+    // if(!err){
+    //   // 如果登陆获取购物车里面的数据
+    //   this.props.getCartDataAPI();
+    //   return;
+    // }
+    // // 没有登录跳转到登录页面
+
+
     // 验证是否登录过
     let isLogin = this.props.getToLoginAPI("15134578149", "123456");
     // 如果登陆获取购物车里面的数据
@@ -36,7 +48,61 @@ class Cart extends React.Component {
   // 点击右上角编辑按钮执行的事件
   handleEditor = (e) => {
     let target = e.target;
-    target.innerHTML = target.innerHTML === "编辑" ? "完成" : "编辑";
+    let newData = this.props.refactor;
+    if (target.innerHTML === "编辑") {
+      target.innerHTML = "完成";
+
+      this.setState({remove: "删除所选"});
+
+      // 清空所有的选中状态
+      newData.map(item => {
+        // 刷新状态做准备
+        this.on = true;
+        item.isSelected = false;
+        item.items.map(citem => {
+          citem.isflag = citem.isSelected;
+          citem.isSelected = false;
+          return citem;
+        });
+        return item;
+      });
+
+    } else {
+      target.innerHTML = "编辑";
+
+      // 跳转路由，刷新页面，重新还原所有的选中状态
+      if (this.on) {
+        console.log(this.props.history.replace("/cart"));
+      }
+
+
+      // 还原清空所有的选中状态
+      // for (let i = 0; i < newData.length; i++) {
+      //   let obj = newData[i];
+      //   alert(obj.isSelected)
+      //   if(obj.isSelected){
+      //     obj.isSelected=true;
+      //   }
+      //
+      //   for (let m = 0; m < obj.items.length; m++) {
+      //     let obj1 = obj.items[m];
+      //     if(obj1.isSelected){
+      //       obj1.isSelected=true;
+      //       alert(9)
+      //     }
+      //   }
+      // }
+      // newData.map(item=>{
+      //   item.isSelected = true;
+      //   item.items.map(citem=>{
+      //     citem.isSelected = true;
+      //     return citem;
+      //   });
+      //   return item;
+      // });
+
+      this.setState({remove: ""});
+    }
     this.setState({editor: !this.state.editor});
   };
 
@@ -105,7 +171,7 @@ class Cart extends React.Component {
 
         {/*如果购物车有商品，显示底部固定去结算区域开始*/}
         {
-          err === 0 && userCart.length ? <ToSettle/> : null
+          err === 0 && userCart.length ? <ToSettle remove={this.state.remove}/> : null
         }
         {/*如果购物车有商品，显示底部固定去结算区域结束*/}
       </div>

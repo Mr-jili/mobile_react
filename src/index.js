@@ -19,6 +19,8 @@ import Search from "./containers/Search/Search";
 import Collection from "./containers/Collection/Collection";
 import Collections from "./containers/Collection/Collections";
 
+import OrderList from "./containers/OrderList/OrderList";
+
 ReactDOM.render((
   <Provider store={store}>
     <HashRouter>
@@ -37,6 +39,8 @@ ReactDOM.render((
           <Route path='/favor' component={Collection}/>{/*收藏页面有数据临时使用*/}
           <Route path='/favors' component={Collections}/>{/*收藏页面无数据临时使用*/}
           <Route path='/favor' component={Collection}/>
+          <Route path='/pay' component={Pay}/>{/*支付页面临时使用*/}
+          <Route path='/orderlist' component={OrderList}/>
           <Route path='/pay' exact={true} component={Pay}/>{/*支付页面临时使用*/}
           <Route path='/pay/password' component={PayPassword}/>{/*支付页面临时使用*/}
           <Redirect to='/'/>
