@@ -29,7 +29,7 @@ export default class Pay extends React.Component {
                 <img src={pay_alipay} alt=""/>
                 <span>支付宝</span>
               </div>
-              <img src={checkbox} alt="" className="checkbox"/>
+              <img src={unselect} alt="" className="checkbox"/>
             </div>
             <Bar/>
             <div className="method">
@@ -37,10 +37,8 @@ export default class Pay extends React.Component {
                 <img src={pay_mipay} alt="" className="pay"/>
                 <span>小米钱包</span>
               </div>
-              <img src={unselect} alt="" className="checkbox"/>
+              <img src={checkbox} alt="" className="checkbox"/>
             </div>
-
-
           </div>
           <BarThick/>
           <div className="goods">
