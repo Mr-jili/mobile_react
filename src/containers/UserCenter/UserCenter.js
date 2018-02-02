@@ -18,11 +18,6 @@ import message from "../../images/set_icon_message_new.png";
 import feed from "../../images/personal_icon_feedback.png";
 
 class UserCenter extends React.Component {
-  constructor(){
-    super();
-
-  }
-
   async componentDidMount() {
     let validate = await toValidate();
     let userInfo = await getUserInfo();
@@ -46,7 +41,7 @@ class UserCenter extends React.Component {
 
   turnCollectLogin = () => {
     if (!this.loginState) {
-      this.props.history.push("/login");
+      this.props.history.push("/register");
     }else{
       this.props.history.push("/favors");
     }
@@ -54,7 +49,7 @@ class UserCenter extends React.Component {
 
   turnOrderLogin = () => {
     if (!this.loginState) {
-      this.props.history.push("/login");
+      this.props.history.push("/register");
     }else{
       this.props.history.push("/orderlist");
     }
@@ -62,7 +57,7 @@ class UserCenter extends React.Component {
 
   turnLogin = () => {
     if (!this.loginState) {
-      this.props.history.push("/login");
+      this.props.history.push("/register");
     }
   };
 
@@ -80,9 +75,9 @@ class UserCenter extends React.Component {
               </div>
             </div>
             <div className="lyc-user-right">
-              <div className="set-user-info" ref={x=>this.set=x}>
-                <i className="iconfont icon-shezhi-tianchong"></i>
-              </div>
+              <Link className="set-user-info"  to={"/personaldata"}>
+                <i className="iconfont icon-shezhi-tianchong" ref={x=>this.set=x}></i>
+              </Link>
               <img ref={x=>this.toImg=x} src={right_arw} onClick={this.turnLogin}/>
             </div>
           </div>
@@ -179,7 +174,7 @@ class UserCenter extends React.Component {
             </div>
           </div>
           <div className="lyc-user-quit" ref={x => this.quit = x} onClick={()=>{
-            this.props.signOutAPI(this.loginState,this.props.history);
+            this.props.signOutAPI(this.loginState,this.props.history.go(-1));
           }}>退出</div>
         </div>
       </div>

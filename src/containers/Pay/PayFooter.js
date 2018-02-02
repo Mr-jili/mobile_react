@@ -1,16 +1,20 @@
 import React from 'react';
-export default class PayFooter extends React.Component{
+import {withRouter} from 'react-router-dom'
+class PayFooter extends React.Component{
   render(){
     return (
       <div className="footer">
         <div className="total">
           <span>合计:</span>
-          <span>￥5298</span>
+          <span>￥{this.props.total}</span>
         </div>
-        <div className="paybtn">
+        <div className="paybtn" onClick={()=>{
+          this.props.history.push('/pay/password')
+        }}>
           <span>去支付</span>
         </div>
       </div>
     )
   }
 }
+export default withRouter(PayFooter)

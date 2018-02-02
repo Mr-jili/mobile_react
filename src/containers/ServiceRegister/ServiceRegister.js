@@ -3,7 +3,7 @@ import "./ServiceRegister.less";
 import {withRouter, Link} from "react-router-dom"
 import {connect} from "react-redux";
 import actions from "../../store/actions/register";
-import {getCode} from "../../api/api";
+import {toRegister, getCode} from "../../api/api";
 
 import mi_logo from "../../images/mi_logo.jpg";
 
@@ -52,16 +52,19 @@ class ServiceRegister extends Component {
       return;
     }
 
-    this.checkTurnUser();
-
+    this.getRegister();//手机号验证码输入后跳转到个人中心
   };
 
-  //验证码填写之后就可以跳转到个人中心页了
-  checkTurnUser = () => {
-    if (this.phoneCheckNum) {
+  //获取API中手机号和验证码登录后显示随机生成的用户名
+  async getRegister() {
+    let $phoneNum = this.mobile.value;
+    let $checkNode = this.checkNum.value;
+    let checkNodeNum = await toRegister($phoneNum, $checkNode);
+    this.registerUser=checkNodeNum.user;
+    if (this.registerUser) {
       this.props.history.push("/usercenter");
     }
-  };
+  }
 
   //手机号码一旦输入相应提示信息消失
   handleInputPhoneNum = (e) => {
@@ -77,7 +80,7 @@ class ServiceRegister extends Component {
   async getCodeFn() {
     let $phoneNum = this.mobile.value;
     let checkNode = await getCode($phoneNum);
-    this.phoneCheckNum = checkNode.mobileCode;//将获取的验证码放到实例上。
+    //this.phoneCheckNum = checkNode.mobileCode;//将获取的验证码放到实例上。
     setTimeout(() => {
       this.checkNum.value = checkNode.mobileCode;
     }, 3000);
@@ -115,7 +118,7 @@ class ServiceRegister extends Component {
       this.timerBack();
     }
 
-    //执行获取的
+    //执行获取验证码
     this.getCodeFn();
   };
   //实现倒计时
@@ -136,7 +139,6 @@ class ServiceRegister extends Component {
       }
     }, 1000);
   };
-
 
   //验证码一旦输入相应提示消失
   handleCheckNum = (e) => {
