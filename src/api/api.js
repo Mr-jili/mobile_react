@@ -157,9 +157,13 @@ export function getUserInfo() {
 /*----------------------------*/
 
 // 还获取收藏列表
-
 export function getCollList() {
   return axios.get('/collectionlist');
+}
+
+// 获取订单列表
+export function getBill() {
+  return axios.get('/userbill');
 }
 
 // 校验是否登陆
