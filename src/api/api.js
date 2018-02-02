@@ -154,6 +154,11 @@ export function getUserInfo() {
   return axios.post('/userInfo');
 }
 
+// 修改用户名
+export function modifyUserName(username) {
+  return axios.post('/modifyusername',{username})
+}
+
 /*----------------------------*/
 
 // 还获取收藏列表
