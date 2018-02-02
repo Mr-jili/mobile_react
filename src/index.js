@@ -20,7 +20,6 @@ import Collection from "./containers/Collection/Collection";
 import Collections from "./containers/Collection/Collections";
 
 import OrderList from "./containers/OrderList/OrderList";
-import Collections from "./containers/Collection/Collections";
 
 ReactDOM.render((
   <Provider store={store}>

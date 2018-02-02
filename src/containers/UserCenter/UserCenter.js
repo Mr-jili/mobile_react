@@ -44,12 +44,28 @@ class UserCenter extends React.Component {
     }
   }
 
+  turnCollectLogin = () => {
+    if (!this.loginState) {
+      this.props.history.push("/login");
+    }else{
+      this.props.history.push("/favors");
+    }
+  };
+
+  turnOrderLogin = () => {
+    if (!this.loginState) {
+      this.props.history.push("/login");
+    }else{
+      this.props.history.push("/orderlist");
+    }
+  };
+
   turnLogin = () => {
     if (!this.loginState) {
       this.props.history.push("/login");
     }
-    return this.loginState;
   };
+
   render() {
     return (
       <div className="lyc-user-center">
@@ -75,24 +91,24 @@ class UserCenter extends React.Component {
               <div className="lyc-order">
                 <span>我的订单</span>
               </div>
-              <div className="lyc-order-arw" onClick={this.turnLogin}>
+              <div className="lyc-order-arw" onClick={this.turnOrderLogin}>
                 <img src={right_arw}/>
               </div>
             </div>
             <div className="lyc-user-order-detail">
-              <div className="lyc-pending-payment information" onClick={this.turnLogin}>
+              <div className="lyc-pending-payment information" onClick={this.turnOrderLogin}>
                 <img src={pending_payment}/>
                 <span>待付款</span>
               </div>
-              <div className="lyc-goods-receipt information" onClick={this.turnLogin}>
+              <div className="lyc-goods-receipt information" onClick={this.turnOrderLogin}>
                 <img src={goods_receipt}/>
                 <span>待收货</span>
               </div>
-              <div className="lyc-pending-payment information" onClick={this.turnLogin}>
+              <div className="lyc-pending-payment information" onClick={this.turnOrderLogin}>
                 <img src={evaluate}/>
                 <span>待评价</span>
               </div>
-              <div className="lyc-pending-payment information" onClick={this.turnLogin}>
+              <div className="lyc-pending-payment information" onClick={this.turnOrderLogin}>
                 <img src={refund}/>
                 <span>退款订单</span>
               </div>
@@ -114,7 +130,7 @@ class UserCenter extends React.Component {
                   <img src={right_arw}/>
                 </div>
               </div>
-              <div  className="lyc-user-collection" onClick={this.turnLogin}>
+              <div  className="lyc-user-collection" onClick={this.turnCollectLogin}>
                 <div className="collection-img">
                   <img src={collect}/>
                 </div>
