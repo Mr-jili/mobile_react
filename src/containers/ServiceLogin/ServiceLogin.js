@@ -44,7 +44,6 @@ class ServiceLogin extends React.Component {
     }
 
     //判断用户名和密码
-    console.log(this.props);
     let {username, password} = this.props.login;
     if ($user !== username || $psw !== password) {
       $box.style.display = "flex";
