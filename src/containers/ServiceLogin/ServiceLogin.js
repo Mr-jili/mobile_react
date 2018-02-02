@@ -18,41 +18,29 @@ class ServiceLogin extends React.Component {
     }
   }
 
-  handleClick = (e) => {
+  handleClick = () => {
     let reg = /^1\d{10}$/;
     let $box = this.dialogBox;
     let $user = this.userna;
     let $psw = this.psw;
     let $phoneTips = this.loginTips;
-
     if ($user.value === "") {
       $box.style.display = "flex";
       $phoneTips.innerHTML = this.state.login_tipAry[0];//手机未输入提示错误信息
       $user.style.border="1px solid #f56700";
       return;
     }
-
     if (!reg.test($user.value)) {//验证手机号，不匹配出现相应提示
       $box.style.display = "flex";
       $phoneTips.innerHTML = this.state.login_tipAry[1];
       return;
     }
-
     if ($user.value !== "" && $psw.value === "") {//手机号已经输入但是密码未输入
       $box.style.display = "flex";
       $phoneTips.innerHTML = this.state.login_tipAry[2];
       $psw.style.border="1px solid #f56700";
       return;
     }
-
-    //判断用户名和密码
-    let {username, password} = this.props.login;
-    if ($user.value !== username || $psw.value !== password) {
-      $box.style.display = "flex";
-      $phoneTips.innerHTML = this.state.login_tipAry[3];
-      return;
-    }
-
     this.props.toLoginAPI(this.userna.value, this.psw.value, this.props.history);
   };
 
