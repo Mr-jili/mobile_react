@@ -825,7 +825,7 @@ app.post('/register', (req, res) => {
         fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
           if (err) return console.log('用户收藏列表写入失败');
 
-          fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
+          fs.writeFile('./mock/userBill.json', JSON.stringify(userBill), (err) => {
             if (err) return console.log('用户订单列表写入失败');
             req.session.user = userInfoItem.userid;
             res.json({user: req.session.user, msg: "", success: "ok", err: 0});
