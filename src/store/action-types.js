@@ -1,13 +1,28 @@
+import {getCollLen} from "../api/api";
+
 export const INIT_STATE = 'INIT_STATE';
 
+
+//商品详情是否登录
+export const DERAIL_LOGIN_J='DERAIL_LOGIN_J';
 //商品详情页面
 export const GET_DETAIL='GET_DETAIL';
 
-//商品评价
+//商品详情收藏
+export const GET_COLLECT='GET_COLLECT';
+
+//商品详情购物车
+export const GET_COLLEN='GET_COLLEN';
+
+//商品详情添加购物车
+export const DETAIL_CART='DETAIL_CART';
+
+//商品详情评价
 export const GET_EVALUATE='GET_EVALUATE';
 
 // 品味改变状态
 export const CHANGE_SAVOUR = 'CHANGE_SAVOUR';
+
 
 
 
