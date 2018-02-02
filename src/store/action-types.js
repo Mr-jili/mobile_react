@@ -70,6 +70,12 @@ export const SET_GOODSDATA = "SET_GOODSDATA";
 //设置二级分类数据
 export const SET_GOODS_LEVEL_DATA = "SET_GOODS_LEVEL_DATA";
 
+//设置支付列表
+export const SET_PAY_DATA = "SET_PAY_DATA";
+
+//设置支付列表，确认页面用
+export const SET_PAYP_DATA_PASSWORD = "SET_PAYP_DATA_PASSWORD";
+
 //首页数据
 export const GET_HOME_DATA = "GET_HOME_DATA";
 //首页加载热量组件
