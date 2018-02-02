@@ -6,7 +6,7 @@ export default class Items extends React.Component{
       <div className="items">
         {this.props.data.map((item, index) => (
           <div className="item" key={index}>
-            <Link to={{pathname: `/detail/${item.gid}`}}>
+            <Link to={{pathname: `/detail/${item.gid}`,state:item}}>
               <img src={item.url} alt=""/>
               <span>{item.title}</span>
             </Link>
