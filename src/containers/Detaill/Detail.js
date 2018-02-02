@@ -34,6 +34,7 @@ class Detail extends React.Component {
 
   };
   render(){
+      console.log(this.props);
       return (
               <div className="main">
                   <DetailHeader handBack={this.handBack} handHome={this.handHome}/>

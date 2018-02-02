@@ -15,7 +15,7 @@ class DetailBottom extends Component{
         this.props.getValidateAPI();
         this.props.getCollection('700');
         await this.props.getDetailCollLen();
-        // console.log(this.props.match.params);
+
         // this.props.getDetailCart('700');
     }
 
