@@ -186,27 +186,27 @@ app.post('/content', (req, res) => {
 
 let crypto = require('crypto'); // 加密处理插件
 let userList = []; // 所有用户数据
-// let userCart = []; // 所有用户购物车
-// let userCollection = []; // 所有用户收藏
-// let userBill = []; // 所有用户订单
+let userCart = []; // 所有用户购物车
+let userCollection = []; // 所有用户收藏
+let userBill = []; // 所有用户订单
 let userID = '';
 
 fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
   if (err) return [];
   userList = JSON.parse(data);
 });
-// fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
-//   if (err) return [];
-//   userCart = JSON.parse(data);
-// });
-// fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
-//   if (err) return [];
-//   userCollection = JSON.parse(data);
-// });
-// fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
-//   if (err) return [];
-//   userBill = JSON.parse(data);
-// });
+fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+  if (err) return [];
+  userCart = JSON.parse(data);
+});
+fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
+  if (err) return [];
+  userCollection = JSON.parse(data);
+});
+fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
+  if (err) return [];
+  userBill = JSON.parse(data);
+});
 
 /*-------------------------------*/
 
