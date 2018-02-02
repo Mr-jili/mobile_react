@@ -18,7 +18,7 @@ export default function carts(state = initState, action) {
       return {...state, ifLogin: action.payload};
     // 获取登录后的购物车数据和为您推荐数据
     case Types.GET_CART_DATA:
-      return {...state, ...action.payload};
+      return {...state, userCart:action.payload.userCart,recommend:action.payload.recommend};
     // 购物车数量增加
     case Types.SET_CART_NUM_PLUS:
       return {...state, refactor: action.newAry};

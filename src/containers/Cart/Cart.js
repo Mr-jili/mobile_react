@@ -7,12 +7,6 @@ import NoGoods from "./Split/NoGoods";
 import NotLogged from "./Split/NotLogged";
 import Header from "../../components/Header/Header";
 
-
-/*   1. 判断是否登录 ：但是现在没有写好登陆，所以现在先调登录接口，假使已经登陆了，待登陆页面写好，再切换至校验是否登陆接口
-*
-*    2. 现在假使已经登陆
-*
-*/
 import {connect} from "react-redux";
 import actions from "../../store/actions/cart/cart";
 
@@ -74,31 +68,6 @@ class Cart extends React.Component {
         this.props.history.replace("/cart");
       }
 
-      // 还原清空所有的选中状态
-      // for (let i = 0; i < newData.length; i++) {
-      //   let obj = newData[i];
-      //   alert(obj.isSelected)
-      //   if(obj.isSelected){
-      //     obj.isSelected=true;
-      //   }
-      //
-      //   for (let m = 0; m < obj.items.length; m++) {
-      //     let obj1 = obj.items[m];
-      //     if(obj1.isSelected){
-      //       obj1.isSelected=true;
-      //       alert(9)
-      //     }
-      //   }
-      // }
-      // newData.map(item=>{
-      //   item.isSelected = true;
-      //   item.items.map(citem=>{
-      //     citem.isSelected = true;
-      //     return citem;
-      //   });
-      //   return item;
-      // });
-
       this.setState({remove: "", on: false});
     }
     this.setState({editor: !this.state.editor});
@@ -107,7 +76,7 @@ class Cart extends React.Component {
   render() {
     let {userCart, recommend} = this.props;
     let err = null;
-    if(this.props.ifLogin){
+    if (this.props.ifLogin) {
       err = this.props.ifLogin.user;
     }
     let editorStatus = this.state.editor;
@@ -145,7 +114,8 @@ class Cart extends React.Component {
           {
             err ? (<div className="wj-is-logged">
               <div className="wj-is-logged-scroll">
-                <Goods userCart={userCart} editorStatus={editorStatus}/>
+                {/*<Goods userCart={userCart} editorStatus={editorStatus}/>*/}
+                {userCart.length?<Goods/>:null}
                 <Recomend recommend={recommend}/>
               </div>
             </div>) : <NotLogged/>

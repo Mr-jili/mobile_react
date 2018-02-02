@@ -9,9 +9,11 @@ import detail from "./detail/detail";
 import evaluate from "./detail/evaluate";
 import isDetail from './detail/isDetailLogin'
 import search from "./search";
+import personaldata from "./personaldata";
 // 合并reducers
 let reducer = combineReducers({
   cart,
+  personaldata,
   main,
   mySavour,
   register,

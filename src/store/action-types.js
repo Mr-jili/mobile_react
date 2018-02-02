@@ -59,6 +59,10 @@ export const SET_CART_CHANGE_ALL_Refactor = "SET_CART_CHANGE_ALL_Refactor";
 // 移除购物车中的商品
 export const SET_CART_REMOVE_GOODS = "SET_CART_REMOVE_GOODS";
 
+// ==>个人资料修改
+// 设置个人资料
+export const SET_PERSONAL_DATA = "SET_PERSONAL_DATA";
+
 //==>商品分类部分
 //设置商品分类信息
 export const SET_GOODSDATA = "SET_GOODSDATA";

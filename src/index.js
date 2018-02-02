@@ -20,6 +20,7 @@ import Collection from "./containers/Collection/Collection";
 import Collections from "./containers/Collection/Collections";
 
 import OrderList from "./containers/OrderList/OrderList";
+import PersonalData from "./containers/PersonalData/PersonalData";
 
 ReactDOM.render((
   <Provider store={store}>
@@ -43,6 +44,9 @@ ReactDOM.render((
           <Route path='/orderlist' component={OrderList}/>
           <Route path='/pay' exact={true} component={Pay}/>{/*支付页面临时使用*/}
           <Route path='/pay/password' component={PayPassword}/>{/*支付页面临时使用*/}
+          <Route path='/pay/password' component={PayPassword}/>{/*支付页面临时使用*/}
+          <Route path='/personaldata' component={PersonalData}/>{/*个人资料*/}
+
           <Redirect to='/'/>
         </Switch>
       </App>
