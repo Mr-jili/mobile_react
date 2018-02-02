@@ -48,6 +48,7 @@ class UserCenter extends React.Component {
     if (!this.loginState) {
       this.props.history.push("/login");
     }
+    return this.loginState;
   };
   render() {
     return (
@@ -113,7 +114,7 @@ class UserCenter extends React.Component {
                   <img src={right_arw}/>
                 </div>
               </div>
-              <div className="lyc-user-collection" onClick={this.turnLogin}>
+              <div  className="lyc-user-collection" onClick={this.turnLogin}>
                 <div className="collection-img">
                   <img src={collect}/>
                 </div>

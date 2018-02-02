@@ -15,7 +15,7 @@ import ServiceLogin from "./containers/ServiceLogin/ServiceLogin";
 import ServiceRegister from "./containers/ServiceRegister/ServiceRegister";
 import Detail from "./containers/Detaill/Detail";
 import Collection from "./containers/Collection/Collection";
-
+import OrderList from "./containers/OrderList/OrderList";
 ReactDOM.render((
   <Provider store={store}>
     <HashRouter>
@@ -31,6 +31,7 @@ ReactDOM.render((
           <Route path='/detail' component={Detail}/>
           <Route path='/favor' component={Collection}/>
           <Route path='/pay' component={Pay}/>{/*支付页面临时使用*/}
+          <Route path='/orderlist' component={OrderList}/>
           <Redirect to='/'/>
         </Switch>
       </App>
