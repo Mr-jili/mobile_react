@@ -1,4 +1,4 @@
-import * as Types from '../action-types'
+import * as Types from '../../action-types'
 
 let initDetail = {
   msg: '',
@@ -13,4 +13,5 @@ export default function detail(state = initDetail, action) {
   }
   return state;
 }
+
 

@@ -186,34 +186,33 @@ app.post('/content', (req, res) => {
 
 let crypto = require('crypto'); // 加密处理插件
 let userList = []; // 所有用户数据
-let userCart = []; // 所有用户购物车
-let userCollection = []; // 所有用户收藏
-let userBill = []; // 所有用户订单
+// let userCart = []; // 所有用户购物车
+// let userCollection = []; // 所有用户收藏
+// let userBill = []; // 所有用户订单
 let userID = '';
 
 fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
   if (err) return [];
   userList = JSON.parse(data);
 });
-fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
-  if (err) return [];
-  userCart = JSON.parse(data);
-});
-fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
-  if (err) return [];
-  userCollection = JSON.parse(data);
-});
-fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
-  if (err) return [];
-  userBill = JSON.parse(data);
-});
+// fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+//   if (err) return [];
+//   userCart = JSON.parse(data);
+// });
+// fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
+//   if (err) return [];
+//   userCollection = JSON.parse(data);
+// });
+// fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
+//   if (err) return [];
+//   userBill = JSON.parse(data);
+// });
 
 /*-------------------------------*/
 
 // 获取商品详情
 app.post('/detail/:gid', (req, res) => {
   let {gid} = req.params;
-  console.log(gid);
   let backData = new Promise((resolve, reject) => {
     fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
       if (err) {
@@ -280,7 +279,7 @@ app.get('/collection/:gid', (req, res) => {
   backData.then((result) => {
     let curUser = result.find(item => item.userId === req.session.user);
     let eva = curUser.coll.find(item => item === gid);
-    if (!type) {
+    if (type === 'undefined') {
       if (eva) {
         res.json({"collState": true});
       }
@@ -591,6 +590,7 @@ app.post('/pay', (req, res) => {
   })
 });
 
+// 验证支付密码
 app.post('/payverfication', (req, res) => {
   if (!req.session.user) {
     res.json({user: null, msg: "请先登录", success: '', err: 1});
@@ -607,19 +607,71 @@ app.post('/payverfication', (req, res) => {
       resolve(JSON.parse(data));
     })
   });
+  let userCart = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  let userBill = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+
   backData.then((result) => {
     let user = result.find(item => item.userid === req.session.user);
     if (user.paypsd === paypsd) {
-       res.json({
-         "msg":"支付成功",
-         "err":0,
-         "successCode":0
-       })
-    }else {
+      userCart.then((cart) => {
+        let userCart = cart.find(item => item.userId === req.session.user);
+        let payEva = userCart.cart.filter(item => item.isSelected); // 保存支付商品列表
+        userCart.cart = userCart.cart.filter(item => !item.isSelected); // 过滤掉支付商品
+
+        // 将移除后的结果写入userCart
+        fs.writeFile('./mock/userCart.json', JSON.stringify(cart), 'utf-8', (err) => {
+          if (err) return console.log('移除支付商品失败');
+
+          userBill.then((bill) => {
+            let userBill = bill.find(item => item.userId === req.session.user);
+            let date = new Date();
+            let year = date.getFullYear();
+            let mouth = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+            let day = date.getDay() < 10 ? '0' + date.getDay() : date.getDay();
+            let hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+            let minute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+            // 订单格式
+            let billInfo = {
+              "pid": Math.round(Math.random() * 100000000000).toFixed(0),
+              "time": `${year}/${mouth}/${day}  ${hour}:${minute}`,
+              "state": "pendingReceived",
+              "commodity": payEva
+            };
+
+            userBill.bill = [...userBill.bill, billInfo]; // 合并订单列表内的商品
+
+            fs.writeFile('./mock/userBill.json', JSON.stringify(bill), 'utf-8', (err) => {
+              if (err) return console.log('添加新订单失败');
+              res.json({
+                "msg": "支付成功",
+                "err": 0,
+                "successCode": 0
+              })
+            })
+          })
+        })
+      });
+    } else {
       res.json({
-        "msg":"支付失败",
-        "err":1,
-        "successCode":1
+        "msg": "支付失败",
+        "err": 1,
+        "successCode": 1
       })
     }
   })
@@ -698,7 +750,7 @@ app.delete('/search', (req, res) => {
 /*-------------------------------*/
 let tempCode = '!@#$%^&*()_+';
 
-// 注册接口
+// 注册接口 + 手机+验证码 登录
 app.post('/register', (req, res) => {
   let {username, password} = req.body;
   let user = userList.find((item) => {
@@ -727,7 +779,7 @@ app.post('/register', (req, res) => {
     let userInfoItem = {
       "userid": `U${temp + 1}`,
       "userimg": "",
-      "username": 'E' + Math.random().toFixed(7) * 10000000,
+      "username": 'E' + (Math.random() * 10000000).toFixed(0),
       "password": password,
       "email": "",
       "mobile": username,
@@ -772,9 +824,10 @@ app.post('/register', (req, res) => {
         fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
           if (err) return console.log('用户收藏列表写入失败');
 
-          fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
+          fs.writeFile('./mock/userBill.json', JSON.stringify(userBill), (err) => {
             if (err) return console.log('用户订单列表写入失败');
-            res.json({user: username, msg: "", success: "ok", err: 0});
+            req.session.user = userInfoItem.userid;
+            res.json({user: req.session.user, msg: "", success: "ok", err: 0});
           });
         });
       });
@@ -843,6 +896,93 @@ app.post('/userInfo', (req, res) => {
     tempInfo.help = userInfo.help;
     res.json(tempInfo);
   });
+});
+
+// 修改用户名
+app.post('/modifyusername', (req, res) => {
+  if (!req.session.user) {
+    res.json({"msg": "用户错误！", "err": 1});
+    return;
+  }
+  let {username} = req.body;
+  let user = userList.find(item => item.userid === req.session.user);
+  user.username = username;
+  fs.writeFile('./mock/userInfo.json',JSON.stringify(userList),'utf-8',(err) => {
+      if(err) {
+        res.json({"msg":"修改失败","err":1});
+        return;
+      }
+      res.json({"msg":"修改成功","err":0})
+  })
+
+});
+
+/*-------------------------------*/
+
+// 获取收藏列表
+app.get('/collectionlist', (req, res) => {
+  if (!req.session.user) {
+    res.json({"msg": "用户错误！", "err": 1});
+    return;
+  }
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+  let dataList = new Promise((resolve, reject) => {
+    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+
+  backData.then((result) => {
+    let user = result.find(item => item.userId === req.session.user);
+    let collList = user.coll;
+    dataList.then((dataList) => {
+      let backList = [];
+      for (let i = 0; i < collList.length; i++) {
+        let obj = collList[i];
+        dataList.forEach((item) => {
+          if (obj === item.gid) {
+            backList.push(item);
+          }
+        })
+      }
+      res.json({"msg": "返回成功", "err": 0, backList});
+    })
+  })
+});
+
+// 获取订单列表
+app.get('/userbill', (req, res) => {
+  if (!req.session.user) {
+    res.json({"msg": "用户错误！", "err": 1});
+    return;
+  }
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userBill.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+
+  backData.then((result) => {
+    let user = result.find((item) => item.userId === req.session.user);
+    let bill = user.bill;
+    res.json({"msg": "订单列表", "err": 0, bill});
+  })
 });
 
 /*-------------------------------*/

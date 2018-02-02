@@ -18,11 +18,6 @@ import message from "../../images/set_icon_message_new.png";
 import feed from "../../images/personal_icon_feedback.png";
 
 class UserCenter extends React.Component {
-  constructor(){
-    super();
-
-  }
-
   async componentDidMount() {
     let validate = await toValidate();
     let userInfo = await getUserInfo();
@@ -44,11 +39,28 @@ class UserCenter extends React.Component {
     }
   }
 
-  turnLogin = () => {
+  turnCollectLogin = () => {
     if (!this.loginState) {
-      this.props.history.push("/login");
+      this.props.history.push("/register");
+    }else{
+      this.props.history.push("/favors");
     }
   };
+
+  turnOrderLogin = () => {
+    if (!this.loginState) {
+      this.props.history.push("/register");
+    }else{
+      this.props.history.push("/orderlist");
+    }
+  };
+
+  turnLogin = () => {
+    if (!this.loginState) {
+      this.props.history.push("/register");
+    }
+  };
+
   render() {
     return (
       <div className="lyc-user-center">
@@ -63,9 +75,9 @@ class UserCenter extends React.Component {
               </div>
             </div>
             <div className="lyc-user-right">
-              <div className="set-user-info" ref={x=>this.set=x}>
-                <i className="iconfont icon-shezhi-tianchong"></i>
-              </div>
+              <Link className="set-user-info"  to={"/personaldata"}>
+                <i className="iconfont icon-shezhi-tianchong" ref={x=>this.set=x}></i>
+              </Link>
               <img ref={x=>this.toImg=x} src={right_arw} onClick={this.turnLogin}/>
             </div>
           </div>
@@ -74,24 +86,24 @@ class UserCenter extends React.Component {
               <div className="lyc-order">
                 <span>我的订单</span>
               </div>
-              <div className="lyc-order-arw" onClick={this.turnLogin}>
+              <div className="lyc-order-arw" onClick={this.turnOrderLogin}>
                 <img src={right_arw}/>
               </div>
             </div>
             <div className="lyc-user-order-detail">
-              <div className="lyc-pending-payment information" onClick={this.turnLogin}>
+              <div className="lyc-pending-payment information" onClick={this.turnOrderLogin}>
                 <img src={pending_payment}/>
                 <span>待付款</span>
               </div>
-              <div className="lyc-goods-receipt information" onClick={this.turnLogin}>
+              <div className="lyc-goods-receipt information" onClick={this.turnOrderLogin}>
                 <img src={goods_receipt}/>
                 <span>待收货</span>
               </div>
-              <div className="lyc-pending-payment information" onClick={this.turnLogin}>
+              <div className="lyc-pending-payment information" onClick={this.turnOrderLogin}>
                 <img src={evaluate}/>
                 <span>待评价</span>
               </div>
-              <div className="lyc-pending-payment information" onClick={this.turnLogin}>
+              <div className="lyc-pending-payment information" onClick={this.turnOrderLogin}>
                 <img src={refund}/>
                 <span>退款订单</span>
               </div>
@@ -113,7 +125,7 @@ class UserCenter extends React.Component {
                   <img src={right_arw}/>
                 </div>
               </div>
-              <div className="lyc-user-collection" onClick={this.turnLogin}>
+              <div  className="lyc-user-collection" onClick={this.turnCollectLogin}>
                 <div className="collection-img">
                   <img src={collect}/>
                 </div>
@@ -162,7 +174,7 @@ class UserCenter extends React.Component {
             </div>
           </div>
           <div className="lyc-user-quit" ref={x => this.quit = x} onClick={()=>{
-            this.props.signOutAPI(this.loginState,this.props.history);
+            this.props.signOutAPI(this.loginState,this.props.history.go(-1));
           }}>退出</div>
         </div>
       </div>
