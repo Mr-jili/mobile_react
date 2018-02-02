@@ -610,16 +610,16 @@ app.post('/payverfication', (req, res) => {
   backData.then((result) => {
     let user = result.find(item => item.userid === req.session.user);
     if (user.paypsd === paypsd) {
-       res.json({
-         "msg":"支付成功",
-         "err":0,
-         "successCode":0
-       })
-    }else {
       res.json({
-        "msg":"支付失败",
-        "err":1,
-        "successCode":1
+        "msg": "支付成功",
+        "err": 0,
+        "successCode": 0
+      })
+    } else {
+      res.json({
+        "msg": "支付失败",
+        "err": 1,
+        "successCode": 1
       })
     }
   })
@@ -774,7 +774,8 @@ app.post('/register', (req, res) => {
 
           fs.writeFile('./mock/userCollection.json', JSON.stringify(userCollection), (err) => {
             if (err) return console.log('用户订单列表写入失败');
-            res.json({user: username, msg: "", success: "ok", err: 0});
+            req.session.user = userInfoItem.userid;
+            res.json({user: req.session.user, msg: "", success: "ok", err: 0});
           });
         });
       });
@@ -843,6 +844,52 @@ app.post('/userInfo', (req, res) => {
     tempInfo.help = userInfo.help;
     res.json(tempInfo);
   });
+});
+
+/*-------------------------------*/
+
+// 获取收藏列表
+
+app.get('/collectionlist', (req, res) => {
+  if (!req.session.user) {
+    res.json({"msg": "用户错误！", "err": 1});
+    return;
+  }
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCollection.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+  let dataList = new Promise((resolve, reject) => {
+    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+
+  backData.then((result) => {
+    let user = result.find(item => item.userId === req.session.user);
+    let collList = user.coll;
+    dataList.then((dataList) => {
+      let backList = [];
+      for (let i = 0; i < collList.length; i++) {
+        let obj = collList[i];
+        dataList.forEach((item) => {
+          if (obj === item.gid) {
+            backList.push(item);
+          }
+        })
+      }
+      res.json({"msg": "返回成功", "err": 0, backList});
+    })
+  })
 });
 
 /*-------------------------------*/
