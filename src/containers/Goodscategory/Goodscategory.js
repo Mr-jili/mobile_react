@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import actions from '../../store/actions/goodscategory'
 import Banner from "./Banner";
 import Items from "./Items";
+import {withRouter} from 'react-router-dom'
 
 class Goodscategory extends React.Component {
   constructor(){
@@ -30,7 +31,9 @@ class Goodscategory extends React.Component {
     return (
       <div className="container">
         <div className="g-header">
-          <div className="search">
+          <div className="search" onClick={()=>{
+            this.props.history.push('/search')
+          }}>
             <img src={icon_search}/>
             <span>年货嗨抢，最高直降1000</span>
           </div>
@@ -53,4 +56,4 @@ class Goodscategory extends React.Component {
   }
 }
 
-export default connect(state => ({...state.goodscategory}), actions)(Goodscategory);
+export default withRouter(connect(state => ({...state.goodscategory}), actions)(Goodscategory));

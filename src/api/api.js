@@ -43,17 +43,17 @@ export function savourDetail(gid) {
 
 // 商品详情页面
 export function getCommodity(gid) {
-  return axios.post(`/detail/:${gid}`)
+  return axios.post(`/detail/${gid}`)
 }
 
 // 获取评价
 export function getEvaluate(gid) {
-  return axios.post(`/evaluate/:${gid}`)
+  return axios.post(`/evaluate/${gid}`)
 }
 
 // 收藏操作
 export function setCollection(gid, type) {
-  return axios.get(`/collection/:${gid}?type=${type}`);
+  return axios.get(`/collection/${gid}?type=${type}`);
 }
 
 // 获取购物车数量
@@ -96,6 +96,18 @@ export function changePartSelect(from, state) {
 // 修改所有商品选中状态
 export function changeAllSelect(state) {
   return axios.get(`/cart/allstate?state=${state}`)
+}
+
+/*----------------------------*/
+
+// 获取支付列表
+export function getPayList() {
+  return axios.post('/pay')
+}
+
+// 验证支付密码
+export function verPayPassword(paypsd) {
+  return axios.post('/payverfication', {paypsd});
 }
 
 /*----------------------------*/
@@ -143,6 +155,12 @@ export function getUserInfo() {
 }
 
 /*----------------------------*/
+
+// 还获取收藏列表
+
+export function getCollList() {
+  return axios.get('/collectionlist');
+}
 
 // 校验是否登陆
 export function toValidate() {
