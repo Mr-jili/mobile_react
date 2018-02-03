@@ -8,7 +8,7 @@ export default class MainLink extends Component{
                 {
                     activity.map((item,index)=>(
                         <div className='react-view' key={index}>
-                            <img src={item.url} alt="活动"/>
+                            <img src={item.url} alt=""/>
                         </div>
                     ))
 

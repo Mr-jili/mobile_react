@@ -3,9 +3,9 @@ import "./OrderList.less";
 import Header from '../../components/Header/Header';
 import CollectionList from "../Collection/CollectionList";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link,withRouter} from "react-router-dom";
 
-export default class OrderList extends Component {
+class OrderList extends Component {
     constructor() {
         super();
         this.state = {
@@ -24,15 +24,24 @@ export default class OrderList extends Component {
             console.log(err);
         })
     }
-
+    goodBack=()=>{
+        this.props.history.push("/usercenter");
+    };
     render() {
+
         let {order} = this.state;
         //有订单渲染和无订单渲染
         if (order) {
             if (order.bill.length>0) {
                 return (
                     <div className="user-order-list user-order-has">
-                        <Header back={true}>我的订单</Header>
+                        {/*<Header pushUser={"https://static.home.mi.com/youpin/static/m/res/images/std_tittlebar_main_device_back_normal.png"}></Header>*/}
+                        <div className="header">
+                            {<i className="header_icon" onClick={this.goodBack}>
+                                <img src="https://static.home.mi.com/youpin/static/m/res/images/std_tittlebar_main_device_back_normal.png" alt=""/>
+                            </i>}
+                            {"我的订单"}
+                        </div>
                         <div className="mainBox">
                             <div className="order-listBox">
                                 <div className="order-list-item">
@@ -166,3 +175,4 @@ export default class OrderList extends Component {
 
     }
 }
+export default withRouter(OrderList)

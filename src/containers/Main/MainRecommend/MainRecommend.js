@@ -16,10 +16,10 @@ export default class MainRecommend extends Component {
                 <div className='recommend-body'>
                     <div className='only-box'>
                         <img src={src0}
-                             alt="1"/>
+                             alt=""/>
                         <img className="tmd"
                              src={src1}
-                             alt="2"/>
+                             alt=""/>
                     </div>
                 </div>
                 <TwoRow recommend={recommend}/>

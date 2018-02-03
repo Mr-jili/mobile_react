@@ -11,7 +11,7 @@ export default class ThreeRow extends Component {
             return (
                 <div className="three-row-box">
                     <div className='three-row'>
-                        <img src={hotDatas[2].url}/>
+                        <img src={hotDatas[2].url} alt=""/>
                         <div className="t-row-text">
                             <p className="row-title">
                                 {hotDatas[2].title}
@@ -26,7 +26,7 @@ export default class ThreeRow extends Component {
                     {/*you*/}
                     <div className='three-row'>
                         <div className='row-tool'>
-                            <img alt="1"
+                            <img alt=""
                                  src={hotDatas[3].url}/>
                             <div className="t-row-text">
                                 <p className="row-title">
@@ -39,7 +39,7 @@ export default class ThreeRow extends Component {
                             </div>
                         </div>
                         <div className='row-tool'>
-                            <img alt="1"
+                            <img alt=""
                                  src={hotDatas[4].url}/>
                             <div className="t-row-text">
                                 <p className="row-title">
@@ -74,7 +74,7 @@ export default class ThreeRow extends Component {
                     {/*you*/}
                     <div className='three-row'>
                         <div className='row-tool'>
-                            <img alt="1"
+                            <img alt=""
                                  src={newGoods[2].url}/>
                             <div className="t-row-text">
                                 <p className="row-title">
@@ -87,7 +87,7 @@ export default class ThreeRow extends Component {
                             </div>
                         </div>
                         <div className='row-tool'>
-                            <img alt="1"
+                            <img alt=""
                                  src={newGoods[3].url}/>
                             <div className="t-row-text">
                                 <p className="row-title">
@@ -106,58 +106,5 @@ export default class ThreeRow extends Component {
         }
         return null;
 
-
-        // let hots2 = hotDatas.length > 0 && hotDatas[2];
-        // let hots3 = hotDatas.length > 0 && hotDatas[3];
-        // let hots4 = hotDatas.length > 0 && hotDatas[4];
-        // return (
-        // <div className="three-row-box">
-        // <div className='three-row'>
-        // <img src={hots2.url}
-        //                 alt=""/>
-        //             <div className="t-row-text">
-        //                 <p className="row-title">
-        //                     {hots2.title}
-        //                 </p>
-        //                 <p className="row-alt">
-        //                     {hots2.describe}
-        //                 </p>
-        //                 <span className="row-price">
-        //         ￥{hots2.price}
-        //         </span>
-        //             </div>
-        //         </div>
-        //
-        //         {/*右侧*/}
-        //         <div className='three-row'>
-        //             <div className='row-tool'>
-        //                 <img alt="1"
-        //                      src={hots3.url}/>
-        //                 <div className="t-row-text">
-        //                     <p className="row-title">
-        //                         {hots3.title}
-        //                     </p>
-        //                     <span className="row-price">
-        //         ￥{hots3.price}
-        //         </span>
-        //
-        //                 </div>
-        //             </div>
-        //             <div className='row-tool'>
-        //                 <img alt="1"
-        //                      src={hots4.url}/>
-        //                 <div className="t-row-text">
-        //                     <p className="row-title">
-        //                         {hots4.title}
-        //                     </p>
-        //                     <span className="row-price">
-        //         ￥{hots4.price}
-        //         </span>
-        //
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // )
     }
 }

@@ -18,6 +18,7 @@ import * as axiosData from "../../api/api.js";
 import main from "../../store/reducers/main";
 import store from "../../store/index";
 import Loading from "../../components/Loading/Loading";
+import { Spin } from 'antd';
 
 class Main extends React.Component {
     constructor() {
@@ -28,23 +29,25 @@ class Main extends React.Component {
             limit: [],
             brand: [],
             phone: [],
-            allData:[],
-            bl:true
+            allData: [],
+
         }
     }
+
     componentDidMount() {
         //首页首屏init渲染
         axiosData.mainInit().then(res => {
+
             this.props.getHomeData(res);
         }).catch(err => {
             console.log(err);
         })
         //热销
         axiosData.getMainData("G0019").then(res => {
-            // this.props.getLoaderHomeData(res);
             this.setState({
                 hot: res
             })
+            this.timer=setTimeout(this.n,50000);
 
         }).catch(err => {
             console.log(err);
@@ -73,7 +76,6 @@ class Main extends React.Component {
             this.setState({
                 brand: res
             })
-
         }).catch(err => {
             console.log(err);
         })
@@ -87,11 +89,12 @@ class Main extends React.Component {
             console.log(err);
         })
 
- //更多
+        //更多
         axiosData.getMainData("G9999").then(res => {
             this.setState({
                 allData: res
             })
+
 
         }).catch(err => {
             console.log(err);
@@ -103,45 +106,37 @@ class Main extends React.Component {
         // let x= this.props.getLoaderHomeData("G0019");
         //  console.log(x);
 
+
     }
-
-
-    // loading=()=>{
-    //
-    //     this.setState({
-    //         bl:false
-    //     })
-    // }
-
-
     render() {
-        //
-        // setTimeout(loading,3000)
-        // console.log(this.state.bl);
-
         let {sliders, activity, recommend, crowdfunding} = this.props.homedata;
-        let {hot: homeLoaderData, newGoods, limit, brand,phone,allData} = this.state;
+        let {hot: homeLoaderData, newGoods, limit, brand, phone, allData} = this.state;
+        console.log(recommend);
         return (
-            <Provider store={store}>
-                <div className="main-box" ref={x=>this.ele=x}>
-                    {/*<Loading bl={true}/>*/}
-                    <MainHeader/>
-                    <div className="cwj-main-body">
-                        <MainSlider sliders={sliders || []}/>
-                        <MainLink activity={activity || []}/>
-                        <MainRecommend recommend={recommend || []}/>
-                        <MainCrowdfunding crowdfunding={crowdfunding || []}/>
-                        <MainHot homeLoaderData={homeLoaderData || []}/>
-                        <NewGoogs newGoods={newGoods}/>
-                        <TimeBuy limit={limit}/>
-                        <MainBrand brand={brand}/>
-                        <MainPhone phone={phone}/>
-                        <MainMore allData={allData}/>
-                        <MainFooter/>
-                    </div>
-
-                </div>
-            </Provider>
+            <div>
+                {
+                    recommend[0].url===""
+                    ?<div className="example"> <Spin size="large"/></div>
+                        : <Provider store={store}>
+                            <div className="main-box" ref={x => this.ele = x}>
+                                <MainHeader/>
+                                <div className="cwj-main-body">
+                                    <MainSlider sliders={sliders || []}/>
+                                    <MainLink activity={activity || []}/>
+                                    <MainRecommend recommend={recommend || []}/>
+                                    <MainCrowdfunding crowdfunding={crowdfunding || []}/>
+                                    <MainHot homeLoaderData={homeLoaderData || []}/>
+                                    <NewGoogs newGoods={newGoods}/>
+                                    <TimeBuy limit={limit}/>
+                                    <MainBrand brand={brand}/>
+                                    <MainPhone phone={phone}/>
+                                    <MainMore allData={allData}/>
+                                    <MainFooter/>
+                                </div>
+                            </div>
+                        </Provider>
+                }
+            </div>
         )
     }
 }

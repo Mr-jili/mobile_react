@@ -4,10 +4,34 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 99;
+  //z-index: 99;
   background: #f1f1f1;
+  //头部
+  .header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: rgb(255, 255, 255);
+    width:100%;
+    height: .45rem;
+    text-align: center;
+    line-height: .45rem;
+    font-size: 16px;
+    border-bottom: 1px solid #f3f3f3;
+    .header_icon{
+      position: absolute;
+      left: 0;
+      cursor: pointer;
+      img{
+        display: block;
+        width: .39rem;
+        height: .48rem;
+      }
+    }
 
-
+  }
+  //头部
   .mainBox{
     position: absolute;
     top: .45rem;
