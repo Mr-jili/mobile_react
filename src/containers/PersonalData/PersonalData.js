@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 
 import {connect} from "react-redux";
 import actions from "../../store/actions/personaldata/personaldata";
-import {getUserInfo, modifyUserName} from "../../../src/api/api";
+import {getUserInfo, modifyUserName,signOut} from "../../../src/api/api";
 
 class PersonalData extends Component {
   constructor() {
@@ -42,7 +42,7 @@ class PersonalData extends Component {
 
   // 退出登录
   handleExict = () => {
-
+    signOut();
   };
 
   render() {

@@ -3,10 +3,7 @@ import './PayPassword.less'
 import actions from '../../store/actions/pay'
 import {connect} from 'react-redux'
 import {verPayPassword} from '../../api/api'
-import Dialog from './Dialog'
 import {Alert} from 'antd'
-
-// import "antd/dist/antd.css"
 
 class PayPassword extends React.Component {
   async componentDidMount() {
@@ -53,18 +50,15 @@ class PayPassword extends React.Component {
           <a className="forget">忘记密码？</a>
           <a className="yijian">意见反馈</a>
           <div ref="success" className="success">
-            <Alert message="支付成功!" description="" type="success" onClose={console.log(1)}/>
+            <Alert message="支付成功!" description="" type="success"/>
           </div>
           <div ref="error" className="error">
-            <Alert message="支付失败" description="密码不正确，请重新输入！" type="error"
-                   onClose={console.log(1)}/>
+            <Alert message="支付失败" description="密码不正确，请重新输入！" type="error"/>
           </div>
           <p className="footer">- 由小米科技提供技术支持 -</p>
         </div>
       </div>
-
     )
   }
 }
-
 export default connect(state => ({...state.pay}), actions)(PayPassword)
