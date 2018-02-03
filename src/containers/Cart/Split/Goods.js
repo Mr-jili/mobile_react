@@ -8,7 +8,7 @@ class Goods extends Component {
 
   constructor() {
     super();
-    this.state = {newItem: null};
+    this.state = {newItem: null, statusNew: false};
   }
 
   // 加减购物车数量
@@ -17,50 +17,45 @@ class Goods extends Component {
     let newData = this.props.refactor;
     // 减
     if (target.dataset.btn === "minus") {
-      let gid = target.dataset.gid;
-      let num = target.dataset.num;
-      num--;
-      if (num === 0) {
+      target.dataset.num--;
+      if (parseFloat(target.dataset.num) <= 0) {
         this.props.getCartDialogStatus("block", "杯具啦，已到最低值了");
         setTimeout(() => {
           this.props.getCartDialogStatus("none", "杯具啦，已到最低值了");
         }, 2000);
-        return;
-      }
-      let newAry = newData.map(item => {
-        if (item.gid === gid) {
+      } else {
+        let newAry = newData.map(item => {
           item.items.map(citem => {
-            citem.number = num;
+            if (citem.gid === target.dataset.gid) {
+              citem.number = target.dataset.num;
+            }
             return citem;
           });
-        }
-        return item;
-      });
-
-      this.props.getCartNumMinus(newAry, gid, num);
+          return item;
+        });
+        this.props.getCartNumMinus(newAry, target.dataset.gid, target.dataset.num);
+      }
     }
     // 加
     if (target.dataset.btn === "plus") {
-      let gid = target.dataset.gid;
-      let num = target.dataset.num;
-      num++;
-      if (num === 16) {
+      target.dataset.num++;
+      if (parseFloat(target.dataset.num) >= 16) {
         this.props.getCartDialogStatus("block", "杯具啦，已到最高值了");
         setTimeout(() => {
           this.props.getCartDialogStatus("none", "杯具啦，已到最高值了");
         }, 2000);
-        return;
-      }
-      let newAry = newData.map(item => {
-        if (item.gid === gid) {
+      } else {
+        let newAry = newData.map(item => {
           item.items.map(citem => {
-            citem.number = num;
+            if (citem.gid === target.dataset.gid) {
+              citem.number = target.dataset.num;
+            }
             return citem;
           });
-        }
-        return item;
-      });
-      this.props.getCartNumPlus(newAry, gid, num);
+          return item;
+        });
+        this.props.getCartNumPlus(newAry, target.dataset.gid, target.dataset.num);
+      }
     }
   };
 
@@ -81,6 +76,7 @@ class Goods extends Component {
       }
       return item;
     });
+    this.setState({statusNew: status});
     this.props.getCartChangePartSelectAPI(newItem, from, status);
   };
 
@@ -155,6 +151,9 @@ class Goods extends Component {
     for (let j = 0; j < newArr.length; j++) {
       if (newArr.from) break;
       return newArr.map((item1, index) => {
+        if (!item1.gid) {
+          return null;
+        }
         let {from, minfreight, isSelected, items = [], gid, price, title, number} = item1;
         return (
           <li style={items.length === 0 ? {display: "none"} : null} ref={x => this.li = x} key={index} data-gid={gid}

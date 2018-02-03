@@ -10,8 +10,6 @@ import Header from "../../components/Header/Header";
 import {connect} from "react-redux";
 import actions from "../../store/actions/cart/cart";
 
-// import {toLogin, getCartData} from "../../api/api";
-
 class Cart extends React.Component {
 
   constructor() {
@@ -19,7 +17,10 @@ class Cart extends React.Component {
     this.state = {
       editor: true,
       remove: "",
-      on: false
+      on: false,
+      OFF: true,
+      oldData: [],
+      newData: []
     };
   }
 
@@ -35,28 +36,33 @@ class Cart extends React.Component {
     }
   }
 
+
   // 点击右上角编辑按钮执行的事件
   handleEditor = (e) => {
     let target = e.target;
-    let newData = this.props.refactor;
+
+    if (this.state.OFF) {
+      this.setState({oldData: this.props.refactor});
+      this.setState({newData: JSON.parse(JSON.stringify(this.props.refactor))});
+      this.setState({OFF: false});
+    }
+
+    let oldData = this.state.oldData.length ? this.state.oldData : this.props.refactor,
+      newData = this.state.newData.length ? this.state.newData : JSON.parse(JSON.stringify(this.props.refactor));
     if (target.innerHTML === "编辑") {
       target.innerHTML = "完成";
-
       // 刷新状态做准备
       this.setState({remove: "删除所选", on: true});
-
       // 清空所有的选中状态
-      newData.map(item => {
-
+      newData = newData.map(item => {
         item.isSelected = false;
         item.items.map(citem => {
-          citem.isflag = citem.isSelected;
           citem.isSelected = false;
           return citem;
         });
         return item;
       });
-
+      this.props.editorStatusAllFalse(newData);
     } else {
       target.innerHTML = "编辑";
 
@@ -64,13 +70,15 @@ class Cart extends React.Component {
       if (this.state.on) {
         // 刷新状态做准备
         this.setState({on: false});
-        // alert(8)
         this.props.history.replace("/cart");
       }
-
       this.setState({remove: "", on: false});
+      // 恢复以前选择点击编辑的状态
+      // console.log(this.props.newRefactor);
+      console.log(newData);
+      console.log(oldData);
+      this.props.editStatusOld(oldData);
     }
-    this.setState({editor: !this.state.editor});
   };
 
   render() {
@@ -79,7 +87,6 @@ class Cart extends React.Component {
     if (this.props.ifLogin) {
       err = this.props.ifLogin.user;
     }
-    let editorStatus = this.state.editor;
     let handleFnStyle = () => {
       if (err && userCart.length) {
         return {bottom: ".54rem", overflowY: "scroll"};
@@ -89,6 +96,7 @@ class Cart extends React.Component {
         return {bottom: "0", overflowY: "hidden"};
       }
     };
+
     return (
       <div className="cart">
 
@@ -96,9 +104,7 @@ class Cart extends React.Component {
         <Header back={true}>购物车
           {err && userCart.length ? <em className="wj-cart-editor" onClick={this.handleEditor}>编辑</em> : null}
         </Header>
-        {/*<div className="top-bar">*/}
-        {/*顶部导航区域*/}
-        {/*</div>*/}
+
         {/*=========== 购物车头部插入区域结束 ===========*/}
 
         <div className="wj-cart-content" style={handleFnStyle()}>
@@ -115,7 +121,7 @@ class Cart extends React.Component {
             err ? (<div className="wj-is-logged">
               <div className="wj-is-logged-scroll">
                 {/*<Goods userCart={userCart} editorStatus={editorStatus}/>*/}
-                {userCart.length?<Goods/>:null}
+                {userCart.length ? <Goods/> : null}
                 <Recomend recommend={recommend}/>
               </div>
             </div>) : <NotLogged/>

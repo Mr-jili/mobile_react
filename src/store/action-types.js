@@ -4,26 +4,24 @@ export const INIT_STATE = 'INIT_STATE';
 
 
 //商品详情是否登录
-export const DERAIL_LOGIN_J='DERAIL_LOGIN_J';
+export const DERAIL_LOGIN_J = 'DERAIL_LOGIN_J';
 //商品详情页面
-export const GET_DETAIL='GET_DETAIL';
+export const GET_DETAIL = 'GET_DETAIL';
 
 //商品详情收藏
-export const GET_COLLECT='GET_COLLECT';
+export const GET_COLLECT = 'GET_COLLECT';
 
 //商品详情购物车
-export const GET_COLLEN='GET_COLLEN';
+export const GET_COLLEN = 'GET_COLLEN';
 
 //商品详情添加购物车
-export const DETAIL_CART='DETAIL_CART';
+export const DETAIL_CART = 'DETAIL_CART';
 
 //商品详情评价
-export const GET_EVALUATE='GET_EVALUATE';
+export const GET_EVALUATE = 'GET_EVALUATE';
 
 // 品味改变状态
 export const CHANGE_SAVOUR = 'CHANGE_SAVOUR';
-
-
 
 
 // 购物车获取是否登陆状态
@@ -58,6 +56,12 @@ export const SET_CART_CHANGE_ALL_Refactor = "SET_CART_CHANGE_ALL_Refactor";
 
 // 移除购物车中的商品
 export const SET_CART_REMOVE_GOODS = "SET_CART_REMOVE_GOODS";
+
+// 点击编辑到完成，修改所有的选中为不选状态
+export const SET_CART_STATUS_ALL_FALSE = "SET_CART_STATUS_ALL_FALSE";
+
+// 点击完成到编辑，恢复以前点击完成前的选择状态
+export const SET_CART_STATUS_OLD = "SET_CART_STATUS_OLD";
 
 // ==>个人资料修改
 // 设置个人资料

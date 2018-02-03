@@ -51,7 +51,8 @@ let actions = {
       dispatch({
         type: Types.SET_CART_CHANGE_PART_SELECT,
         parentItem: item,
-        payload: changePartSelect(from, state)
+        payload: changePartSelect(from, state),
+        allStatus: state
       });
     }
   },
@@ -74,9 +75,19 @@ let actions = {
   // 移除购物车中的商品
   removeCartListAPI(item, gid) {
     return function (dispatch, getState) {
-      console.log(gid);
       dispatch({type: Types.SET_CART_REMOVE_GOODS, newAry: item, payload: delCartData(gid)});
     }
+  },
+  // 点击编辑到完成，修改所有的选中为不选状态
+  editorStatusAllFalse(item) {
+    return {type: Types.SET_CART_STATUS_ALL_FALSE, refactor: item};
+    // return function (dispatch, getState) {
+    //   dispatch({type: Types.SET_CART_STATUS_ALL_FALSE, refactor: item});
+    // }
+  },
+  // 点击完成到编辑，恢复以前点击完成前的选择状态
+  editStatusOld(oldData) {
+    return {type: Types.SET_CART_STATUS_OLD, oldData};
   }
 };
 

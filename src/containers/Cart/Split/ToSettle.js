@@ -4,17 +4,13 @@ import actions from "../../../store/actions/cart/cart";
 import {withRouter} from "react-router-dom";
 
 class ToSettle extends Component {
-  constructor() {
-    super();
-  }
 
   componentWillMount() {
     this.props.getCartChangeAllSelectAPI(this.props.userCart.every(item => item.isSelected));
   }
 
   // 修改所有商品选中状态
-  handleCheckAllList = (e) => {
-    let target = e.target;
+  handleCheckAllList = () => {
     let newArr = this.props.refactor;
     // 改自己
     let status = !this.props.allStatus;
@@ -42,21 +38,14 @@ class ToSettle extends Component {
         }
         return;
       }
-      item.items.map((citem, index) => {
+
+      item.items.forEach((citem, index) => {
         if (citem.isSelected) {
           removeAry.push(citem.gid);
-          for (let key in citem) {
-            delete citem[key];
-          }
-          return;
+          item.items.splice(index, 1);
         }
-        return citem;
+
       });
-      if (item.items.length === 0) {
-        for (let key in item) {
-          delete item[key];
-        }
-      }
       return item;
     });
     if (removeAry.length === 0) {
@@ -70,16 +59,16 @@ class ToSettle extends Component {
     setTimeout(() => {
       this.props.getCartDialogStatus("none", "主人，我要走了");
     }, 2000);
-    this.props.removeCartListAPI(newAry, removeAry);
     let delIndex = null;
     newAry.forEach((item, index) => {
       if (typeof item === 'undefined') {
         delIndex = index;
       }
     });
-    if(delIndex !== null){
-      newAry.splice(delIndex,1);
+    if (delIndex !== null) {
+      newAry.splice(delIndex, 1);
     }
+    this.props.removeCartListAPI(newAry, removeAry);
   };
 
   // 计算去结算里面的个数
@@ -124,6 +113,7 @@ class ToSettle extends Component {
   };
 
   render() {
+    console.log(!this.props.partStatus);
     return (
       <div className="wj-to-settle">
         <div onClick={this.handleCheckAllList} className="wj-to-settle-l">
