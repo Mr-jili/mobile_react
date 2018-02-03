@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+﻿import React,{Component} from 'react'
 import './animate.css'
 import './detail_animate.css'
 import shop from '../../images/gift.png'
@@ -79,8 +79,10 @@ class DetailBottom extends Component{
         return (
             <div>
                 <ul className="detail_route" >
+
                     <div className="wraper1" ref="wraper1" style={{display:'none'}}><img src={shop} alt="" className="img1"/></div>
                     <div className="DetailCart" ref="art1" style={{display:'none'}}>添加购物车成功</div>
+
                     <div className="DetailCount" ref='count1' style={{display:'none'}}>亲,太贪心了,仅限购3次,but我喜欢~😙</div>
                     <li onClick={this.handLi1}>
                         {this.props.collectList.collState.collState?<img src="https://static.home.mi.com/youpin/static/m/res/images/device_shop_detail_favor_v2.png" alt=""/>
