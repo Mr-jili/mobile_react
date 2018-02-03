@@ -1,54 +1,64 @@
 import React from 'react';
 import './PayPassword.less'
 import actions from '../../store/actions/pay'
-import {connect}  from 'react-redux'
+import {connect} from 'react-redux'
 import {verPayPassword} from '../../api/api'
 import Dialog from './Dialog'
+import {Alert} from 'antd'
 
-class PayPassword extends React.Component{
-  async componentDidMount(){
+// import "antd/dist/antd.css"
+
+class PayPassword extends React.Component {
+  async componentDidMount() {
     await this.props.getPayListPassWordAPI();
     this.refs.password.focus();
   }
 
-  handleChange=(e)=>{
-    if(e.target.value.length===6){
-      verPayPassword(e.target.value).then((result)=>{
-        console.log(result);
-        if(result.successCode === 0){
-          setTimeout(()=> {
-            alert("支付成功！");
-            this.props.history.push('/orderlist');
-          },3000)
+  handleChange = (e) => {
+    if (e.target.value.length === 6) {
+      verPayPassword(e.target.value).then((result) => {
+        if (result.successCode === 0) {
+          setTimeout(() => {
+            this.refs.success.style.display = "block";
+            setTimeout(() => {
+              // alert("支付成功！");
+              this.refs.success.style.display = "none";
+              this.props.history.push('/orderlist');
+            }, 2000)
+          }, 1000)
         } else {
-          alert("支付失败,请重新输入密码！");
-          this.refs.password.value=""
+          // alert("支付失败,请重新输入密码！");
+          this.refs.error.style.display = "block";
+          setTimeout(() => {
+            this.refs.error.style.display = "none";
+            this.refs.password.value = "";
+          }, 2000)
         }
       });
     }
 
   };
 
-  render(){
+  render() {
     return (<div>
         <div className="pay-password-container">
-          <p className="title">使用小米白条（不分期）支付</p>
+          <p className="title">使用小米钱包支付</p>
           <p className="price">{this.props.totalparice}<span>元</span></p>
           {/*<div className="password">*/}
-          <input type="password" className="password"  maxLength="6"
-                 onChange={(e)=>{this.handleChange(e)}}
+          <input type="password" className="password" maxLength="6"
+                 onChange={(e) => {
+                   this.handleChange(e)
+                 }}
                  ref="password"/>
-          {/*</div>*/}
-          {/*<div className="password1">*/}
-          {/*<div><span className="istrue"></span></div>*/}
-          {/*<div><span className="istrue"></span></div>*/}
-          {/*<div><span className="istrue"></span></div>*/}
-          {/*<div><span className="istrue"></span></div>*/}
-          {/*<div><span className="istrue"></span></div>*/}
-          {/*<div><span className="istrue"></span></div>*/}
-          {/*</div>*/}
           <a className="forget">忘记密码？</a>
           <a className="yijian">意见反馈</a>
+          <div ref="success" className="success">
+            <Alert message="支付成功!" description="" type="success" onClose={console.log(1)}/>
+          </div>
+          <div ref="error" className="error">
+            <Alert message="支付失败" description="密码不正确，请重新输入！" type="error"
+                   onClose={console.log(1)}/>
+          </div>
           <p className="footer">- 由小米科技提供技术支持 -</p>
         </div>
       </div>

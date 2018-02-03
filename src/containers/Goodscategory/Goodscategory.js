@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import actions from '../../store/actions/goodscategory'
 import Banner from "./Banner";
 import Items from "./Items";
+import {withRouter} from "react-router-dom"
 
 class Goodscategory extends React.Component {
 
@@ -49,4 +50,4 @@ class Goodscategory extends React.Component {
   }
 }
 
-export default connect(state => ({...state.goodscategory}), actions)(Goodscategory);
+export default withRouter(connect(state => ({...state.goodscategory}), actions)(Goodscategory));
