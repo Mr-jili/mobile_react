@@ -7,7 +7,8 @@ import Dialog from './Dialog'
 
 class PayPassword extends React.Component{
   async componentDidMount(){
-    await this.props.getPayListPassWordAPI()
+    await this.props.getPayListPassWordAPI();
+    this.refs.password.focus();
   }
 
   handleChange=(e)=>{

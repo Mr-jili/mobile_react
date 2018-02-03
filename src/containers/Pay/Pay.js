@@ -29,7 +29,15 @@ class Pay extends React.Component {
         <Header back={true}>确认信息</Header>
         <div className="content">
           <div className="address">
-            <span>没有地址信息，请点击后添加地址</span>
+            {/*<span>没有地址信息，请点击后添加地址</span>*/}
+            <div className="content">
+              <div className="name-phone">
+                <p className="name">杨波</p>
+                <p className="phone">151****8149</p>
+              </div>
+              <p className="ad">中国 北京 北京市 昌平区 回龙观地区 回龙观东大街3号楼02号东段珠峰培训(102200)</p>
+              <p className="post"></p>
+            </div>
             <img src={right_arrow} alt=""/>
           </div>
           <BarThick/>

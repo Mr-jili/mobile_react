@@ -7,7 +7,8 @@
   .content{
     font-size: .14rem;
     margin-top: .45rem;
-    margin-bottom: .53rem;
+    margin-bottom: .63rem;
+    //padding-bottom: .2rem;
     display: flex;
     flex-direction: column;
     overflow: scroll;
@@ -24,15 +25,33 @@
       margin: 0 auto;
     }
     .address{
-      margin: 0 .13rem;
+      margin: 0.08rem .2rem 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: .7rem;
-      span{
-        font-size: .14rem;
-        color: rgb(182,9,9);
+      //span{
+      //  font-size: .14rem;
+      //  color: rgb(182,9,9);
+      //}
+
+      .content{
+        display: flex;
+        flex-direction: column;
+        .name-phone{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        .ad{
+          font-size: .12rem;
+          overflow: hidden;
+          text-overflow:ellipsis;
+        }
+
+
       }
+
       img{
         width: .13rem;
         height: .13rem;
@@ -143,8 +162,6 @@
           span{
             color: rgb(182,9,9);
           }
-
-
         }
       }
     }
@@ -213,42 +230,62 @@
 
   }
 
-  .footer{
+  .bottom{
     position: fixed;
-    height: .53rem;
+    height: .7rem;
+    z-index: 11;
     width: 100%;
     bottom: 0;
     left: 0;
-    z-index: 11;
-    background:rgb(242,242,242);
-    border-style: solid;
-    border-width: .01rem 0 0;
-    border-color: rgb(191,191,191);
     display: flex;
-    justify-content: space-between;
-    .total{
+    flex-direction: column;
+
+    .address{
       display: flex;
-      margin-left: .2rem;
       align-items: center;
-      span{
-        font-size: .13rem;
-        &:nth-child(2){
-          color: rgb(182,9,9);
+      padding: 0 .2rem;
+      height: .3rem;
+      color: rgb(153, 153, 153);
+      background: rgb(252, 249, 196);
+      font-size: .12rem;
+    }
+    .footer{
+      //position: fixed;
+      height: .53rem;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      //z-index: 11;
+      background:rgb(242,242,242);
+      border-style: solid;
+      border-width: .01rem 0 0;
+      border-color: rgb(191,191,191);
+      display: flex;
+      justify-content: space-between;
+      .total{
+        display: flex;
+        margin-left: .2rem;
+        align-items: center;
+        span{
+          font-size: .13rem;
+          &:nth-child(2){
+            color: rgb(182,9,9);
+          }
         }
       }
-    }
-    .paybtn{
-      flex: 0 0 1rem;
-      background: rgb(182,9,9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      span{
-        font-size: .13rem;
-        color: #FFF;
+      .paybtn{
+        flex: 0 0 1rem;
+        background: rgb(182,9,9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span{
+          font-size: .13rem;
+          color: #FFF;
+        }
       }
-    }
 
+    }
   }
 }
 
