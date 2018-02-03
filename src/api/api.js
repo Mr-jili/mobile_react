@@ -122,6 +122,11 @@ export function searchInfo(info) {
   return axios.post('/search', {info});
 }
 
+// 添加历史记录
+export  function putHistory(gid) {
+  return axios.put(`/search?gid=${gid}`)
+}
+
 // 清空历史搜索
 export function clearHistorySearch() {
   return axios.delete('/search');
@@ -175,3 +180,4 @@ export function getBill() {
 export function toValidate() {
   return axios.get('/validate');
 }
+// 共33个接口

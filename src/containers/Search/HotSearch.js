@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 export default class HotSearch extends React.Component {
@@ -11,7 +10,7 @@ export default class HotSearch extends React.Component {
           {
             this.props.hotSearch.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index} onClick={()=>{this.props.putHistory(item.gid)}}>
                   <Link to={{pathname:`/detail/${item.gid}`}}>{item.title}</Link>
                 </li>
               )

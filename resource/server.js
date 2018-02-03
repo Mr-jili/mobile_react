@@ -12,6 +12,7 @@ app.use(session({
   saveUninitialized: true,
   secret: 'yangbo'
 }));
+// 中间件 允许跨域
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Credentials", true);
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
   else next();
 });
 let id = '';
+// 中间件 处理传进来的分类 id
 app.use((req, res, next) => {
   let tempId = req.query.id || req.body.id;
   switch (tempId) {
@@ -99,10 +101,10 @@ app.use((req, res, next) => {
 
 // 首页接口 首屏数据
 app.post('/init', (req, res) => {
-  let sliders = require('./mock/sliders.json');
-  let activity = require('./mock/activity.json');
-  let recommend = require('./mock/recommend.json');
-  let crowdfunding = require('./mock/crowdfunding.json');
+  let sliders = require('./mock/sliders.json'); //  轮播图数据
+  let activity = require('./mock/activity.json'); // 活动导航
+  let recommend = require('./mock/recommend.json'); //　有品推荐数据
+  let crowdfunding = require('./mock/crowdfunding.json'); // 小米众筹数据
   res.json({sliders, activity, recommend, crowdfunding});
 });
 
@@ -157,12 +159,11 @@ app.get('/goodscategory', (req, res) => {
   res.json(result);
 });
 
-// 点击商品||banner图 跳转请求
+// 点击商品二级分类
 app.post('/commodity/:gid', (req, res) => {
   let {gid} = req.params;
-  // 根据
+  // 暂时不做
 });
-
 
 /*-------------------------------*/
 
@@ -172,14 +173,7 @@ app.post('/savour', (req, res) => {
   let savour = require('./mock/savour.json') || [];
   let hasMore = offset < savour.length;
   savour = savour.slice(offset, limit + offset);
-  res.json({hasMore, savour})
-});
-
-app.post('/content', (req, res) => {
-  //aid: 所属种类id article_id : 内容id
-  let {gid, article_id} = req.body;
-
-  res.json({});
+  res.json({hasMore, savour}) // 返回是否还有数据，返回数据
 });
 
 /*-------------------------------*/
@@ -189,7 +183,7 @@ let userList = []; // 所有用户数据
 let userCart = []; // 所有用户购物车
 let userCollection = []; // 所有用户收藏
 let userBill = []; // 所有用户订单
-let userID = '';
+let userID = ''; // 用户id 暂时没有用处
 
 fs.readFile('./mock/userInfo.json', 'utf-8', (err, data) => {
   if (err) return [];
@@ -279,14 +273,14 @@ app.get('/collection/:gid', (req, res) => {
   backData.then((result) => {
     let curUser = result.find(item => item.userId === req.session.user);
     let eva = curUser.coll.find(item => item === gid);
-    if (type === 'undefined') {
+    if (type === 'undefined') { // 如果type没有传值，执行获取状态操作
       if (eva) {
         res.json({"collState": true});
       }
       else {
         res.json({"collState": false})
       }
-    } else {
+    } else { // 如果type有值，执行修改状态操作
       if (eva) {
         curUser.coll = curUser.coll.filter(item => item !== gid);
         fs.writeFile('./mock/userCollection.json', JSON.stringify(result), (err) => {
@@ -317,6 +311,7 @@ app.get('/collLength', (req, res) => {
     });
   });
   if (!req.session.user) {
+    // 未登录状态 返回商品数量0
     res.json({collLength: 0, "err": 0});
     return;
   }
@@ -354,20 +349,23 @@ app.get("/cart", (req, res) => {
       return item.gid === gid;
     });
     commodity.number = parseInt(number) || 1;
-    return commodity;
+    return commodity; // 返回找到的商品数据
   }).then((result) => {
     let userCart = JSON.parse(fs.readFileSync('./mock/userCart.json', 'utf-8'));
     userCart.forEach((item) => {
-      let proIndex = 0;
+      let proIndex = null;
       if (item.userId === req.session.user) {
         let flag = item.cart.some((item, index) => {
+          // 查询这个商品是否已经加入过购物车，如果已经存在，找到在购物车中的位置
           proIndex = index;
           return item.gid === gid;
         });
         if (flag) {
+          // 如果存在就执行数量累加
           item.cart[proIndex].number += parseInt(number);
         }
         else {
+          // 如果不存在 就添加一个新的商品
           item.cart.push(result);
         }
       }
@@ -398,7 +396,7 @@ app.post('/cart', (req, res) => {
     let userCart = JSON.parse(data);
     let findCart = userCart.find((item) => item.userId === req.session.user) || [];
     let recommend = require('./mock/allData.json');
-    recommend = recommend.slice(7, 15);
+    recommend = recommend.slice(7, 15); // 推荐的数据
     res.json({"userCart": findCart.cart, recommend});
   });
 });
@@ -414,15 +412,18 @@ app.put('/cart', (req, res) => {
     if (err) return console.log('读取失败!');
     let userCart = JSON.parse(data);
     let curCartIndex, curProIndex;
+    // 找到登录用户的购物车
     let findCart = userCart.find((item, index) => {
-      curCartIndex = index;
+      curCartIndex = index; // 当初是觉得可用会用到商品位置，现在暂无用处
       return item.userId === req.session.user;//userId
     });
+    // 找到购物车中商品的位置
     let curProduct = findCart['cart'].find((item, index) => {
-      curProIndex = index;
+      curProIndex = index; // 当初是觉得可用会用到商品位置，现在暂无用处
       return item.gid === gid;
     });
     if (!curProduct) {
+      // 如果没找到，返回默认状态
       res.json({"userCart": findCart.cart});
       return;
     }
@@ -724,6 +725,43 @@ app.post('/search', (req, res) => {
   });
 });
 
+// 添加历史记录
+app.put('/search', (req, res) => {
+  let {gid} = req.query;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/search.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+  let addData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/allData.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data))
+    })
+  });
+  addData.then((result) => {
+    let eva = result.find(item => item.gid === gid);
+    let backEva = {
+      "gid": eva.gid,
+      "title": eva.title
+    };
+    backData.then((result) => {
+      result.history.push(backEva);
+      fs.writeFile('./mock/search.json', JSON.stringify(result), 'utf-8', (err) => {
+        if (err) return console.log("添加历史记录失败");
+        res.json({"msg": "添加历史记录", "err": 0});
+      })
+    })
+  })
+});
+
 // 清空历史搜索
 app.delete('/search', (req, res) => {
   let backData = new Promise((resolve, reject) => {
@@ -907,16 +945,16 @@ app.post('/modifyusername', (req, res) => {
   let {username} = req.body;
   let user = userList.find(item => item.userid === req.session.user);
   user.username = username;
-  fs.writeFile('./mock/userInfo.json',JSON.stringify(userList),'utf-8',(err) => {
-      if(err) {
-        res.json({"msg":"修改失败","err":1});
-        return;
-      }
-      res.json({"msg":"修改成功","err":0})
+  fs.writeFile('./mock/userInfo.json', JSON.stringify(userList), 'utf-8', (err) => {
+    if (err) {
+      res.json({"msg": "修改失败", "err": 1});
+      return;
+    }
+    res.json({"msg": "修改成功", "err": 0})
   })
 
 });
-
+1
 /*-------------------------------*/
 
 // 获取收藏列表

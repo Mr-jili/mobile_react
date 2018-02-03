@@ -74,9 +74,6 @@ class Cart extends React.Component {
       }
       this.setState({remove: "", on: false});
       // 恢复以前选择点击编辑的状态
-      // console.log(this.props.newRefactor);
-      console.log(newData);
-      console.log(oldData);
       this.props.editStatusOld(oldData);
     }
   };
@@ -99,7 +96,6 @@ class Cart extends React.Component {
 
     return (
       <div className="cart">
-
         {/*=========== 购物车头部插入区域开始 ===========*/}
         <Header back={true}>购物车
           {err && userCart.length ? <em className="wj-cart-editor" onClick={this.handleEditor}>编辑</em> : null}

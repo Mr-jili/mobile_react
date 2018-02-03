@@ -39,7 +39,7 @@ export default class Collections extends Component{
                         backList.backList.map((item,index)=>(
                                 <div className="collection-has-data" style={{fontSize:"12px"}} key={index}>
                                     <div className="goods-container">
-                                        <Link className="goods-wrrap" to={{pathname:"/detail/100748"}}>
+                                        <Link className="goods-wrrap" to={{pathname:`/detail/${item.gid}`}}>
                                             <img src={item.url} alt=""/>
                                             <div className="goods-text-box">
                                                 <span className="goods-title">{item.title}</span>

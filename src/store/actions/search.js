@@ -1,5 +1,5 @@
 import * as Types from '../search-types';
-import {getHistory, searchInfo, clearHistorySearch} from '../../api/api';
+import {getHistory, searchInfo, clearHistorySearch,putHistory} from '../../api/api';
 
 let actions = {
   getInitSearchAPI() {
@@ -12,13 +12,13 @@ let actions = {
       dispatch({type: Types.SEARCH_RESULT, payload: searchInfo(info)})
     }
   },
-  clearHistorySearchAPI(){
-    return (dispatch,getState) => {
-        dispatch({type:Types.SEARCH_CLEAR_HISTORY,payload:clearHistorySearch()})
+  clearHistorySearchAPI() {
+    return (dispatch, getState) => {
+      dispatch({type: Types.SEARCH_CLEAR_HISTORY, payload: clearHistorySearch()})
     }
   },
-  getInputValue(val){
-    return {type:Types.GET_INPUT_VALUE,val}
+  getInputValueAPI(val) {
+    return {type: Types.GET_INPUT_VALUE, val}
   }
 };
 

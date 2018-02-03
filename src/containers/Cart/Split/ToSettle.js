@@ -113,7 +113,6 @@ class ToSettle extends Component {
   };
 
   render() {
-    console.log(!this.props.partStatus);
     return (
       <div className="wj-to-settle">
         <div onClick={this.handleCheckAllList} className="wj-to-settle-l">

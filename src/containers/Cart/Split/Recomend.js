@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import {Link} from 'react-router-dom';
 
 export default class Recomend extends Component {
   render() {
@@ -18,16 +19,18 @@ export default class Recomend extends Component {
             {
               recommend.map((item, index) => (
                 <li key={index} className="wj-recomend-you-list">
-                  <div className="wj-recomend-you-top">
-                    <div>
-                      <img src={item.url} alt=""/>
+                  <Link to={{pathname:`/detail/${item.gid}`}}>
+                    <div className="wj-recomend-you-top">
+                      <div>
+                        <img src={item.url} alt=""/>
+                      </div>
+                      <p>{item.describe}</p>
                     </div>
-                    <p>{item.describe}</p>
-                  </div>
-                  <div className="wj-recomend-you-bot">
-                    <p>{item.title}</p>
-                    <div>￥<span>{item.price}起</span></div>
-                  </div>
+                    <div className="wj-recomend-you-bot">
+                      <p>{item.title}</p>
+                      <div>￥<span>{item.price}起</span></div>
+                    </div>
+                  </Link>
                 </li>
               ))
             }

@@ -14,7 +14,6 @@ let actions={
     getCollection(gid,type){
     return function (dispatch,getState) {
         setCollection(gid,type).then((data)=>{
-            console.log(data);
             dispatch({type:Types.GET_COLLECT,collect:data})
         })
     }

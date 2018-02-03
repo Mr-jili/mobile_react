@@ -111,7 +111,6 @@ class Main extends React.Component {
     render() {
         let {sliders, activity, recommend, crowdfunding} = this.props.homedata;
         let {hot: homeLoaderData, newGoods, limit, brand, phone, allData} = this.state;
-        console.log(recommend);
         return (
             <div>
                 {

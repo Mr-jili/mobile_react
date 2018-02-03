@@ -5,7 +5,7 @@ let initState = {
   searchResult: [],
   hot: [],
   history: [],
-  searchVal:''
+  searchVal: ''
 };
 
 function search(state = initState, action) {

@@ -9,6 +9,10 @@ class SearchInput extends React.Component {
     this.state = {val: ''};
   }
 
+  componentDidMount() {
+    this.props.getInputVal(this.state.val);
+  }
+
   inputFocus = () => {
     this.refs.searchInput.focus();
   };
@@ -19,10 +23,18 @@ class SearchInput extends React.Component {
     if (this.refs.searchInput.value) {
       this.props.getSearchResultAPI(this.refs.searchInput.value);
     }
-    this.props.getInputValue(this.refs.searchInput.value);
+    this.props.getInputValueAPI(this.refs.searchInput.value);
+    this.props.getInputVal(this.refs.searchInput.value);
   };
   goBack = () => {
     this.props.history.go(-1);
+  };
+  searchDetail = () => {
+    if(this.refs.searchInput.value){
+      this.props.getSearchResultAPI(this.refs.searchInput.value);
+    }else {
+      this.props.history.push(`/detail/${this.props.detailVal.gid}`)
+    }
   };
 
   render() {
@@ -36,7 +48,7 @@ class SearchInput extends React.Component {
           <input type="text" className='search_input' value={this.state.val} ref='searchInput' onChange={this.changeVal}
                  autoFocus/>
         </div>
-        <span className='search_btn'>搜索</span>
+        <span className='search_btn' onClick={this.searchDetail}>搜索</span>
       </div>
     )
   }

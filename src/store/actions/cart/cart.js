@@ -40,7 +40,6 @@ let actions = {
   },
   // 购物车修改单个商品选中状态
   getCartChangeSelectAPI(item, gid, state) {
-    console.log(1111);
     return function (dispatch, getState) {
       dispatch({type: Types.SET_CART_CHANGE_SELECT, childrenItem: item, payload: changeSelect(gid, state)});
     }

@@ -11,7 +11,9 @@ class SearchList extends React.Component {
           {
             this.props.search.searchResult.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index} onClick={() => {
+                  this.props.putHistory(item.gid)
+                }}>
                   <Link to={{pathname: `/detail/${item.gid}`}}>{item.title}</Link>
                 </li>
               )

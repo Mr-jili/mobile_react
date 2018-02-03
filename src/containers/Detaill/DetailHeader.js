@@ -9,7 +9,6 @@ class DetailHeader extends Component{
         this.props.getDetailAPI(this.props.index);
     }
     render(){
-        // console.log(this.props.index);
         let {url,title,describe,from,price}=this.props;
         let smallPrice=price-200;
         let bigPrice=price-10;
