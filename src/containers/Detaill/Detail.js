@@ -10,9 +10,6 @@ class Detail extends React.Component {
   constructor(){
       super();
   }
-  componentDidMount(){
-      // localStorage.setItem('index',JSON.stringify(this.props.location.state))
-  }
   handBack=()=>{
       this.props.history.goBack();
   };
@@ -20,6 +17,7 @@ class Detail extends React.Component {
       this.props.history.push('/');
   };
 
+  //判断是否为登陆态
   isLogin=(err,user)=>{
          if(err===1&&user==null){
              this.props.history.push('/login');
