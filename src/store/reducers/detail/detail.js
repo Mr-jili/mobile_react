@@ -7,9 +7,7 @@ let initDetail = {
 export default function detail(state = initDetail, action) {
   switch (action.type) {
     case Types.GET_DETAIL:
-      return {...state, ...action.detail};
-    case Types.GET_EVALUATE:
-      return {...state, ...action.evaluate}
+      return {...state,...action.detail};
   }
   return state;
 }

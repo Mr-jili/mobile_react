@@ -1,8 +1,6 @@
 import * as Types from '../../action-types'
 let initDetail={
-    list:[],
-    msg:'',
-    err:0
+    list:[]
 };
 export default function evaluate(state=initDetail,action) {
     switch (action.type){
