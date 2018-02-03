@@ -70,6 +70,9 @@ export const SET_GOODSDATA = "SET_GOODSDATA";
 //设置二级分类数据
 export const SET_GOODS_LEVEL_DATA = "SET_GOODS_LEVEL_DATA";
 
+//设置导航列表当前选中ID
+export const SET_LINKLIST_CURRENTID = "SET_LINKLIST_CURRENTID";
+
 //设置支付列表
 export const SET_PAY_DATA = "SET_PAY_DATA";
 
