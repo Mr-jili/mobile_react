@@ -12,6 +12,9 @@ let actions = {
     return function (dispatch,getState) {
       dispatch({type:Types.SET_GOODS_LEVEL_DATA,payload:getLevelData(id)});
     }
+  },
+  setLinkListCurrentID(id){
+    return {type:Types.SET_LINKLIST_CURRENTID,listCurrentID:id};
   }
 
 };
