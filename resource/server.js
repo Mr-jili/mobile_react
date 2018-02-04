@@ -820,6 +820,7 @@ app.post('/register', (req, res) => {
       "username": 'E' + (Math.random() * 10000000).toFixed(0),
       "password": password,
       "email": "",
+      "paypsd": "888888",
       "mobile": username,
       "bill": {
         "all": [],
@@ -954,7 +955,7 @@ app.post('/modifyusername', (req, res) => {
   })
 
 });
-1
+
 /*-------------------------------*/
 
 // 获取收藏列表

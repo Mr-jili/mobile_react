@@ -106,7 +106,7 @@
 
 ***获取指定种类的数据***
 【发送】
-{"id":""}
+         {"id":""}
 【成功】
 [
   {
@@ -368,7 +368,7 @@ get(`/cart/allstate?state=${state}`)
 {
   "userid": "U10001",          --用户id
   "userimg": "",               --用户邮箱
-  "username": "      ",        --用户名
+  "username": "",              --用户名
   "password": "",              --用户密码
   "mobile": "",                --用户手机
   "bill": {                    --我的订单

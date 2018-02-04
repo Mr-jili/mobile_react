@@ -174,7 +174,7 @@ class UserCenter extends React.Component {
             </div>
           </div>
           <div className="lyc-user-quit" ref={x => this.quit = x} onClick={()=>{
-            this.props.signOutAPI(this.loginState,this.props.history.go(-1));
+            this.props.signOutAPI(this.loginState,this.props.history.push('/main'));
           }}>退出</div>
         </div>
       </div>
