@@ -4,6 +4,64 @@
 服务server  端口 localhost:9999
 项目启用     端口 localhost:3000
 
+resource  服务器端代码（静态文件）
+  ├─images           icon图片文件夹
+  ├─mock             json数据文件夹
+  ├─pageImg          界面截图
+  └─server.js        服务器
+
+src  客户端代码
+  ├─api              客户端接口
+  ├─common           公共文件
+  ├─components       公共组件
+  │  ├─Header
+  │  ├─Loading
+  │  └─Tab
+  ├─containers       页面组件
+  │  ├─Cart          购物车
+  │  │  └─common
+  │  ├─Collection    我的收藏
+  │  ├─Detaill       商品详情
+  │  ├─Goodscategory 商品分类
+  │  ├─Main          首页
+  │  │  ├─common
+  │  │  │  ├─CWJ
+  │  │  │  ├─OneRow
+  │  │  │  ├─OnlyRow
+  │  │  │  ├─ThreeRow
+  │  │  │  ├─Title
+  │  │  │  ├─TRow
+  │  │  │  └─TwoRow
+  │  │  ├─MainBrand
+  │  │  ├─MainCrowdfunding
+  │  │  ├─MainFooter
+  │  │  ├─MainHeader
+  │  │  ├─MainHot
+  │  │  ├─MainLink
+  │  │  ├─MainMore
+  │  │  ├─MainPhone
+  │  │  ├─MainRecommend
+  │  │  ├─MainSlider
+  │  │  ├─NewGoods
+  │  │  └─TimeBuy
+  │  ├─OrderList     我的订单
+  │  ├─Pay           支付
+  │  ├─PersonalData  修改个人信息
+  │  ├─Savour        品味
+  │  ├─Search        搜索
+  │  ├─ServiceLogin  登录
+  │  ├─ServiceRegister   注册
+  │  └─UserCenter        个人中心
+  ├─images               图片文件夹
+  └─store                redux 文件
+      ├─actions
+      │  ├─cart
+      │  ├─detail
+      │  ├─home
+      │  ├─personaldata
+      │  └─savour
+      └─reducers
+          └─detail
 
 首页：main
 分类：goodscategory
