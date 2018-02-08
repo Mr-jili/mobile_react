@@ -23,46 +23,6 @@ export const GET_EVALUATE = 'GET_EVALUATE';
 // 品味改变状态
 export const CHANGE_SAVOUR = 'CHANGE_SAVOUR';
 
-
-// 购物车获取是否登陆状态
-export const GET_WHETHER_LOGIN = "GET_WHETHER_LOGIN";
-
-// 购物车登陆成功获取购物车和为您推荐数据
-export const GET_CART_DATA = "GET_CART_DATA";
-
-// 购物车数量增加
-export const SET_CART_NUM_PLUS = "SET_CART_NUM_PLUS";
-
-// 购物车数量减少
-export const SET_CART_NUM_MINUS = "SET_CART_NUM_MINUS";
-
-// 购物车显示/隐藏模态框状态
-export const SET_CART_DIALOG_STATUS = "SET_CART_DIALOG_STATUS";
-
-// 购物车登陆成功后修改商品数量
-export const SET_EDITOR_CART_DATA = "SET_EDITOR_CART_DATA";
-
-// 购物车修改单个商品选中状态
-export const SET_CART_CHANGE_SELECT = "SET_CART_CHANGE_SELECT";
-
-// 购物车修改分组商品选中状态
-export const SET_CART_CHANGE_PART_SELECT = "SET_CART_CHANGE_PART_SELECT";
-
-// 购物车修改所有商品选中状态
-export const SET_CART_CHANGE_ALL_SELECT = "SET_CART_CHANGE_ALL_SELECT";
-
-// 购物车修改原来数据后存储的refactoring
-export const SET_CART_CHANGE_ALL_Refactor = "SET_CART_CHANGE_ALL_Refactor";
-
-// 移除购物车中的商品
-export const SET_CART_REMOVE_GOODS = "SET_CART_REMOVE_GOODS";
-
-// 点击编辑到完成，修改所有的选中为不选状态
-export const SET_CART_STATUS_ALL_FALSE = "SET_CART_STATUS_ALL_FALSE";
-
-// 点击完成到编辑，恢复以前点击完成前的选择状态
-export const SET_CART_STATUS_OLD = "SET_CART_STATUS_OLD";
-
 // ==>个人资料修改
 // 设置个人资料
 export const SET_PERSONAL_DATA = "SET_PERSONAL_DATA";
