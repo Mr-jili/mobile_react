@@ -78,9 +78,24 @@ export function editCartData(gid, number) {
   return axios.put(`/cart?gid=${gid}&number=${number}`)
 }
 
+// 修改单个要移除商品状态
+export function changeDelState(gid, state) {
+  return axios.get(`/cart/delsingle?gid=${gid}&state=${state}`);
+}
+
+// 修改部分要移除商品状态
+export function changeDelPartState(from, state) {
+  return axios.get(`/cart/delpart?from=${from}&state=${state}`);
+}
+
+// 修改全部要移除商品状态
+export function changeDelAllState(state) {
+  return axios.get(`/cart/delall?&state=${state}`);
+}
+
 // 移除购物车中的商品
-export function delCartData(gid) {
-  return axios.post(`/cart/delete`, {gid});
+export function delCartData() {
+  return axios.post(`/cart/delete`);
 }
 
 // 修改单个商品选中状态
@@ -123,7 +138,7 @@ export function searchInfo(info) {
 }
 
 // 添加历史记录
-export  function putHistory(gid) {
+export function putHistory(gid) {
   return axios.put(`/search?gid=${gid}`)
 }
 
@@ -161,7 +176,7 @@ export function getUserInfo() {
 
 // 修改用户名
 export function modifyUserName(username) {
-  return axios.post('/modifyusername',{username})
+  return axios.post('/modifyusername', {username})
 }
 
 /*----------------------------*/
@@ -180,4 +195,5 @@ export function getBill() {
 export function toValidate() {
   return axios.get('/validate');
 }
+
 // 共33个接口

@@ -435,47 +435,6 @@ app.put('/cart', (req, res) => {
   });
 });
 
-// 移除选中商品
-app.post('/cart/delete', (req, res) => {
-  if (!req.session.user) {
-    res.json({user: null, msg: "请先登录", success: '', err: 1});
-    return;
-  }
-  let {gid} = req.body;
-  let progress = new Promise((resolve, reject) => {
-    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(JSON.parse(data));
-    });
-  });
-  progress.then((result) => {
-    let user = result.find((item) => item.userId === req.session.user);
-    let ex = user.cart.find((item) => {
-      return gid.some(gitItem => item.gid === gitItem);
-    });
-
-    if (!ex) {
-      res.json({"msg": "没找到有效商品", err: 1});
-      return;
-    }
-
-    for (let i = 0; i < gid.length; i++) {
-      let temp = gid[i];
-      user.cart = user.cart.filter((item) => {
-        return item.gid !== temp;
-      });
-    }
-
-    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
-      if (err) return res.json({"msg": "移除失败", err: 0});
-      res.json({"msg": "移除成功", err: 0});
-    })
-  })
-});
-
 // 修改单个商品选中状态
 app.get('/cart/singlestate', (req, res) => {
   if (!req.session.user) {
@@ -520,7 +479,6 @@ app.get('/cart/partstate', (req, res) => {
       resolve(JSON.parse(data));
     })
   });
-
   backData.then((result) => {
     let userCart = result.find(item => item.userId === req.session.user);
     for (let i = 0; i < userCart.cart.length; i++) {
@@ -563,6 +521,122 @@ app.get('/cart/allstate', (req, res) => {
     fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
       if (err) return console.log('修改失败');
       res.json({"msg": "ok", "err": 0});
+    })
+  })
+});
+
+// 修改单个要移除商品状态
+app.get('/cart/delsingle', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {gid, state} = req.query;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  backData.then((result) => {
+    let userCart = result.find(item => item.userId === req.session.user);
+    let eva = userCart.cart.find(item => item.gid === gid);
+    eva.delState = JSON.parse(state);
+
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return console.log('修改失败');
+      res.json({"msg": "ok", "err": 0});
+    })
+  })
+});
+
+// 修改部分要移除商品状态
+app.get('/cart/delpart', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {from, state} = req.query;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  backData.then((result) => {
+    let userCart = result.find(item => item.userId === req.session.user);
+    for (let i = 0; i < userCart.cart.length; i++) {
+      let temp = userCart.cart[i];
+      from = from.replace(/['"]/g, '');
+      if (temp.from === from) {
+        temp.delState = JSON.parse(state);
+      }
+    }
+
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return console.log('修改失败');
+      res.json({"msg": "ok", "err": 0});
+    })
+  })
+});
+
+// 修改全部要移除商品状态
+app.get('/cart/delall', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let {state} = req.query;
+  let backData = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    })
+  });
+  backData.then((result) => {
+    let userCart = result.find(item => item.userId === req.session.user);
+    userCart.cart.forEach((item) => {
+      item.delState = JSON.parse(state);
+    });
+
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return console.log('修改失败');
+      res.json({"msg": "ok", "err": 0});
+    })
+  })
+});
+
+// 移除选中商品
+app.post('/cart/delete', (req, res) => {
+  if (!req.session.user) {
+    res.json({user: null, msg: "请先登录", success: '', err: 1});
+    return;
+  }
+  let progress = new Promise((resolve, reject) => {
+    fs.readFile('./mock/userCart.json', 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(JSON.parse(data));
+    });
+  });
+  progress.then((result) => {
+    let user = result.find((item) => item.userId === req.session.user);
+    user.cart = user.cart.filter((item) => !item.delState);
+
+    fs.writeFile('./mock/userCart.json', JSON.stringify(result), 'utf-8', (err) => {
+      if (err) return res.json({"msg": "移除失败", err: 0});
+      res.json({"msg": "移除成功", err: 0});
     })
   })
 });

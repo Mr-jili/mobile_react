@@ -136,7 +136,7 @@
     "url": "https://static.home.mi.com/app/shop/img?id=shop_c71c34944c21b3ca3d5183e0c7390051.png",
     "link": "/detail?gid=254",
     "price": 199,
-    "mark": false,
+    "mark": true,
     "isSelected": true,
     "delState": false,
     "minfreight": 0,
